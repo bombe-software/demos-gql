@@ -1,0 +1,21 @@
+{
+  "name": "demos-gql",
+  "version": "1.0.0",
+  "description": "Api de demos en GraphQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Bombe software",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "express": "^4.16.2",
+    "express-graphql": "^0.6.11",
+    "graphql": "^0.12.3",
+    "lodash": "^4.17.4",
+    "mongoose": "^4.13.9",
+    "nodemon": "^1.14.10"
+  }
+} 

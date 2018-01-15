@@ -5,4 +5,4 @@ const partido = mongoose.Schema({
     partido: String
 });
 
-mongoose.model('estado', partido);
+mongoose.model('partido', partido);

@@ -6,20 +6,17 @@ const bodyParser = require('body-parser');
 const schema = require('./src');
 const app = express();
 
-// Replace with your mongoLab URI
-const MONGO_URI = 'mongodb://localhost:27017/demos';
-if (!MONGO_URI) { 
-  throw new Error('You must provide a MongoLab URI');
+const config = {
+  user: 'admin',
+  password: 'n0m3l0',
 }
+const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 
+mongoose.connect(MONGO_URI, { useMongoClient: true }).catch(err => console.error(err));
 mongoose.Promise = global.Promise;
-mongoose.connect(MONGO_URI, { useMongoClient: true })
-    .catch(err => console.error(err));
-	
-mongoose.connection
-    .once('open', () => console.log('Connected to MongoLab instance.'))
-    .on('error', error => console.log('Error connecting to MongoLab:', error));+
-     
+mongoose.connection.once('open', () => console.log('Conectado a la base de datos.'))
+  .on('error', error => console.log('Error al conectar a la base de datos:', error));
+
 app.use(bodyParser.json());
 app.use('/graphql', expressGraphQL({
   schema,

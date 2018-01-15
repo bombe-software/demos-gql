@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const usuario = mongoose.Schema({
     nombre: String,			
     email: String,		
-    id_tipo_usuario: {
+    tipo_usuario: {
         type: Schema.Types.ObjectId,
         ref: 'tipo_usuario'
     },

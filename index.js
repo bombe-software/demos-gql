@@ -13,7 +13,7 @@ const config = {
 const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI, { useMongoClient: true }).catch(err => console.error(err));
-mongoose.connection.once('open', () => console.log('Conectado a la base de datos.'))
+mongoose.connection.once('open', () => console.log('Conectado a la base de datos'))
   .on('error', error => console.log('Error al conectar a la base de datos:', error));
 
 

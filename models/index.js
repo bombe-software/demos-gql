@@ -8,8 +8,8 @@ require('./tipo_politico');
 require('./tipo_propuesta');
 require('./tipo_usuario');
 require('./propuesta');//requiere [tipo_propuesta]
-require('./politico'); //requiere [partido, tipo_politico, estado, evento, estudio, propuesta]
-require('./usuario');//requiere [usuario]
-require('./preferencia');//requiere [politico, usuario]
-require('./votacion');//requiere [estado, preferencia]
-require('./zona');//requiere estado
+require('./politico'); //requiere [partido, tipo_politico, estado, [eventos], [estudios], [propuestas]
+require('./usuario');//requiere [tipo_usuario]
+require('./preferencia');//requiere [politico, [usuarios]]
+require('./votacion');//requiere [estado, [preferencias]]
+require('./zona');//requiere [[estados]]

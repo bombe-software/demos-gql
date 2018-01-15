@@ -11,7 +11,7 @@ const politico = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'tipo_politico'
     },
-    lugar: {
+    estado: {
         type: Schema.Types.ObjectId,
         ref: 'estado'
     },

@@ -3,7 +3,7 @@ const models = require('./models');
 const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const schema = require('./schema/schema');
+const schema = require('./src');
 const app = express();
 
 // Replace with your mongoLab URI
@@ -23,7 +23,7 @@ mongoose.connection
 app.use(bodyParser.json());
 app.use('/graphql', expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: true 
 }));
 
 const port = 4000;

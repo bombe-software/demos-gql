@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
 const { GraphQLObjectType,  GraphQLID,  GraphQLInt, GraphQLString } = graphql;
-const Usuario = mongoose.model('estudio');
+const Usuario = mongoose.model('tipo_usuario');
 
 const UsuarioType = new GraphQLObjectType({
   name:  'UsuarioType',

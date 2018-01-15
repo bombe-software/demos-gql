@@ -17,6 +17,21 @@ mongoose.connection.once('open', () => console.log('Conectado a la base de datos
   .on('error', error => console.log('Error al conectar a la base de datos:', error));
 
 app.use(bodyParser.json());
+
+app.use(function (req, res, next) {
+
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  res.setHeader('Access-Control-Allow-Credentials', true);
+
+  next();
+});
+
+
 app.use('/graphql', expressGraphQL({
   schema,
   graphiql: true

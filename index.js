@@ -45,7 +45,7 @@ app.get('/pruebas', function (req, res) {
   res.end();
 });
 
-const port = 4000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log('Listening on port: ' + port);
 });

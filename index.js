@@ -2,6 +2,10 @@ const express = require('express');
 const models = require('./models');
 const expressGraphQL = require('express-graphql');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const configPassport = require('./config_passport');
+const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const schema = require('./src');
 const app = express();
@@ -19,17 +23,25 @@ mongoose.connection.once('open', () => console.log('Conectado a la base de datos
 app.use(bodyParser.json());
 
 app.use(function (req, res, next) {
-
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8081');
-
+  res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
   res.setHeader('Access-Control-Allow-Credentials', true);
-
   next();
 });
+
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'jaiba',
+  store: new MongoStore({
+    url: MONGO_URI,
+    autoReconnect: true
+  })
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 app.use('/graphql', expressGraphQL({

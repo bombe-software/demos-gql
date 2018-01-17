@@ -16,7 +16,7 @@ const UsuarioType = new GraphQLObjectType({
           .then(usuario => usuario.tipo_usuario);
       }
     },
-    contrasena: { type: GraphQLString },
+    password: { type: GraphQLString },
     curp: { type: GraphQLString },
     avatar: { type: GraphQLString },
     puntos: { type: GraphQLInt },

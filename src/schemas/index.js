@@ -130,6 +130,12 @@ const RootQuery = new GraphQLObjectType({
       resolve() {
         return Zona.find({});
       }
+    },
+    usuario: {
+      type: UsuarioType,
+      resolve(parentValue, args, req) {
+        return req.user;
+      }
     }
   })
 });

@@ -22,15 +22,12 @@ mongoose.connection.once('open', () => console.log('Conectado a la base de datos
 
 app.use(bodyParser.json());
 
-app.use(function (req, res, next) {
-  
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:9000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-app.options('/graphql', cors())
+const corsOptions = {
+    origin: 'http://localhost:9000',
+    credentials: true,
+
+}
+app.use(cors(corsOptions))
 app.use(session({
   resave: true,
   saveUninitialized: true,

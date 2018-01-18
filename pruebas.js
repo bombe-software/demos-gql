@@ -1,15 +1,17 @@
+const db = new require('mongoose');
 function estado_registro(){
-    var Estado = require('mongoose').model('estado');
-    var michoacan = new Estado({ estado: 'michoacan' });
-    michoacan.save(function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Estado registrado');
-      }
-    });
-}
+    //Nombre del modelo
+    db.model('estado')({
+      //Campos que lleva el modelo 
+      estado: 'Michoacan' 
+    }).save();
 
+
+    db.model('estado')({
+      estado: 'Ciudad de Mexico' 
+    }).save();
+
+}
 
 exports.pruebas = function (req, res) {
     estado_registro();

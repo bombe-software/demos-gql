@@ -14,7 +14,12 @@ const mongoose = require('mongoose');
 
 //Importando schemas y modelos necesarios para updates
 const Politico = mongoose.model('politico');
+const Partido = mongoose.model('partido');
+const TipoPolitico = mongoose.model('tipo_politico')
+
 const PoliticoType = require('../schemas/politico');
+const PartidoType = require('../schemas/partido');
+const TipoPoliticoType = require('../schemas/tipo_politico')
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -54,10 +59,23 @@ const mutation = new GraphQLObjectType({
     addPolitico: {
       type: PoliticoType,
       args: {
-          nombre: { type: GraphQLString }
+          nombre: { type: GraphQLString },
+          partido: { type: GraphQLString },
+          tipo_politico: { type: GraphQLString },
+          estado: { type: GraphQLString },
       },
       resolve(parentValue, { nombre }){
           return(new Politico({ nombre })).save()
+      }
+    },
+      addPartido: {
+        type: PartidoType,
+        args: {
+          partido: { type: GraphQLString}
+        },
+        resolve(parentValue, { partido }){
+          return(new Partido({ partido })).save()
+
       }
     }
   }

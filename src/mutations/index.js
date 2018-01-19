@@ -9,6 +9,13 @@ const UsuarioType = require('./../schemas/usuario');
 const { login } = require('./login');
 const { signup } = require('./signup');
 
+//Mongoose
+const mongoose = require('mongoose');
+
+//Importando schemas y modelos necesarios para updates
+const Politico = mongoose.model('politico');
+const PoliticoType = require('../schemas/politico');
+
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
@@ -42,6 +49,15 @@ const mutation = new GraphQLObjectType({
       },
       resolve(parentValue, { email, password }, req) {
         return login({ email, password, req });
+      }
+    },
+    addPolitico: {
+      type: PoliticoType,
+      args: {
+          nombre: { type: GraphQLString }
+      },
+      resolve(parentValue, { nombre }){
+          return(new Politico({ nombre })).save()
       }
     }
   }

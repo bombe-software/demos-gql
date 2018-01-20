@@ -11,6 +11,8 @@ function addpolitico({ args, req }) {
         tipo_politico, estado
     } = args
 
+    console.log(args)
+
     //Area de registro
     const politico = new Politico({
         nombre, partido,

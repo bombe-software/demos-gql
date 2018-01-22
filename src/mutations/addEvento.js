@@ -14,7 +14,7 @@ function addevento({ args, req }) {
 
     //Area de registro
     const evento = new Evento({
-        fecha,titulo ,
+        fecha,titulo,
         descripcion
     });
 

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const { 
-  GraphQLObjectType, GraphQLList, GraphQLID, 
+const {
+  GraphQLObjectType, GraphQLList, GraphQLID,
   GraphQLNonNull, GraphQLString
- } = graphql;
+} = graphql;
 
 
 //Importar models
@@ -28,17 +28,17 @@ const EstadoType = require('./estado');
 const EventoType = require('./evento');
 const GradoAcademicoType = require('./grado_academico');
 const LugarEstudioType = require('./lugar_estudio');
-const EstudioType = require('./estudio'); 
+const EstudioType = require('./estudio');
 const PartidoType = require('./partido');
 const TipoPoliticoType = require('./tipo_politico');
 const TipoPropuestaType = require('./tipo_propuesta');
 const TipoUsuarioType = require('./tipo_usuario');
-const PropuestaType =  require('./propuesta');
-const PoliticoType =  require('./politico');
+const PropuestaType = require('./propuesta');
+const PoliticoType = require('./politico');
 const UsuarioType = require('./usuario');
-const PreferenciaType =  require('./preferencia');
-const VotacionType =  require('./votacion');
-const ZonaType =  require('./zona');
+const PreferenciaType = require('./preferencia');
+const VotacionType = require('./votacion');
+const ZonaType = require('./zona');
 
 
 const RootQuery = new GraphQLObjectType({
@@ -143,30 +143,30 @@ const RootQuery = new GraphQLObjectType({
 
     politicoEstado: {
       type: new GraphQLList(PoliticoType),
-      args:{id: {type: new GraphQLNonNull(GraphQLID)}},
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, args, req) {
         return req.user;
       },
 
 
-    votacion: {
-      args: {
-        estado: { type: GraphQLID }
+      votacion: {
+        args: {
+          estado: { type: GraphQLID }
+        },
+        type: new GraphQLList(VotacionType),
+        resolve(parentValue, args, req) {
+          return Votacion.find({ lugar: args.estado });
+        }
       },
-      type: new GraphQLList(VotacionType),
-      resolve(parentValue, args, req) {
-        return Votacion.find({lugar: args.estado});
+      estado: {
+        args: {
+          id: { type: GraphQLID }
+        },
+        type: EstadoType,
+        resolve(parentValue, args, req) {
+          return Estado.findById(args.id);
+        }
       }
-    },
-    estado: {
-      args: {
-        id: { type: GraphQLID }
-      },
-      type: EstadoType,
-      resolve(parentValue, args, req) {
-        return Estado.findById(args.id);
-      }
->>>>>>> origin/vicroni
     }
   })
 });

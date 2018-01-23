@@ -7,7 +7,8 @@ const UsuarioType = require('./../schemas/usuario');
 const PoliticoType = require('./../schemas/politico');
 const PartidoType = require('../schemas/partido');
 const TipoPoliticoType = require('../schemas/tipo_politico');
-
+const EventoType = require('../schemas/evento');
+const { addevento } = require('./addEvento');
 
 //Funciones de la mutacion
 const { login } = require('./login');
@@ -56,9 +57,21 @@ const mutation = new GraphQLObjectType({
             partido: { type: GraphQLID},
             tipo_politico: { type: GraphQLID },
             estado: { type: GraphQLID },
+            estudios: {type: GraphQLID }
         },
         resolve(parentValue, args, req){
           return addpolitico({ args, req });
+        }
+      },
+      addEvento: {
+        type: EventoType,
+        args: {
+            fecha: { type: GraphQLString },
+            titulo: { type: GraphQLString},
+            descripcion: { type: GraphQLString }
+        },
+        resolve(parentValue, args, req){
+          return addevento({ args, req });
         }
       }
   }

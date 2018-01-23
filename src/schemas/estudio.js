@@ -7,10 +7,10 @@ const EstudioType = new GraphQLObjectType({
   name:  'EstudioType',
   fields: () => ({
     id: { type: GraphQLID },
-    tiulo: { type: GraphQLString },
+    titulo: { type: GraphQLString },
     grado_academico: {
       type: require('./grado_academico'),
-      resolve(parentValue) {
+      resolve(parentValue) { 
         return Estudio.findById(parentValue).populate('grado_academico')
           .then(estudio => estudio.grado_academico);
       }

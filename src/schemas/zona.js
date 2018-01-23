@@ -16,8 +16,7 @@ const ZonaType = new GraphQLObjectType({
     estados: {
         type: new GraphQLList(EstadoType),
         resolve(parentValue) {
-          console.log(parentValue);
-            return Zona.findById(parentValue)
+            return Zona.findById(parentValue.id)
                 .populate('estados')
                 .then(zona => zona.estados);
         }

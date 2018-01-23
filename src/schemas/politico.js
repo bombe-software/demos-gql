@@ -45,11 +45,11 @@ const PoliticoType = new GraphQLObjectType({
             }
         },
         estudios: {
+           
             type: new GraphQLList(EstudioType),
-            resolve(parentValue) {
-                return Politico.findById(parentValue.id)
-                    .populate('estudios')
-                    .then(politico => politico.estudios);
+            resolve(parentValue) { 
+                return Politico.findById(parentValue.id).populate('estudios')
+                    .then(politico => politico.estudios); 
             }
         },
         propuestas: {

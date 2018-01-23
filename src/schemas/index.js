@@ -136,6 +136,14 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue, args, req) {
         return req.user;
       }
+    },
+    politicoEstado: {
+      type: new GraphQLList(PoliticoType),
+      args:{id: {type: new GraphQLNonNull(GraphQLID)}},
+      resolve(parentValue, args, req) {
+        return req.user;
+      }
+
     }
   })
 });

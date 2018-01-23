@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLList, GraphQLID, GraphQLNonNull } = graphql;
+const { 
+  GraphQLObjectType, GraphQLList, GraphQLID, 
+  GraphQLNonNull, GraphQLString
+ } = graphql;
 
 
 //Importar models
@@ -137,13 +140,33 @@ const RootQuery = new GraphQLObjectType({
         return req.user;
       }
     },
+
     politicoEstado: {
       type: new GraphQLList(PoliticoType),
       args:{id: {type: new GraphQLNonNull(GraphQLID)}},
       resolve(parentValue, args, req) {
         return req.user;
-      }
+      },
 
+
+    votacion: {
+      args: {
+        estado: { type: GraphQLID }
+      },
+      type: new GraphQLList(VotacionType),
+      resolve(parentValue, args, req) {
+        return Votacion.find({lugar: args.estado});
+      }
+    },
+    estado: {
+      args: {
+        id: { type: GraphQLID }
+      },
+      type: EstadoType,
+      resolve(parentValue, args, req) {
+        return Estado.findById(args.id);
+      }
+>>>>>>> origin/vicroni
     }
   })
 });

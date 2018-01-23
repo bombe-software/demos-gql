@@ -12,6 +12,7 @@ const EstadoType = require('./estado');
 const ZonaType = new GraphQLObjectType({
   name:  'ZonaType',
   fields: () => ({
+    id: { type: GraphQLID },
     zona: { type: GraphQLString },
     estados: {
         type: new GraphQLList(EstadoType),

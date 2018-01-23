@@ -43,4 +43,5 @@ politico.statics.RegistrarPolitico = function(idEstudio, idTipoPolitico, idEstad
         .then(([lyric, song]) => song);
     });
 }
+
 mongoose.model('politico', politico);

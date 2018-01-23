@@ -17,14 +17,14 @@ const EstadoType = new GraphQLObjectType({
       type: GraphQLList(PoliticoType),
       resolve(parentValue) {
         return Estado.findById(parentValue).populate('politico')
-            .then(estado => estado.funcionario);
+            .then(estado => estado.funcionarios);
       }
     },
     candidatos: {
       type: GraphQLList(PoliticoType),
       resolve(parentValue) {
         return Estado.findById(parentValue).populate('politico')
-            .then(estado => estado.candidato);
+            .then(estado => estado.candidatos);
       }
     }
   })

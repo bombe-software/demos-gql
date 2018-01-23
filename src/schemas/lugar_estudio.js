@@ -5,7 +5,7 @@ const LugarEstudioType = new GraphQLObjectType({
   name:  'LugarEstudioType',
   fields: () => ({
     id: { type: GraphQLID },
-    lugar: { type: GraphQLString }
+    nombre: { type: GraphQLString }
   })
 });
 

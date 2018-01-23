@@ -11,7 +11,7 @@ const politico = mongoose.Schema({
     estudios: [{
         type: Schema.Types.ObjectId,
         ref: 'estudio'
-    }],//Dr, Ma, L, NA
+    }],
     propuestas: [{
         type: Schema.Types.ObjectId,
         ref: 'propuesta'

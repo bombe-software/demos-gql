@@ -15,27 +15,7 @@ const PoliticoType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
-        partido: {
-            type: require('./partido'),
-            resolve(parentValue) {
-                return Politico.findById(parentValue).populate('partido')
-                    .then(politico => politico.partido);
-            }
-        },
-        tipo_politico: {
-            type: require('./tipo_politico'),
-            resolve(parentValue) {
-                return Politico.findById(parentValue).populate('tipo_politico')
-                    .then(politico => politico.tipo_politico );
-            }
-        },
-        estado: {
-            type: require('./estado'),
-            resolve(parentValue) {
-                return Politico.findById(parentValue).populate('estado')
-                    .then(politico => politico.estado);
-            }
-        },
+        cargo: { type: GraphQLList(GraphQLString)},
         eventos: {
             type: new GraphQLList(EventoType),
             resolve(parentValue) {
@@ -45,7 +25,6 @@ const PoliticoType = new GraphQLObjectType({
             }
         },
         estudios: {
-           
             type: new GraphQLList(EstudioType),
             resolve(parentValue) { 
                 return Politico.findById(parentValue.id).populate('estudios')

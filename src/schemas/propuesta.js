@@ -9,6 +9,7 @@ const PropuestaType = new GraphQLObjectType({
     id: { type: GraphQLID },
     fecha: { type: GraphQLString },
     descripcion: { type: GraphQLString },
+    titulo: { type: GraphQLString },
     tipo_propuesta: {
       type: require('./tipo_propuesta'),
       resolve(parentValue) {

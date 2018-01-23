@@ -12,6 +12,7 @@ const PreferenciaType = require('./preferencia');
 const VotacionType = new GraphQLObjectType({
   name:  'VotacionType',
   fields: () => ({
+    id: {  type: GraphQLID },
     estado: {
         type: require('./estado'),
         resolve(parentValue) {

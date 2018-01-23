@@ -3,18 +3,7 @@ const Schema = mongoose.Schema;
 
 const politico = mongoose.Schema({
     nombre: String,
-    partido: {
-        type: Schema.Types.ObjectId,
-        ref: 'partido'
-    },
-    tipo_politico: {
-        type: Schema.Types.ObjectId,
-        ref: 'tipo_politico'
-    },
-    estado: {
-        type: Schema.Types.ObjectId,
-        ref: 'estado'
-    },
+    cargo: [String],
     eventos: [{
         type: Schema.Types.ObjectId,
         ref: 'evento'
@@ -22,13 +11,13 @@ const politico = mongoose.Schema({
     estudios: [{
         type: Schema.Types.ObjectId,
         ref: 'estudio'
-    }],
+    }],//Dr, Ma, L, NA
     propuestas: [{
         type: Schema.Types.ObjectId,
         ref: 'propuesta'
     }]
 });
-
+/*
 politico.statics.RegistrarPolitico = function(idEstudio, idTipoPolitico, idEstado, idPartido, nombre) {
   const estado = mongoose.model('estado');
   const partido = mongoose.model('partido');
@@ -43,5 +32,5 @@ politico.statics.RegistrarPolitico = function(idEstudio, idTipoPolitico, idEstad
         .then(([lyric, song]) => song);
     });
 }
-
+*/
 mongoose.model('politico', politico);

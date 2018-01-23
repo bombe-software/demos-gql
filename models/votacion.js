@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const votacion = mongoose.Schema({
-    lugar: {
+    estado: {
         type: Schema.Types.ObjectId,
         ref: 'estado'
     },

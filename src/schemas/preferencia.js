@@ -12,6 +12,7 @@ const UsuarioType = require('./usuario');
 const PreferenciaType = new GraphQLObjectType({
   name:  'PreferenciaType',
   fields: () => ({
+    id: {  type: GraphQLID },
     politico: {
         type: require('./politico'),
         resolve(parentValue) {

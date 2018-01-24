@@ -9,8 +9,7 @@ const Politico = mongoose.model('politico');
 const EventoType = require('./evento');
 const EstudioType = require('./estudio');
 const PropuestaType = require('./propuesta');
-const PartidoType = require('./partido');
-const EstadoType = require('./estado');
+//const PartidoType = require('/');
 
 const PoliticoType = new GraphQLObjectType({
     name: 'PoliticoType',
@@ -18,20 +17,8 @@ const PoliticoType = new GraphQLObjectType({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLString },
-        estado: {
-            type: EstadoType,
-            resolve(parentValue) {
-                return Politico.findById(parentValue.id).populate('estado')
-                    .then(politico => politico.estado);
-            }
-        },
-        partido: {
-            type: PartidoType,
-            resolve(parentValue) {
-                return Politico.findById(parentValue.id).populate('partido')
-                    .then(politico => politico.partido);
-            }
-        },
+        estado: { type: GraphQLID },
+        partido: { type: GraphQLID },
         eventos: {
             type: new GraphQLList(EventoType),
             resolve(parentValue) {

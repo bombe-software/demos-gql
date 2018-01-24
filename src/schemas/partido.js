@@ -8,6 +8,7 @@ const Partido = mongoose.model('partido');
 //Schemas
 const PoliticoType = require('./politico');
 
+
 const PartidoType = new GraphQLObjectType({
   name:  'PartidoType',
   fields: () => ({

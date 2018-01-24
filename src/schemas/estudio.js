@@ -5,24 +5,20 @@ const { GraphQLObjectType,  GraphQLID,  GraphQLInt, GraphQLString } = graphql;
 //Models
 const Estudio = mongoose.model('estudio');
 
-//Schemas
-const GradoAcademicoType = require('./grado_academico');
-const LugarEstudioType = require('./lugar_estudio')
-
 const EstudioType = new GraphQLObjectType({
   name:  'EstudioType',
   fields: () => ({
     id: { type: GraphQLID },
     titulo: { type: GraphQLString },
     grado_academico: {
-      type: GradoAcademicoType,
+      type: require('./grado_academico'),
       resolve(parentValue) { 
         return Estudio.findById(parentValue).populate('grado_academico')
           .then(estudio => estudio.grado_academico);
       }
     },
     lugar_estudio: {
-        type: LugarEstudioType,
+        type: require('./lugar_estudio'),
         resolve(parentValue) {
           return Estudio.findById(parentValue).populate('lugar_estudio')
             .then(estudio => estudio.lugar_estudio);

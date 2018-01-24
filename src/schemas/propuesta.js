@@ -16,7 +16,8 @@ const PropuestaType = new GraphQLObjectType({
         return Propuesta.findById(parentValue).populate('tipo_propuesta')
           .then(propuesta => propuesta.tipo_propuesta );
       }
-    }
+    },
+    fuente: { type: GraphQLString }
   })
 });
 

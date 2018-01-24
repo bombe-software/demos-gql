@@ -163,7 +163,7 @@ const RootQuery = new GraphQLObjectType({
       type: PoliticoType,
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }){
-        return Politico.find({'politico': id});
+        return Politico.findById(id);
       }
     }
   })

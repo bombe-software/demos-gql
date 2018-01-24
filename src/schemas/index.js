@@ -147,7 +147,7 @@ const RootQuery = new GraphQLObjectType({
       },
       type: new GraphQLList(VotacionType),
       resolve(parentValue, args, req) {
-        return Votacion.find({lugar: args.estado});
+        return Votacion.find({estado: args.estado});
       }
     },
     estado: {

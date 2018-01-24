@@ -13,7 +13,7 @@ const { addevento } = require('./addEvento');
 //Funciones de la mutacion
 const { login } = require('./login');
 const { signup } = require('./signup');
-const { addpolitico } = require('./addPolitico');
+const { addPolitico } = require('./addPolitico');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',

@@ -24,7 +24,7 @@ const VotacionType = new GraphQLObjectType({
         type: new GraphQLList(PreferenciaType),
         resolve(parentValue) {
             return Votacion.findById(parentValue.id)
-                .populate('usuarios')
+                .populate('preferencias')
                 .then(votacion => votacion.preferencias);
         }
     }

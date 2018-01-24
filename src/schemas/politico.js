@@ -16,6 +16,8 @@ const PoliticoType = new GraphQLObjectType({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLList(GraphQLString)},
+        estado: { type: GraphQLID },
+        partido: { type: GraphQLID },
         eventos: {
             type: new GraphQLList(EventoType),
             resolve(parentValue) {

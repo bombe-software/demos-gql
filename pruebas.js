@@ -3,7 +3,7 @@ function estado_registro(){
     //Nombre del modelo
     db.model('estado')({
       //Campos que lleva el modelo 
-      estado: 'Michoacan' 
+      estado: 'Michoacan'
     }).save();
 
 

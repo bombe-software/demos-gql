@@ -4,6 +4,14 @@ const Schema = mongoose.Schema;
 const politico = mongoose.Schema({
     nombre: String,
     cargo: [String],
+    estado:{
+        type: Schema.Types.ObjectId,
+        ref: 'estado'
+    },
+    partido: {
+        type: Schema.Types.ObjectId,
+        ref: 'partido'
+    },
     eventos: [{
         type: Schema.Types.ObjectId,
         ref: 'evento'

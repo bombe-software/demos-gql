@@ -13,7 +13,7 @@ const GradoAcademico = mongoose.model('grado_academico');
 const LugarEstudio = mongoose.model('lugar_estudio');
 const Estudio = mongoose.model('estudio');
 const Partido = mongoose.model('partido');
-const TipoPolitico = mongoose.model('tipo_politico');
+//const TipoPolitico = mongoose.model('tipo_politico');
 const TipoPropuesta = mongoose.model('tipo_propuesta');
 const TipoUsuario = mongoose.model('tipo_usuario');
 const Propuesta = mongoose.model('propuesta');
@@ -30,7 +30,7 @@ const GradoAcademicoType = require('./grado_academico');
 const LugarEstudioType = require('./lugar_estudio');
 const EstudioType = require('./estudio'); 
 const PartidoType = require('./partido');
-const TipoPoliticoType = require('./tipo_politico');
+//const TipoPoliticoType = require('./tipo_politico');
 const TipoPropuestaType = require('./tipo_propuesta');
 const TipoUsuarioType = require('./tipo_usuario');
 const PropuestaType =  require('./propuesta');
@@ -78,12 +78,6 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(PartidoType),
       resolve() {
         return Partido.find({});
-      }
-    },
-    tipos_politico: {
-      type: new GraphQLList(TipoPoliticoType),
-      resolve() {
-        return TipoPolitico.find({});
       }
     },
     tipos_propuesta: {

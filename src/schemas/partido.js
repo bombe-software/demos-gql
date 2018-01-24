@@ -1,6 +1,6 @@
 const graphql = require('graphql');
 const mongoose = require('mongoose');
-const { GraphQLObjectType,  GraphQLString,  GraphQLID } = graphql;
+const { GraphQLObjectType,  GraphQLString,  GraphQLID, GraphQLList } = graphql;
 
 //Models
 const Partido = mongoose.model('partido');
@@ -13,13 +13,6 @@ const PartidoType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     nombre: { type: GraphQLString },
-    funcionarios: {
-      type: GraphQLList(PoliticoType),
-      resolve(parentValue) {
-        return Partido.findById(parentValue).populate('politico')
-            .then(partido => partido.funcionarios);
-      }
-    },
     integrantes: {
       type: GraphQLList(PoliticoType),
       resolve(parentValue) {

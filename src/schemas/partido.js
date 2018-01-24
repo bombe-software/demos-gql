@@ -16,7 +16,7 @@ const PartidoType = new GraphQLObjectType({
     integrantes: {
       type: GraphQLList(PoliticoType),
       resolve(parentValue) {
-        return Partido.findById(parentValue).populate('politico')
+        return Partido.findById(parentValue).populate('integrantes')
             .then(partido => partido.integrantes);
       }
     }

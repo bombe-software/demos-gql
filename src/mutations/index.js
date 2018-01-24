@@ -60,7 +60,7 @@ const mutation = new GraphQLObjectType({
             estudios: {type: GraphQLID }
         },
         resolve(parentValue, args, req){
-          return addpolitico({ args, req });
+          return addPolitico({ args, req });
         }
       },
       addEvento: {

@@ -5,7 +5,7 @@ const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');
 
 //Funcion
-function addpolitico({ args, req }) {
+function addPolitico({ args, req }) {
 
     const {
         nombre, cargo, estudios, estado, partido
@@ -15,7 +15,7 @@ function addpolitico({ args, req }) {
 
     //Area de registro
     const politico = new Politico({
-        nombre, cargo, estudios
+        nombre, cargo, estudios, estado
     });
 
     //Guardar
@@ -61,4 +61,4 @@ function addpolitico({ args, req }) {
 }
 
 //Se exporta la funcion
-module.exports = { addpolitico };
+module.exports = { addPolitico };

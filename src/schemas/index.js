@@ -166,6 +166,13 @@ const RootQuery = new GraphQLObjectType({
         return Politico.find({ 'estado': id });
 
       }
+    },
+    politicosPorId:{
+      type: PoliticoType,
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      resolve(parentValue, { id }) {
+        return Politico.findById(id);
+      }
     }
   })
 });

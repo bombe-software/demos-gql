@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const propuesta_politico = mongoose.Schema({
   usuario: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'usuario'
   },
   nombre: String,
@@ -25,4 +25,4 @@ const propuesta_politico = mongoose.Schema({
   }]
 });
 
-mongoose.model('propuesta_propuesta', propuesta_propuesta);
+mongoose.model('propuesta_politico', propuesta_politico);

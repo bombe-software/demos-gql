@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const propuesta_propuesta = mongoose.Schema({
   usuario: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'usuario'
   },
   politico: {
-    type: mongoose.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'politico'
   },
   fecha: Date,

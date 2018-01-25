@@ -1,6 +1,6 @@
 //Importar models
 const mongoose = require('mongoose');
-const Votacion = mongoose.model('evento');
+const Votacion = mongoose.model('votacion');
 
 //Funcion
 function voto_estado({ args, req }) {
@@ -18,7 +18,7 @@ function voto_estado({ args, req }) {
 
     
     //Area del resolve
-    Votacion.findOne({});
+    return Votacion.findOne({});
 }
 
 //Se exporta la funcion

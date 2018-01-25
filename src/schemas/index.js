@@ -28,17 +28,17 @@ const EstadoType = require('./estado');
 const EventoType = require('./evento');
 const GradoAcademicoType = require('./grado_academico');
 const LugarEstudioType = require('./lugar_estudio');
-const EstudioType = require('./estudio'); 
+const EstudioType = require('./estudio');
 const PartidoType = require('./partido');
 //const TipoPoliticoType = require('./tipo_politico');
 const TipoPropuestaType = require('./tipo_propuesta');
 const TipoUsuarioType = require('./tipo_usuario');
-const PropuestaType =  require('./propuesta');
-const PoliticoType =  require('./politico');
+const PropuestaType = require('./propuesta');
+const PoliticoType = require('./politico');
 const UsuarioType = require('./usuario');
-const PreferenciaType =  require('./preferencia');
-const VotacionType =  require('./votacion');
-const ZonaType =  require('./zona');
+const PreferenciaType = require('./preferencia');
+const VotacionType = require('./votacion');
+const ZonaType = require('./zona');
 
 
 const RootQuery = new GraphQLObjectType({
@@ -147,7 +147,7 @@ const RootQuery = new GraphQLObjectType({
       },
       type: new GraphQLList(VotacionType),
       resolve(parentValue, args, req) {
-        return Votacion.find({lugar: args.estado});
+        return Votacion.find({estado: args.estado});
       }
     },
     estado: {
@@ -157,6 +157,21 @@ const RootQuery = new GraphQLObjectType({
       type: EstadoType,
       resolve(parentValue, args, req) {
         return Estado.findById(args.id);
+      }
+    },
+    politicosPorEstado: {
+      type: new GraphQLList(PoliticoType),
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      resolve(parentValue, { id }) {
+        return Politico.find({ 'estado': id });
+
+      }
+    },
+    politicosPorId:{
+      type: PoliticoType,
+      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      resolve(parentValue, { id }) {
+        return Politico.findById(id);
       }
     }
   })

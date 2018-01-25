@@ -79,6 +79,7 @@ const mutation = new GraphQLObjectType({
       voto_estado: {
         type: VotacionType,
         args: {
+          id_votacion: {type: GraphQLID},
           id_usuario: {type: GraphQLID},
           id_politico: {type: GraphQLID}
         },

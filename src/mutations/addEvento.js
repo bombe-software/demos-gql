@@ -8,7 +8,7 @@ function addevento({ args, req }) {
     const {
         fecha,titulo ,
         descripcion
-    } = args
+    } = args;
 
     console.log(args)
 

@@ -1,17 +1,9 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-<<<<<<< HEAD
 const { 
   GraphQLObjectType, GraphQLList, GraphQLID, 
   GraphQLNonNull, GraphQLString
  } = graphql;
-=======
-
-const {
-  GraphQLObjectType, GraphQLList, GraphQLID,
-  GraphQLNonNull, GraphQLString
-} = graphql;
->>>>>>> origin/MedinaVilla
 
 
 //Importar models
@@ -167,20 +159,12 @@ const RootQuery = new GraphQLObjectType({
         return Estado.findById(args.id);
       }
     },
-<<<<<<< HEAD
-    politicosPorId: {
-      type: PoliticoType,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }){
-        return Politico.find({'politico': id});
-=======
     politicosPorEstado: {
       type: new GraphQLList(PoliticoType),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }) {
         return Politico.find({ 'estado': id });
 
->>>>>>> origin/MedinaVilla
       }
     }
   })

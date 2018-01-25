@@ -1,21 +1,22 @@
 //Importar models
 const mongoose = require('mongoose');
-const Evento = mongoose.model('evento');
+const propuesta_evento = mongoose.model('propuesta_evento');
 
 //Funcion
 function addevento({ args, req }) {
 
     const {
-        fecha,titulo ,
-        descripcion
+        usuario, politico,
+        fecha, titulo, descripcion, referencia
     } = args;
 
-    console.log(args)
+    console.log(args);
 
     //Area de registro
-    const evento = new Evento({
-        fecha,titulo,
-        descripcion
+    const evento = new propuesta_evento({
+      usuario, politico,
+      fecha, titulo,
+      descripcion, referencia
     });
 
     //Guardar
@@ -24,8 +25,8 @@ function addevento({ args, req }) {
     });
 
     //Area del resolver
-    return Evento.findOne({titulo});
+    return propuesta_evento.findOne({titulo});
 }
 
 //Se exporta la funcion
-module.exports = { addevento};
+module.exports = { addevento };

@@ -19,7 +19,7 @@ const propuesta_politico = mongoose.Schema({
       type: Schema.Types.ObjectId,
       ref: 'partido'
   },
-estudios: [{
+  estudios: [{
       type: Schema.Types.ObjectId,
       ref: 'estudio'
   }]

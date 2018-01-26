@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const propuesta_politico = mongoose.Schema({
+const solicitud_politico = mongoose.Schema({
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'usuario'
@@ -25,4 +25,4 @@ const propuesta_politico = mongoose.Schema({
   }]
 });
 
-mongoose.model('propuesta_politico', propuesta_politico);
+mongoose.model('solicitud_politico', solicitud_politico);

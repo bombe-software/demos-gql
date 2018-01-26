@@ -24,7 +24,7 @@ mongoose.connection.once('open', () => console.log('Conectado a la base de datos
 app.use(bodyParser.json());
 
 const corsOptions = {
-    origin: 'http://localhost:9000',
+    origin: 'https://demos-web.herokuapp.com',
     credentials: true,
 
 }

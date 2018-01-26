@@ -16,6 +16,7 @@ const { addevento } = require('./addEvento');
 const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
+const { updateUsuario } = require('./updateUsuario');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -84,6 +85,18 @@ const mutation = new GraphQLObjectType({
         },
         resolve(parentValue, args, req){
           return voto_estado({ args, req });
+        }
+      },
+       updateUsuario: {
+        type: UsuarioType,
+        args: {
+          id: {type: GraphQLID },
+          nombre: {type: GraphQLString},
+          password: {type: GraphQLString},
+          avatar: {type: GraphQLString}
+        },
+        resolve(parentValue, args, req){
+          return updateUsuario({ args, req });
         }
       }
   }

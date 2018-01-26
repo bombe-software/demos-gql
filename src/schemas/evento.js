@@ -7,7 +7,8 @@ const EventoType = new GraphQLObjectType({
     id: { type: GraphQLID },
     fecha: { type: GraphQLString },
     titulo: { type: GraphQLString },
-    descripcion: { type: GraphQLString }
+    descripcion: { type: GraphQLString },
+    fuente: { type: GraphQLString }
   })
 });
 

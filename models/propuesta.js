@@ -8,7 +8,8 @@ const propuesta = mongoose.Schema({
     tipo_propuesta: {
         type: Schema.Types.ObjectId,
         ref: 'tipo_propuesta'
-    }
+    },
+    fuente: String
 });
 
 mongoose.model('propuesta', propuesta);

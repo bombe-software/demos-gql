@@ -5,7 +5,6 @@ const { GraphQLObjectType,  GraphQLString,  GraphQLID, GraphQLList } = graphql;
 //Models
 const Estado = mongoose.model('estado');
 
-
 const EstadoType = new GraphQLObjectType({
   name:  'EstadoType',
   fields: () => ({

@@ -1,22 +1,22 @@
 //Importar models
 const mongoose = require('mongoose');
-const Propuesta = mongoose.model('propuesta');
+const propuesta_propuesta = mongoose.model('propuesta_propuesta');
 
 //Funcion
 function addpropuesta({ args, req }) {
 
     const {
-        idPolitico,
-        fecha,titulo ,
-        descripcion
-    } = args
+        usuario, politico,
+        fecha, titulo, descripcion, referencia, tipo_propuesta
+    } = args;
 
-    console.log(args)
+    console.log(args);
 
     //Area de registro
-    const propuesta = new Propuesta({
-        ididPolitico, fecha,titulo,
-        descripcion
+    const propuesta = new propuesta_propuesta({
+      usuario, politico,
+      fecha, titulo,
+      descripcion, referencia, tipo_usuario
     });
 
     //Guardar
@@ -25,8 +25,8 @@ function addpropuesta({ args, req }) {
     });
 
     //Area del resolver
-    return Propuesta.findOne({id});
+    return propuesta_propuesta.findOne({titulo});
 }
 
 //Se exporta la funcion
-module.exports = { addpropuesta};
+module.exports = {addpropuesta};

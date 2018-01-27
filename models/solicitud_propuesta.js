@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const propuesta_propuesta = mongoose.Schema({
+const solicitud_propuesta = mongoose.Schema({
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'usuario'
@@ -20,4 +20,4 @@ const propuesta_propuesta = mongoose.Schema({
   referencia: String
 });
 
-mongoose.model('solicitud_propuesta', propuesta_propuesta);
+mongoose.model('solicitud_propuesta', solicitud_propuesta);

@@ -20,6 +20,7 @@ const {
   aceptarSolicitudPolitico, 
   denegarSolicitudPolitico
 } = require('./manageSolicitudPolitico');
+const { updateUsuario } = require('./updateUsuario');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -63,7 +64,9 @@ const mutation = new GraphQLObjectType({
             cargo: { type: GraphQLString },
             partido: { type: GraphQLID},
             estado: { type: GraphQLID },
-            estudios: {type: GraphQLID }
+            lugar_estudio: { type: GraphQLID},
+            grado_academico: { type: GraphQLID},
+            titulo: { type: GraphQLString}
         },
         resolve(parentValue, args, req){
           return addPolitico({ args, req });
@@ -108,6 +111,18 @@ const mutation = new GraphQLObjectType({
         },
         resolve(parentValue, args, req) {
           return aceptarSolicitudPolitico({ args, req });
+        }
+      },
+      updateUsuario: {
+        type: UsuarioType,
+        args: {
+          id: {type: GraphQLID },
+          nombre: {type: GraphQLString},
+          password: {type: GraphQLString},
+          avatar: {type: GraphQLString}
+        },
+        resolve(parentValue, args, req){
+          return updateUsuario({ args, req });
         }
       }
   }

@@ -3,15 +3,10 @@ const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList } = graphql;
 
 //importar modelos
-const Politico = mongoose.model('politico');
+const SolicitudPolitico = mongoose.model('solicitud_politico');
 
-//Importar schemas
-const EventoType = require('./evento');
-const EstudioType = require('./estudio');
-const PropuestaType = require('./propuesta');
-
-const PoliticoType = new GraphQLObjectType({
-    name: 'PoliticoType',
+const SolicitudPoliticoType = new GraphQLObjectType({
+    name: 'SolicitudPoliticoType',
     fields: () => ({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
@@ -19,7 +14,7 @@ const PoliticoType = new GraphQLObjectType({
         usuario: {
             type: require('./usuario'),
             resolve(parentValue) {
-                return Politico.findById(parentValue)
+                return SolicitudPolitico.findById(parentValue)
                 .populate('usuario')
                 .then(politico => politico.usuario);
             }
@@ -27,36 +22,37 @@ const PoliticoType = new GraphQLObjectType({
         estado: {
             type: require('./estado'),
             resolve(parentValue) {
-                return Politico.findById(parentValue).populate('estado')
+                return SolicitudPolitico.findById(parentValue).populate('estado')
                     .then(politico => politico.estado);
             }
         },
         partido: {
             type: require('./partido'),
             resolve(parentValue) {
-                return Politico.findById(parentValue).populate('partido')
+                return SolicitudPolitico.findById(parentValue).populate('partido')
                     .then(politico => politico.partido);
             }
         },
         eventos: {
-            type: new GraphQLList(EventoType),
+            type: new GraphQLList(require('./evento')),
             resolve(parentValue) {
-                return Politico.findById(parentValue.id)
+                return SolicitudPolitico.findById(parentValue.id)
                     .populate('eventos')
                     .then(politico => politico.eventos);
             }
         },
         estudios: {
-            type: new GraphQLList(EstudioType),
+            type: new GraphQLList(require('./estudio')),
             resolve(parentValue) {
-                return Politico.findById(parentValue.id).populate('estudios')
+                return SolicitudPolitico.findById(parentValue.id)
+                    .populate('estudios')
                     .then(politico => politico.estudios);
             }
         },
         propuestas: {
-            type: new GraphQLList(PropuestaType),
+            type: new GraphQLList(require('./propuesta')),
             resolve(parentValue) {
-                return Politico.findById(parentValue.id)
+                return SolicitudPolitico.findById(parentValue.id)
                     .populate('propuestas')
                     .then(politico => politico.propuestas);
             }
@@ -64,4 +60,4 @@ const PoliticoType = new GraphQLObjectType({
     })
 });
 
-module.exports = PoliticoType;
+module.exports = SolicitudPoliticoType;

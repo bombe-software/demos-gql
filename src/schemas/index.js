@@ -22,6 +22,7 @@ const Usuario = mongoose.model('usuario');
 const Preferencia = mongoose.model('preferencia');
 const Votacion = mongoose.model('votacion');
 const Zona = mongoose.model('zona');
+const SolicitudPolitico = mongoose.model('solicitud_politico');
 
 //Importar schemas
 const EstadoType = require('./estado');
@@ -39,6 +40,7 @@ const UsuarioType = require('./usuario');
 const PreferenciaType = require('./preferencia');
 const VotacionType = require('./votacion');
 const ZonaType = require('./zona');
+//const SolicitudPoliticoType = ('./solicitud_politico');
 
 
 const RootQuery = new GraphQLObjectType({
@@ -172,6 +174,12 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }) {
         return Politico.findById(id);
+      }
+    },
+    solicitudPoliticos: {
+      type: new GraphQLList(require('./solicitud_politico')),
+      resolve() {
+        return SolicitudPolitico.find({});
       }
     }
   })

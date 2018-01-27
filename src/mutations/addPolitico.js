@@ -4,60 +4,84 @@ const Politico = mongoose.model('politico');
 const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');
 
+const Estudio = mongoose.model('estudio');
 //Funcion
 function addPolitico({ args, req }) {
 
     const {
-        nombre, cargo, estudios, estado, partido
+        nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido
     } = args
 
     console.log(args);
 
+    const estudios = new Estudio({
+        titulo, grado_academico, lugar_estudio
+    });
     //Area de registro
+    var estudioId;
+    estudios.save(function (err, estudio) {
+
+        if (err) return console.error(err);
+        estudioId = estudio.id
+
+    });
+
+
     const politico = new Politico({
-        nombre, cargo, estudios, estado
+        nombre, cargo, partido, estado
     });
 
     //Guardar
-    politico.save(function (err) {
+    var arregloEstudios;
+    politico.save(function (err, poli) {
         if (err) return console.error(err);
+        arregloEstudios = poli.estudios;
+        arregloEstudios.push(estudioId);
+        poli.set({ estudios: arregloEstudios });
+        poli.save(function (err) {
+            if (err) return console.error(err);
+        });
+
     });
 
-    var cargos=[];
-    if(cargo==="Candidato"){
-        Estado.findById(estado)
-        .then(estado => {
-            cargos = estado.candidatos;
-            cargos.push(politico._id);
-            estado.set({candidatos: cargos});
-            estado.save(function (err) {
-                if (err) return console.error(err);
-            });
-        });
-    } else if(cargo==="Funcionario"){
-        Estado.findById(estado)
-        .then(estado => {
-            cargos = estado.funcionarios;
-            cargos.push(politico._id);
-            estado.set({funcionarios: cargos});
-            estado.save(function (err) {
-                if (err) return console.error(err);
-            });
-        });
-    }
 
+
+
+    var cargos = [];
+    if (cargo === "Candidato") {
+        Estado.findById(estado)
+            .then(estado => {
+                cargos = estado.candidatos;
+                cargos.push(politico._id);
+                estado.set({ candidatos: cargos });
+                estado.save(function (err) {
+                    if (err) return console.error(err);
+                });
+            });
+    } else if (cargo === "Funcionario") {
+        Estado.findById(estado)
+            .then(estado => {
+                cargos = estado.funcionarios;
+                cargos.push(politico._id);
+                estado.set({ funcionarios: cargos });
+                estado.save(function (err) {
+                    if (err) return console.error(err);
+                });
+            });
+    }
+    console.log(args);
     var integrantes = [];
     Partido.findById(partido).then(partido => {
         integrantes = partido.integrantes;
         integrantes.push(politico._id);
-        partido.set({integrantes: integrantes});
+        partido.set({ integrantes: integrantes });
         partido.save(function (err) {
             if (err) return console.error(err);
         });
     })
 
     //Area del resolver
-    return Politico.findOne({nombre});
+    return Politico.findOne({ nombre });
 }
 
 //Se exporta la funcion

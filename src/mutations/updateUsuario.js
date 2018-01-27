@@ -8,19 +8,22 @@ function updateUsuario({ args, req }) {
     const {
         id, nombre, password, avatar
     } = args;
-
-    console.log(args)
-
     //Area de registro
-    const usuario = Usuario.findById(id);
-    //Area del resolver
+    const usuario = Usuario.findById(id).then((registro)=>{
+        registro.set({nombre,password,avatar});
+        registro.save((error) =>{
+            if(error){
+                console.log(error);
+            }
+
+        });
+
+    });
+
     if (!usuario) {
         throw new Error(`No se encontro usuario con ID  ${id}`);
     }
 
-    usuario.nombre = nombre;
-    usuario.password = password;
-    usuario.avatar = avatar
     return usuario;
 }
 

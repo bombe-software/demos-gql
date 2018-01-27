@@ -60,7 +60,9 @@ const mutation = new GraphQLObjectType({
             cargo: { type: GraphQLString },
             partido: { type: GraphQLID},
             estado: { type: GraphQLID },
-            estudios: {type: GraphQLID }
+            lugar_estudio: { type: GraphQLID},
+            grado_academico: { type: GraphQLID},
+            titulo: { type: GraphQLString}
         },
         resolve(parentValue, args, req){
           return addPolitico({ args, req });

@@ -16,6 +16,10 @@ const { addevento } = require('./addEvento');
 const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
+const { 
+  aceptarSolicitudPolitico, 
+  denegarSolicitudPolitico
+} = require('./manageSolicitudPolitico');
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -86,7 +90,26 @@ const mutation = new GraphQLObjectType({
           return voto_estado({ args, req });
         }
       },
-      
+      denegarSolicitudPolitico: {
+        type: PoliticoType,
+        args: {
+          id_politico: { type: GraphQLID },
+          id_usuario: { type: GraphQLID }
+        },
+        resolve(parentValue, args, req) {
+          return denegarSolicitudPolitico({ args, req });
+        }
+      },
+      aceptarSolicitudPolitico: {
+        type: PoliticoType,
+        args: {
+          id_politico: { type: GraphQLID },
+          id_usuario: { type: GraphQLID }
+        },
+        resolve(parentValue, args, req) {
+          return aceptarSolicitudPolitico({ args, req });
+        }
+      }
   }
 });
 

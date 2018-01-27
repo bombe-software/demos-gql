@@ -85,7 +85,8 @@ const mutation = new GraphQLObjectType({
         resolve(parentValue, args, req){
           return voto_estado({ args, req });
         }
-      }
+      },
+      
   }
 });
 

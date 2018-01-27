@@ -25,4 +25,4 @@ const propuesta_politico = mongoose.Schema({
   }]
 });
 
-mongoose.model('propuesta_politico', propuesta_politico);
+mongoose.model('solicitud_politico', propuesta_politico);

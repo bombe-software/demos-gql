@@ -16,4 +16,4 @@ const propuesta_evento = mongoose.Schema({
   fuente: String
 });
 
-mongoose.model('propuesta_evento', propuesta_evento);
+mongoose.model('solicitud_evento', propuesta_evento);

@@ -1,6 +1,6 @@
 //Importar models
 const mongoose = require('mongoose');
-const Propuesta_Politico = mongoose.model('propuesta_politico');
+const Propuesta_Politico = mongoose.model('solicitud_politico');
 const Politico = mongoose.model('politico');
 const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');

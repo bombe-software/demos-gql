@@ -1,6 +1,6 @@
 //Importar models
 const mongoose = require('mongoose');
-const propuesta_evento = mongoose.model('propuesta_evento');
+const propuesta_evento = mongoose.model('solicitud_evento');
 
 //Funcion
 function addevento({ args, req }) {

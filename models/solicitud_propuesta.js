@@ -20,4 +20,4 @@ const propuesta_propuesta = mongoose.Schema({
   referencia: String
 });
 
-mongoose.model('propuesta_propuesta', propuesta_propuesta);
+mongoose.model('solicitud_propuesta', propuesta_propuesta);

@@ -13,7 +13,7 @@ function addPolitico({ args, req }) {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario
     } = args
 
-    console.log(args);
+    console.log(usuario);
 
     const estudios = new Estudio({
         titulo, grado_academico, lugar_estudio

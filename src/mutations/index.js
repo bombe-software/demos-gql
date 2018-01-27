@@ -66,7 +66,8 @@ const mutation = new GraphQLObjectType({
             estado: { type: GraphQLID },
             lugar_estudio: { type: GraphQLID},
             grado_academico: { type: GraphQLID},
-            titulo: { type: GraphQLString}
+            titulo: { type: GraphQLString},
+            usuario: { type: GraphQLID }
         },
         resolve(parentValue, args, req){
           return addPolitico({ args, req });
@@ -96,8 +97,8 @@ const mutation = new GraphQLObjectType({
       denegarSolicitudPolitico: {
         type: PoliticoType,
         args: {
-          id_politico: { type: GraphQLID },
-          id_usuario: { type: GraphQLID }
+          id_politico: { type: GraphQLID }/*,
+          id_usuario: { type: GraphQLID }*/
         },
         resolve(parentValue, args, req) {
           return denegarSolicitudPolitico({ args, req });
@@ -106,8 +107,8 @@ const mutation = new GraphQLObjectType({
       aceptarSolicitudPolitico: {
         type: PoliticoType,
         args: {
-          id_politico: { type: GraphQLID },
-          id_usuario: { type: GraphQLID }
+          id_politico: { type: GraphQLID }/*,
+          id_usuario: { type: GraphQLID }*/
         },
         resolve(parentValue, args, req) {
           return aceptarSolicitudPolitico({ args, req });

@@ -3,16 +3,17 @@ const mongoose = require('mongoose');
 const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const Propuesta = mongoose.model('propuesta');
 const Usuario = mongoose.model('usuario');
+const Politico = mongoose.model('politico');
 
 function aceptarSolicitudPropuesta({args, req}) {
     const { id_propuesta } = args;
 
     SolicitudPropuesta.findById(id_propuesta)
     .then((propuesta) => {
-        const { fecha, descripcion, titulo, tipo_propuesta, _id } = propuesta;
+        const { fecha, descripcion, titulo, tipo_propuesta, usuario, referencia, politico, _id } = propuesta;
 
         propuestaAprovada = new Propuesta({
-            fecha, descripcion, titulo, tipo_propuesta
+            fecha, descripcion, titulo, tipo_propuesta, usuario, referencia, politico
         });
 
         propuestaAprovada.save(function (err, resp) {
@@ -20,7 +21,15 @@ function aceptarSolicitudPropuesta({args, req}) {
             SolicitudPropuesta.findByIdAndRemove(_id, (err)=>{
                 if (err) return console.error(err);
             });
-            console.log(resp._id);
+            Politico.findById(politico)
+            .then(p => {
+                newPropuestas = p.propuestas;
+                newPropuestas.push(resp._id);
+                p.set({ propuestas: newPropuestas });
+                p.save(function (err) {
+                    if (err) return console.error(err);
+                });
+            });
             return Propuesta.findById(resp._id);
         });
     });

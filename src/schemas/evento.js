@@ -7,7 +7,15 @@ const EventoType = new GraphQLObjectType({
     id: { type: GraphQLID },
     fecha: { type: GraphQLString },
     titulo: { type: GraphQLString },
-    descripcion: { type: GraphQLString }
+    descripcion: { type: GraphQLString },
+    referencia: { type: GraphQLString },
+    usuario: {
+      type: require('./usuario'),
+      resolve(parentValue) {
+        return Propuesta.findById(parentValue).populate('usuario')
+          .then(evento => evento.usuario );
+      }
+    },
   })
 });
 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const solicitud_evento = mongoose.model('solicitud_evento');
 
 //Funcion
-function addevento({ args, req }) {
+function addEvento({ args, req }) {
 
     const {
         usuario, politico,
@@ -29,4 +29,4 @@ function addevento({ args, req }) {
 }
 
 //Se exporta la funcion
-module.exports = { addevento };
+module.exports = { addEvento };

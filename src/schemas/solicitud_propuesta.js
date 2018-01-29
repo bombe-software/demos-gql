@@ -16,6 +16,21 @@ const SolicitudPropuestaType = new GraphQLObjectType({
         return SolicitudPropuesta.findById(parentValue).populate('tipo_propuesta')
           .then(propuesta => propuesta.tipo_propuesta );
       }
+    },
+    referencia: { type: GraphQLString },
+    usuario: {
+      type: require('./usuario'),
+      resolve(parentValue) {
+        return SolicitudPropuesta.findById(parentValue).populate('usuario')
+          .then(propuesta => propuesta.usuario );
+      }
+    },
+    politico: {
+      type: require('./politico'),
+      resolve(parentValue) {
+        return SolicitudPropuesta.findById(parentValue).populate('politico')
+          .then(propuesta => propuesta.politico );
+      }
     }
   })
 });

@@ -12,10 +12,11 @@ const PropuestaType = require('../schemas/propuesta');
 
 //Funciones de la mutacion
 const { voto_estado } = require('./voto_estado');
-const { addevento } = require('./addEvento');
+const { addEvento } = require('./addEvento');
 const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
+const { addPropuesta } = require('./addPropuesta');
 const {
   aceptarSolicitudPolitico,
   denegarSolicitudPolitico
@@ -86,10 +87,28 @@ const mutation = new GraphQLObjectType({
       args: {
         fecha: { type: GraphQLString },
         titulo: { type: GraphQLString },
-        descripcion: { type: GraphQLString }
+        descripcion: { type: GraphQLString },
+        referencia: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        politico: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
-        return addevento({ args, req });
+        return addEvento({ args, req });
+      }
+    },
+    addPropuesta: {
+      type: PropuestaType,
+      args: {
+        fecha: { type: GraphQLString },
+        titulo: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        tipo_propuesta: { type: GraphQLID },
+        referencia: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        politico: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return addPropuesta({ args, req });
       }
     },
     voto_estado: {

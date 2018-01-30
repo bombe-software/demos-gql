@@ -10,11 +10,11 @@ function aceptarSolicitudEvento({args, req}) {
 
     SolicitudEvento.findById(id_evento)
     .then((evento) => {
-        const { fecha, titulo, descripcion, referencia, usuario, politico, _id } = evento;
+        const { fecha, titulo, descripcion, referencia, politico, usuario, _id } = evento;
         console.log(usuario, politico, titulo, descripcion);
 
         eventoAprovado = new Evento({
-            fecha, titulo, descripcion, referencia, usuario, politico
+            fecha, titulo, descripcion, referencia, politico, usuario
         });
 
         eventoAprovado.save(function (err, resp) {

@@ -2,6 +2,8 @@
 const mongoose = require('mongoose');
 const solicitud_evento = mongoose.model('solicitud_evento');
 
+const Politico = mongoose.model('politico');
+
 //Funcion
 function addEvento({ args, req }) {
 
@@ -14,9 +16,12 @@ function addEvento({ args, req }) {
 
     //Area de registro
     const evento = new solicitud_evento({
-      usuario, politico,
-      fecha, titulo,
-      descripcion, referencia
+      usuario, 
+      politico,
+      fecha, 
+      titulo,
+      descripcion, 
+      referencia
     });
 
     //Guardar

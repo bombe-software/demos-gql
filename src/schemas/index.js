@@ -22,6 +22,10 @@ const Usuario = mongoose.model('usuario');
 const Preferencia = mongoose.model('preferencia');
 const Votacion = mongoose.model('votacion');
 const Zona = mongoose.model('zona');
+const SolicitudPolitico = mongoose.model('solicitud_politico');
+const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
+const SolicitudEvento = mongoose.model('solicitud_evento');
+
 
 //Importar schemas
 const EstadoType = require('./estado');
@@ -34,11 +38,16 @@ const PartidoType = require('./partido');
 const TipoPropuestaType = require('./tipo_propuesta');
 const TipoUsuarioType = require('./tipo_usuario');
 const PropuestaType = require('./propuesta');
+//const SolicitudPropuestaType = require('./solicitud_propuesta');
+//const SolicitudEventoType = require('./solicitud_evento');
+
+
 const PoliticoType = require('./politico');
 const UsuarioType = require('./usuario');
 const PreferenciaType = require('./preferencia');
 const VotacionType = require('./votacion');
 const ZonaType = require('./zona');
+//const SolicitudPoliticoType = ('./solicitud_politico');
 
 
 const RootQuery = new GraphQLObjectType({
@@ -172,6 +181,24 @@ const RootQuery = new GraphQLObjectType({
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }){
         return Politico.findById(id);
+      }
+    },
+    solicitudPoliticos: {
+      type: new GraphQLList(require('./solicitud_politico')),
+      resolve() {
+        return SolicitudPolitico.find({});
+      }
+    },
+    solicitudPropuestas: {
+      type: new GraphQLList(require('./solicitud_propuesta')),
+      resolve() {
+        return SolicitudPropuesta.find({});
+      }
+    },
+     solicitudEventos: {
+      type: new GraphQLList(require('./solicitud_evento')),
+      resolve() {
+        return SolicitudEvento.find({});
       }
     }
   })

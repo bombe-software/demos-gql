@@ -17,6 +17,9 @@ function Registro(){
   const tipo_propuesta = mongoose.model('tipo_propuesta');
   const tipo_usuario = mongoose.model('tipo_usuario');
   const zona = mongoose.model('zona');
+  const solicitud_evento = mongoose.model('solicitud_evento');
+  const solicitud_politico = mongoose.model('solicitud_politico');
+  const solicitud_propuesta = mongoose.model('solicitud_propuesta');
 
   //Registro de Estados & Zonas
   /*
@@ -797,7 +800,37 @@ function Registro(){
   })
   */
 
-  };
+  //Registro de propuestas de propuesta, evento y politico
+  var fecha1 = new Date('1953');
+  var fecha2 = new Date('1976');
+  var fecha3 = new Date('1977');
+
+  var Nacimiento = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha1, titulo: 'Nacimiento', descripcion: 'Nace en Tepetitán, Macuspana, Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+  var InicioCarrera = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha2, titulo: 'Comienzo Político', descripcion: 'Apoya la candidatura de Carlos Pellicer (para Senador de Tabasco)', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+  var DirectorIIT = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha3, titulo: 'Director del Instituto Indigenista de Tabasco', descripcion: 'Labora como Director del Instituto Indigenista de Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+
+  var Propuesta1 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha1, titulo: 'Menos Gastos', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Reducción de gastos gubernamentales', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+  var Propuesta2 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha2, titulo: 'Más escuelas', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Construcción de nuevas escuelas', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+  var Propuesta3 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha3, titulo: 'Mejores Salarios', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Aumento del Salario en 3 pesos', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+
+  var estudios = ["5a6967f6d31a65a3fac70aeb"];
+
+  var Candidato1 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Bronco", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+  var Candidato2 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Anaya", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+  var Funcionario1 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Mancera", cargo: 'Funcionario', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+
+  Nacimiento.save();
+  InicioCarrera.save();
+  DirectorIIT.save();
+
+  Propuesta1.save();
+  Propuesta2.save();
+  Propuesta3.save();
+
+  Candidato1.save();
+  Candidato2.save();
+  Funcionario1.save();
+};
 
 exports.pruebas = function (req, res) {
     Registro();

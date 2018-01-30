@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const politico = mongoose.Schema({
     nombre: String,
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
+    },
     cargo: {
         type: String,
         enum: ['Candidato', 'Funcionario']

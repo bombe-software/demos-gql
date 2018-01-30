@@ -1,5 +1,7 @@
 const graphql = require('graphql');
 const { GraphQLObjectType,  GraphQLString,  GraphQLID } = graphql;
+const mongoose = require('mongoose');
+const Evento = mongoose.model('evento');
 
 const EventoType = new GraphQLObjectType({
   name:  'EventoType',
@@ -12,10 +14,17 @@ const EventoType = new GraphQLObjectType({
     usuario: {
       type: require('./usuario'),
       resolve(parentValue) {
-        return Propuesta.findById(parentValue).populate('usuario')
+        return Evento.findById(parentValue).populate('usuario')
           .then(evento => evento.usuario );
       }
     },
+    politico: {
+      type: require('./politico'),
+      resolve(parentValue) {
+        return Eveneto.findById(parentValue).populate('politico')
+          .then(evento => evento.politico );
+      }
+    }
   })
 });
 

@@ -17,9 +17,6 @@ const PropuestaType = new GraphQLObjectType({
           .then(propuesta => propuesta.tipo_propuesta );
       }
     },
-<<<<<<< HEAD
-    fuente: { type: GraphQLString }
-=======
     usuario: {
       type: require('./usuario'),
       resolve(parentValue) {
@@ -35,7 +32,6 @@ const PropuestaType = new GraphQLObjectType({
           .then(propuesta => propuesta.politico );
       }
     }
->>>>>>> origin/MedinaVilla
   })
 });
 

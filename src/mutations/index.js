@@ -185,7 +185,6 @@ const mutation = new GraphQLObjectType({
       args: {
         id_evento: { type: GraphQLID }
       },
-<<<<<<< HEAD
       voto_estado: {
         type: VotacionType,
         args: {
@@ -193,15 +192,11 @@ const mutation = new GraphQLObjectType({
           id_usuario: {type: GraphQLID},
           id_politico: {type: GraphQLID}
         },
-        resolve(parentValue, args, req){
-          return voto_estado({ args, req });
-        }
-=======
       resolve(parentValue, args, req) {
         return aceptarSolicitudEvento({ args, req });
->>>>>>> origin/MedinaVilla
       }
     }
+	}
   }
 });
 

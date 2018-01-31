@@ -8,9 +8,6 @@ const EventoType = new GraphQLObjectType({
     fecha: { type: GraphQLString },
     titulo: { type: GraphQLString },
     descripcion: { type: GraphQLString },
-<<<<<<< HEAD
-    fuente: { type: GraphQLString }
-=======
     referencia: { type: GraphQLString },
     usuario: {
       type: require('./usuario'),
@@ -19,7 +16,6 @@ const EventoType = new GraphQLObjectType({
           .then(evento => evento.usuario );
       }
     },
->>>>>>> origin/MedinaVilla
   })
 });
 

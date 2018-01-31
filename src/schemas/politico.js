@@ -11,9 +11,6 @@ const PoliticoType = new GraphQLObjectType({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLString },
-<<<<<<< HEAD
-        estado: { 
-=======
         usuario: {
             type: require('./usuario'),
             resolve(parentValue) {
@@ -23,7 +20,6 @@ const PoliticoType = new GraphQLObjectType({
             }
         },
         estado: {
->>>>>>> origin/MedinaVilla
             type: require('./estado'),
             resolve(parentValue) {
                 return Politico.findById(parentValue.id)

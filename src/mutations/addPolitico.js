@@ -10,7 +10,7 @@ const Estudio = mongoose.model('estudio');
 function addPolitico({ args, req }) {
 
     const {
-        nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario
+        nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario, referencia
     } = args
 
     console.log(usuario);
@@ -28,7 +28,7 @@ function addPolitico({ args, req }) {
     });
 
     const politico = new Solicitud_Politico({
-        nombre, cargo, partido, estado, usuario
+        nombre, cargo, partido, estado, usuario, referencia
     });
 
     //Guardar

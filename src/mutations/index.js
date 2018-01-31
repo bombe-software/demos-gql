@@ -76,7 +76,8 @@ const mutation = new GraphQLObjectType({
         lugar_estudio: { type: GraphQLID },
         grado_academico: { type: GraphQLID },
         titulo: { type: GraphQLString },
-        usuario: { type: GraphQLID }
+        usuario: { type: GraphQLID },
+        referencia: { type: GraphQLString }
       },
       resolve(parentValue, args, req) {
         return addPolitico({ args, req });

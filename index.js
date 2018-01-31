@@ -20,12 +20,13 @@ const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com
 mongoose.Promise = require('bluebird');
 
 
-mongoose.connect(MONGO_URI, { useMongoClient: true }).catch(err => console.error(err));
+mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
-
+/*
 mongoose
   .connection.once('open', () => console.log('Conectado a la base de datos'))
   .on('error', error => console.log('Error al conectar a la base de datos:', error));
+*/
 
 app.use(bodyParser.json());
 
@@ -33,9 +34,18 @@ const corsOptions = {
     origin: 'http://localhost:9000',
     credentials: true,
 }
-
-
-
+app.use(cors(corsOptions));
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: 'jaiba',
+  store: new MongoStore({
+    url: MONGO_URI,
+    autoReconnect: true
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/graphql', expressGraphQL({
   schema,

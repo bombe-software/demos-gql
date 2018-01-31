@@ -6,17 +6,39 @@ const Votacion = mongoose.model('evento');
 function voto_estado({ args, req }) {
     const {
         id_usuario,
-        id_politico
+        id_politico,
+        id_estado
     } = args
 
-    console.log(id_usuario, id_politico);
+    var usuarios = [];
+
+    console.log(id_usuario, id_politico, id_estado);
 
     //Area de registro
+    Votacion.findOne({politico: id_politico, estado: id_estado}).then((registro) => {
+      if (registro === null){
+        usuarios.push(id_usuario);
+        var nuevaVotacion = new Votacion({politico: id_politico, estado: id_estado, preferencias: usuarios});
+
+        nuevaVotacion.save().then((error) => {
+          if (error){
+            console.log(error);
+          }
+        });
+      } else {
+        usuarios = registro.preferencias;
+        usuarios.push(id_usuario);
+        registro.set({politico: id_politico, estado: id_estado, preferencias: usuarios});
+
+        registro.save().then((error) => {
+          if (error){
+            console.log(error);
+          }
+        });
+      }
+    });
 
 
-    //Guardar
-
-    
     //Area del resolve
     Votacion.findOne({});
 }

@@ -17,7 +17,11 @@ const propuesta = mongoose.Schema({
     politico: {
         type: Schema.Types.ObjectId,
         ref: 'politico'
-    }
+    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
+    }]
 });
 
 mongoose.model('propuesta', propuesta);

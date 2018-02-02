@@ -17,19 +17,28 @@ const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
 const { addPropuesta } = require('./addPropuesta');
+const { updateUsuario } = require('./updateUsuario');
+
 const {
   aceptarSolicitudPolitico,
   denegarSolicitudPolitico
 } = require('./manageSolicitudPolitico');
+
 const {
   aceptarSolicitudPropuesta,
   denegarSolicitudPropuesta
 } = require('./manageSolicitudPropuesta');
+
 const {
   aceptarSolicitudEvento,
   denegarSolicitudEvento
 } = require('./manageSolicitudEvento');
-const { updateUsuario } = require('./updateUsuario');
+
+const {
+  likePropuesta,
+  dislikePropuesta
+} = require('./manageLike');
+
 
 const mutation = new GraphQLObjectType({
   name: 'Mutation',
@@ -188,15 +197,35 @@ const mutation = new GraphQLObjectType({
       voto_estado: {
         type: VotacionType,
         args: {
-          id_votacion: {type: GraphQLID},
-          id_usuario: {type: GraphQLID},
-          id_politico: {type: GraphQLID}
+          id_votacion: { type: GraphQLID },
+          id_usuario: { type: GraphQLID },
+          id_politico: { type: GraphQLID }
         },
-      resolve(parentValue, args, req) {
-        return aceptarSolicitudEvento({ args, req });
-      }
+        resolve(parentValue, args, req) {
+          return aceptarSolicitudEvento({ args, req });
+        }
+      },
+      like_propuesta: {
+        type: PropuestaType,
+        args: {
+          id_propuesta: { type: GraphQLID },
+          id_usuario: { type: GraphQLID }
+        },
+        resolve(parentValue, args, req) {
+          return likePropuesta({ args, req });
+        }
+      },
+      dislike_propuesta: {
+        type: PropuestaType,
+        args: {
+          id_propuesta: { type: GraphQLID },
+          id_usuario: { type: GraphQLID }
+        },
+        resolve(parentValue, args, req) {
+          return dislikePropuesta({ args, req });
+        }
+      },
     }
-	}
   }
 });
 

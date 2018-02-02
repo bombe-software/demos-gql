@@ -131,6 +131,26 @@ const mutation = new GraphQLObjectType({
         return voto_estado({ args, req });
       }
     },
+    like_propuesta: {
+      type: PropuestaType,
+      args: {
+        id_propuesta: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return likePropuesta({ args, req });
+      }
+    },
+    dislike_propuesta: {
+      type: PropuestaType,
+      args: {
+        id_propuesta: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return dislikePropuesta({ args, req });
+      }
+    },
     denegarSolicitudPolitico: {
       type: PoliticoType,
       args: {
@@ -205,27 +225,7 @@ const mutation = new GraphQLObjectType({
         resolve(parentValue, args, req) {
           return aceptarSolicitudEvento({ args, req });
         }
-      },
-      like_propuesta: {
-        type: PropuestaType,
-        args: {
-          id_propuesta: { type: GraphQLID },
-          id_usuario: { type: GraphQLID }
-        },
-        resolve(parentValue, args, req) {
-          return likePropuesta({ args, req });
-        }
-      },
-      dislike_propuesta: {
-        type: PropuestaType,
-        args: {
-          id_propuesta: { type: GraphQLID },
-          id_usuario: { type: GraphQLID }
-        },
-        resolve(parentValue, args, req) {
-          return dislikePropuesta({ args, req });
-        }
-      },
+      }
     }
   }
 });

@@ -37,7 +37,7 @@ const PropuestaType = new GraphQLObjectType({
       type: new GraphQLList(require('./usuario')),
       resolve(parentValue) {
           return Propuesta.findById(parentValue.id)
-          .populate('usuario')
+          .populate('likes')
           .then(propuesta => propuesta.likes );
       }
   }

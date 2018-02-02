@@ -9,10 +9,10 @@ function aceptarSolicitudPolitico({args, req}) {
 
     SolicitudPolitico.findById(id_politico)
     .then((politico) => {
-        const { nombre, cargo, estado, partido, estudios, _id } = politico;
+        const { nombre, cargo, estado, partido, estudios,referencia, _id } = politico;
 
         politicoAprovado = new Politico({
-            nombre, cargo, estado, partido, estudios
+            nombre, cargo, estado, partido, estudios, referencia
         });
 
         politicoAprovado.save(function (err, resp) {

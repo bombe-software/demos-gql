@@ -31,6 +31,7 @@ const politico = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'propuesta'
     }]
+    
 });
 /*
 politico.statics.RegistrarPolitico = function(idEstudio, idTipoPolitico, idEstado, idPartido, nombre) {

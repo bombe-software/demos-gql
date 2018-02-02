@@ -22,7 +22,10 @@ const solicitud_politico = mongoose.Schema({
   estudios: [{
       type: Schema.Types.ObjectId,
       ref: 'estudio'
-  }]
+  }],
+  referencia: {
+        type: String
+    }
 });
 
 mongoose.model('solicitud_politico', solicitud_politico);

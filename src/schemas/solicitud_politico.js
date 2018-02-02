@@ -56,7 +56,8 @@ const SolicitudPoliticoType = new GraphQLObjectType({
                     .populate('propuestas')
                     .then(politico => politico.propuestas);
             }
-        }
+        },
+         referencia: { type: GraphQLString },
     })
 });
 

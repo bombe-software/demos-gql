@@ -40,8 +40,8 @@ const {
 } = require('./manageLike');
 
 
-const mutation = new GraphQLObjectType({
-  name: 'Mutation',
+const RootMutation = new GraphQLObjectType({
+  name: 'Mutaciones',
   fields: {
     signup: {
       type: UsuarioType,
@@ -230,4 +230,4 @@ const mutation = new GraphQLObjectType({
   }
 });
 
-module.exports = mutation;
+module.exports = RootMutation;

@@ -10,6 +10,7 @@
   "author": "Bombe software",
   "license": "ISC",
   "dependencies": {
+    "apollo-upload-server": "^4.0.2",
     "axios": "^0.17.1",
     "chalk": "^2.3.0",
     "connect-mongo": "^2.0.1",

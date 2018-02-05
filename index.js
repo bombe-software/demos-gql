@@ -16,7 +16,7 @@ const config = {
 }
 
 
-const MONGO_URI = `mongodb://localhost/demos_db`;
+const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 mongoose.Promise = require('bluebird');
 
 

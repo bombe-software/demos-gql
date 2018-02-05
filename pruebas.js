@@ -288,7 +288,7 @@ function Registro(){
       const chivo = new usuario({nombre: 'Chivo12',
                                   email: '',
                                   tipo_usuario: administrador._id,
-                                  contrasena: 'Hola1234',
+                                  password: 'Hola1234',
                                   curp: 'HEGG560427MVZRRL04',
                                   avatar: 'chivo',
                                   puntos: 30,
@@ -297,7 +297,7 @@ function Registro(){
       const erizo = new usuario({nombre: 'Erizo21',
                                   email: 'yosafat_martinez21@hotmail.com',
                                   tipo_usuario: administrador._id,
-                                  contrasena: 'Hola1234',
+                                  password: 'Hola1234',
                                   curp: 'HEGG560427MVZRRL04',
                                   avatar: 'erizo',
                                   puntos: 50,
@@ -306,7 +306,7 @@ function Registro(){
       const jaiba = new usuario({nombre: 'Jaiba17',
                                   email: 'diletalvezalaautopista@gmail.com',
                                   tipo_usuario: administrador._id,
-                                  contrasena: 'Hola1234',
+                                  password: 'Hola1234',
                                   curp: 'HEGG560427MVZRRL04',
                                   avatar: 'jaiba',
                                   puntos: 40,
@@ -315,7 +315,7 @@ function Registro(){
       const anguila = new usuario({nombre: 'Anguila11',
                                 email: 'carlitose07@gmail.com',
                                 tipo_usuario: administrador._id,
-                                contrasena: 'Hola1234',
+                                password: 'Hola1234',
                                 curp: 'HEGG560427MVZRRL04',
                                 avatar: 'anguila',
                                 puntos: 50,
@@ -801,23 +801,24 @@ function Registro(){
   */
 
   //Registro de propuestas de propuesta, evento y politico
+  /*
   var fecha1 = new Date('1953');
   var fecha2 = new Date('1976');
   var fecha3 = new Date('1977');
 
-  var Nacimiento = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha1, titulo: 'Nacimiento', descripcion: 'Nace en Tepetitán, Macuspana, Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
-  var InicioCarrera = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha2, titulo: 'Comienzo Político', descripcion: 'Apoya la candidatura de Carlos Pellicer (para Senador de Tabasco)', referencia: 'http://lopezobrador.org.mx/semblanza/'});
-  var DirectorIIT = new solicitud_evento({usuario: "5a68bcaae9bfc6a2fee8cb09", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha3, titulo: 'Director del Instituto Indigenista de Tabasco', descripcion: 'Labora como Director del Instituto Indigenista de Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+  var Nacimiento = new solicitud_evento({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha1, titulo: 'Nacimiento', descripcion: 'Nace en Tepetitán, Macuspana, Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+  var InicioCarrera = new solicitud_evento({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha2, titulo: 'Comienzo Político', descripcion: 'Apoya la candidatura de Carlos Pellicer (para Senador de Tabasco)', referencia: 'http://lopezobrador.org.mx/semblanza/'});
+  var DirectorIIT = new solicitud_evento({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha3, titulo: 'Director del Instituto Indigenista de Tabasco', descripcion: 'Labora como Director del Instituto Indigenista de Tabasco', referencia: 'http://lopezobrador.org.mx/semblanza/'});
 
-  var Propuesta1 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha1, titulo: 'Menos Gastos', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Reducción de gastos gubernamentales', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
-  var Propuesta2 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha2, titulo: 'Más escuelas', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Construcción de nuevas escuelas', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
-  var Propuesta3 = new solicitud_propuesta({usuario: "5a68bcaae9bfc6a2fee8cb0c", politico: "5a68bb57976c3ba5d6bd37c3", fecha: fecha3, titulo: 'Mejores Salarios', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Aumento del Salario en 3 pesos', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+  var Propuesta1 = new solicitud_propuesta({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha1, titulo: 'Menos Gastos', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Reducción de gastos gubernamentales', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+  var Propuesta2 = new solicitud_propuesta({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha2, titulo: 'Más escuelas', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Construcción de nuevas escuelas', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
+  var Propuesta3 = new solicitud_propuesta({usuario: "5a74b1d3df13610fdc1d0169", politico: "5a74b1d3df13610fdc1d0169", fecha: fecha3, titulo: 'Mejores Salarios', tipo_propuesta: "5a68c182c8ecfc981ee215cf", descripcion: 'Aumento del Salario en 3 pesos', referencia: 'http://www.proceso.com.mx/463327/amlo-doce-sus-polemicas-propuestas-2018'});
 
-  var estudios = ["5a6967f6d31a65a3fac70aeb"];
+  var estudios = ["5a74ba07a516ac27e48484c5"];
 
-  var Candidato1 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Bronco", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
-  var Candidato2 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Anaya", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
-  var Funcionario1 = new solicitud_politico({usuario: "5a68bcaae9bfc6a2fee8cb0a", nombre: "Mancera", cargo: 'Funcionario', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+  var Candidato1 = new solicitud_politico({usuario: "5a74b1d3df13610fdc1d0169", nombre: "Bronco", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+  var Candidato2 = new solicitud_politico({usuario: "5a74b1d3df13610fdc1d0169", nombre: "Anaya", cargo: 'Candidato', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
+  var Funcionario1 = new solicitud_politico({usuario: "5a74b1d3df13610fdc1d0169", nombre: "Mancera", cargo: 'Funcionario', estado: "5a68b566f5985aaea61a93b0", partido: "5a68bb54976c3ba5d6bd37b5", estudios});
 
   Nacimiento.save();
   InicioCarrera.save();
@@ -830,6 +831,16 @@ function Registro(){
   Candidato1.save();
   Candidato2.save();
   Funcionario1.save();
+*/
+
+/*
+  politico.findOne({nombre: "Andrés Manuel López Obrador"}).then((registro) =>{
+    estado.findOne({nombre: 'Nacional'}).then((estadoBuscado) => {
+      registro.set({estado: estadoBuscado._id});
+      registro.save();
+    });
+  });
+  */
 };
 
 exports.pruebas = function (req, res) {

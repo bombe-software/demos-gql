@@ -217,7 +217,11 @@ const RootMutation = new GraphQLObjectType({
       type: EventoType,
       args: {
         id_evento: { type: GraphQLID }
-      },
+      },resolve(parentValue, args, req) {
+          return aceptarSolicitudEvento({ args, req });
+        }
+    },
+
       voto_estado: {
         type: VotacionType,
         args: {
@@ -226,10 +230,9 @@ const RootMutation = new GraphQLObjectType({
           id_politico: { type: GraphQLID }
         },
         resolve(parentValue, args, req) {
-          return aceptarSolicitudEvento({ args, req });
+          return voto_estado({ args, req });
         }
       }
-    }
   }
 });
 

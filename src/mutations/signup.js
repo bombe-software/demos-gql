@@ -51,7 +51,7 @@ function signup({ args, req }) {
         throw new Error('Falta avatar');
     }
     if (!localidad) throw new Error('Falta localidad');
-    const tipo_usuario = {id: "5a68bca9e9bfc6a2fee8cb06"};
+    const tipo_usuario ="5a68bca9e9bfc6a2fee8cb06";
   
     //Area de registro
     const user = new User({

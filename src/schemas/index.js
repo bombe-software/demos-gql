@@ -51,7 +51,7 @@ const ZonaType = require('./zona');
 
 
 const RootQuery = new GraphQLObjectType({
-  name: 'RootQueryType',
+  name: 'Consultas',
   fields: () => ({
     estados: {
       type: new GraphQLList(EstadoType),

@@ -4,8 +4,12 @@ const Solicitud_Politico = mongoose.model('solicitud_politico');
 const Politico = mongoose.model('politico');
 const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');
-
 const Estudio = mongoose.model('estudio');
+
+//Importar modulos de las suscripciones
+const pubsub  = require('graphql-subscriptions').PubSub;
+const { POLITICO_AGREGADO } = require('./../subscriptions/constantes');
+
 //Funcion
 function addPolitico({ args, req }) {
 
@@ -13,7 +17,45 @@ function addPolitico({ args, req }) {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario, referencia
     } = args
 
-    console.log(usuario);
+    if (!usuario) {
+        throw new Error('Falta id del Usuario');
+    }
+    if (!nombre) {
+        throw new Error('Falta nombre');
+    }
+    if (/^\s+|\s+$/.test(nombre)) {
+        throw new Error('Nombre inválido');
+    }
+    if (!partido) {
+        throw new Error('Falta partido');
+    }
+    if (!estado) {
+        throw new Error('Falta estado');
+    }
+    if (!cargo) {
+        throw new Error('Falta cargo');
+    }
+    if (!grado_academico) {
+        throw new Error('Falta grado academico');
+    }
+    if (!lugar_estudio) {
+        throw new Error('Falta lugar de estudio');
+    }
+    if (!titulo) {
+        throw new Error('Falta titulo de estudio');
+    }
+    if (!referencia) {
+        throw new Error('Falta link de referencia');
+
+    } else if (referencia != undefined) {
+        var re = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/;
+        if (/^\s+|\s+$/.test(referencia)) {
+            throw new Error('Link invalido');
+        } else
+            if (!re.test(referencia)) {
+                throw new Error('Link invalido');
+            }
+    }
 
     const estudios = new Estudio({
         titulo, grado_academico, lugar_estudio
@@ -78,6 +120,7 @@ function addPolitico({ args, req }) {
     })
 
     //Area del resolver
+    new pubsub().publish(POLITICO_AGREGADO, { politicoAdded: Solicitud_Politico.findOne({ nombre }) });
     return Solicitud_Politico.findOne({ nombre });
 }
 

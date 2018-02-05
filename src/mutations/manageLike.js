@@ -8,19 +8,24 @@ function dislikePropuesta({ args, req }) {
         id_propuesta,
         id_usuario
     } = args;
-
+    if (!id_propuesta) {
+        throw new Error('Error al hacer fetch con la Propuesta');
+    }
+    if (!id_usuario) {
+        throw new Error('Error al hacer fetch con el Usuario');
+    }
 
     return Propuesta.findById(id_propuesta)
-    .then(propuesta => {
+        .then(propuesta => {
 
-        //Un pequeño problema en el remove :,V
-        const array = _.remove(propuesta.likes, function (n) {
-            return n!=id_usuario;
+            //Un pequeño problema en el remove :,V
+            const array = _.remove(propuesta.likes, function (n) {
+                return n != id_usuario;
+            });
+
+            propuesta.set({ likes: array });
+            return Promise.resolve(propuesta.save());
         });
-
-        propuesta.set({likes: array});
-        return Promise.resolve(propuesta.save());
-    });
 }
 
 function likePropuesta({ args, req }) {
@@ -32,10 +37,10 @@ function likePropuesta({ args, req }) {
 
 
     return Propuesta.findById(id_propuesta)
-    .then(propuesta => {
-        propuesta.likes.push(id_usuario);
-        return Promise.resolve(propuesta.save());
-    });
+        .then(propuesta => {
+            propuesta.likes.push(id_usuario);
+            return Promise.resolve(propuesta.save());
+        });
 }
 
 module.exports = {

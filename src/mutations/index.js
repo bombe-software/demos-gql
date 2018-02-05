@@ -40,8 +40,8 @@ const {
 } = require('./manageLike');
 
 
-const mutation = new GraphQLObjectType({
-  name: 'Mutation',
+const RootMutation = new GraphQLObjectType({
+  name: 'Mutaciones',
   fields: {
     signup: {
       type: UsuarioType,
@@ -88,6 +88,7 @@ const mutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         referencia: { type: GraphQLString }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addPolitico({ args, req });
       }
@@ -102,6 +103,7 @@ const mutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         politico: { type: GraphQLID }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addEvento({ args, req });
       }
@@ -117,6 +119,7 @@ const mutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         politico: { type: GraphQLID }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addPropuesta({ args, req });
       }
@@ -214,7 +217,11 @@ const mutation = new GraphQLObjectType({
       type: EventoType,
       args: {
         id_evento: { type: GraphQLID }
-      },
+      },resolve(parentValue, args, req) {
+          return aceptarSolicitudEvento({ args, req });
+        }
+    },
+
       voto_estado: {
         type: VotacionType,
         args: {
@@ -223,11 +230,10 @@ const mutation = new GraphQLObjectType({
           id_politico: { type: GraphQLID }
         },
         resolve(parentValue, args, req) {
-          return aceptarSolicitudEvento({ args, req });
+          return voto_estado({ args, req });
         }
       }
-    }
   }
 });
 
-module.exports = mutation;
+module.exports = RootMutation;

@@ -5,8 +5,10 @@ const Politico = mongoose.model('politico');
 const Usuario = mongoose.model('usuario');
 
 function aceptarSolicitudPolitico({args, req}) {
-    const { id_politico/*, id_usuario*/ } = args;
-
+    const { id_politico } = args;
+     if (!id_politico) {
+        throw new Error('Error al hacer fetch con el Politico');
+    }
     SolicitudPolitico.findById(id_politico)
     .then((politico) => {
         const { nombre, cargo, estado, partido, estudios,referencia, _id } = politico;

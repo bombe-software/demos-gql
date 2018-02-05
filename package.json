@@ -10,6 +10,7 @@
   "author": "Bombe software",
   "license": "ISC",
   "dependencies": {
+    "apollo-upload-server": "^4.0.2",
     "axios": "^0.17.1",
     "chalk": "^2.3.0",
     "connect-mongo": "^2.0.1",
@@ -18,11 +19,13 @@
     "express-graphql": "^0.6.11",
     "express-session": "^1.15.6",
     "graphql": "^0.12.3",
-    "lodash": "^4.17.4",
+    "graphql-subscriptions": "^0.5.6",
+    "lodash": "^4.17.5",
     "mongoose": "^5.0.3",
     "nodemon": "^1.14.12",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "subscriptions-transport-ws": "^0.9.5"
   }
 }

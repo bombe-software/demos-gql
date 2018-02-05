@@ -13,19 +13,49 @@ function signup({ args, req }) {
         localidad
     } = args
 
-
     // Area de validaciones
-    if (!nombre) throw new Error('Falta nombre en args');
-    if (!email) throw new Error('Falta email en args');
-    if (!password) throw new Error('Falta password en args');
-    if (!curp) throw new Error('Falta curp en args');
-    if (!avatar) throw new Error('Falta curp en args');
-    if (!localidad) throw new Error('Falta localidad en args');
-
-
+    if (!nombre) {
+        throw new Error('Falta nombre de usuario');
+    }
+    if (nombre != undefined) {
+        var ra = /^[a-z0-9]+$/i;
+        if (!ra.test(nombre)) {
+            throw new Error('Nombre de usuario invalido');
+        }
+    }
+    if (!email) {
+        throw new Error('Falta email');
+    }
+    if (!password) {
+        throw new Error('Falta contraseña');
+    }
+    if (password != undefined) {
+        var re = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})\S{6,}$/;
+        if (!re.test(password)) {
+            throw new Error('Password invalido');
+        }
+    }
+    if (!curp) {
+        throw new Error('Falta CURP');
+    }
+    if (curp != undefined) {
+        var ri = /^([A-Z]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[A-Z]{3}[0-9A-Z]\d)$/i
+        if (!ri.test(curp)) {
+            throw new Error('CURP invalido');
+        }
+    }
+    if (email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        throw new Error('Email inválido');
+    }
+    if (!avatar) {
+        throw new Error('Falta avatar');
+    }
+    if (!localidad) throw new Error('Falta localidad');
+    const tipo_usuario ="5a68bca9e9bfc6a2fee8cb06";
+  
     //Area de registro
     const user = new User({
-        nombre, email, // tipo_usuario: 1, remplazar por el id necesario
+        nombre, email,  tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
         password, curp, avatar,
         puntos: 0, localidad
     });

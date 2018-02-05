@@ -4,8 +4,12 @@ const Solicitud_Politico = mongoose.model('solicitud_politico');
 const Politico = mongoose.model('politico');
 const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');
-
 const Estudio = mongoose.model('estudio');
+
+//Importar modulos de las suscripciones
+const pubsub  = require('graphql-subscriptions').PubSub;
+const { POLITICO_AGREGADO } = require('./../subscriptions/constantes');
+
 //Funcion
 function addPolitico({ args, req }) {
 
@@ -116,6 +120,7 @@ function addPolitico({ args, req }) {
     })
 
     //Area del resolver
+    new pubsub().publish(POLITICO_AGREGADO, { politicoAdded: Solicitud_Politico.findOne({ nombre }) });
     return Solicitud_Politico.findOne({ nombre });
 }
 

@@ -70,7 +70,7 @@ app.get('/pruebas', function (req, res) {
 });
 
 
-//COnfiguracion 
+//Configuracion 
 const pubsub = new PubSub();
 const server = createServer(app);
 server.listen(port, () => {

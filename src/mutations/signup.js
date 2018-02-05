@@ -55,7 +55,7 @@ function signup({ args, req }) {
   
     //Area de registro
     const user = new User({
-        nombre, email, tipo_usuario, // tipo_usuario: 1, remplazar por el id necesario
+        nombre, email,  tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
         password, curp, avatar,
         puntos: 0, localidad
     });

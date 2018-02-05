@@ -88,6 +88,7 @@ const RootMutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         referencia: { type: GraphQLString }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addPolitico({ args, req });
       }
@@ -102,6 +103,7 @@ const RootMutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         politico: { type: GraphQLID }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addEvento({ args, req });
       }
@@ -117,6 +119,7 @@ const RootMutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         politico: { type: GraphQLID }
       },
+      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
         return addPropuesta({ args, req });
       }

@@ -1,9 +1,11 @@
 //Importar models
 const mongoose = require('mongoose');
 const solicitud_propuesta = mongoose.model('solicitud_propuesta');
-
-//Modelos
 const Politico = mongoose.model('politico');
+
+//Importar modulos de las suscripciones
+const pubsub  = require('graphql-subscriptions').PubSub;
+const { PROPUESTA_AGREGADA } = require('./../subscriptions/constantes');
 
 //Funcion
 function addPropuesta({ args, req }) {
@@ -70,7 +72,8 @@ function addPropuesta({ args, req }) {
     console.log(politico, usuario);
 
     //Area del resolver
-    return solicitud_propuesta.findOne({ titulo });
+    new pubsub().publish(PROPUESTA_AGREGADA, { propuestaAdded: solicitud_propuesta.findOne({titulo})});
+    return solicitud_propuesta.findOne({titulo});
 }
 
 //Se exporta la funcion

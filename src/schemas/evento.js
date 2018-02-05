@@ -21,7 +21,7 @@ const EventoType = new GraphQLObjectType({
     politico: {
       type: require('./politico'),
       resolve(parentValue) {
-        return Eveneto.findById(parentValue).populate('politico')
+        return Evento.findById(parentValue).populate('politico')
           .then(evento => evento.politico );
       }
     }

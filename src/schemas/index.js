@@ -200,6 +200,24 @@ const RootQuery = new GraphQLObjectType({
       resolve() {
         return SolicitudEvento.find({});
       }
+    },
+    propuesta: {
+      type: require('./propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) } 
+      },
+      resolve(parentValue, { id }) {
+        return Propuesta.findById(id);
+      }
+    },
+    evento: {
+      type: require('./evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) } 
+      },
+      resolve(parentValue, { id }) {
+        return Evento.findById(id);
+      }
     }
   })
 });

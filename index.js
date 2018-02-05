@@ -22,7 +22,7 @@ const SubscriptionServer = require('subscriptions-transport-ws').SubscriptionSer
 const execute = require('graphql').execute;
 const subscribe = require('graphql').subscribe;
 const PubSub = require('graphql-subscriptions').PubSub;
-const apolloUploadExpress = require('apollo-upload-server').apolloUploadExpress;
+//const apolloUploadExpress = require('apollo-upload-server').apolloUploadExpress;
 
 //Importar schemas
 const schema = require('./src');
@@ -59,7 +59,8 @@ app.use(passport.session());
 
 //Integracion de graphql
 app.use('/graphql', bodyParser.json(),  
-apolloUploadExpress(),expressGraphQL({
+//apolloUploadExpress(),
+expressGraphQL({
   schema,
   graphiql: true
 }));

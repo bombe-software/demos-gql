@@ -18,13 +18,11 @@ function dislikePropuesta({ args, req }) {
     return Propuesta.findById(id_propuesta)
         .then(propuesta => {
 
-            //Un pequeño problema en el remove :,V
-            const array = _.remove(propuesta.likes, function (n) {
-                return n != id_usuario;
-            });
+          var usuariosLike = propuesta.likes;
+          var nuevosUsuariosLike = usuariosLike.slice(usuariosLike.indexOf(id_usuario));
 
-            propuesta.set({ likes: array });
-            return Promise.resolve(propuesta.save());
+          propuesta.set({ likes: nuevosUsuariosLike });
+          return Promise.resolve(propuesta.save());
         });
 }
 

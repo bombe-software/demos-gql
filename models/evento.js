@@ -5,7 +5,15 @@ const evento = mongoose.Schema({
     fecha: Date,
     titulo: String,
     descripcion: String,
-    fuente: String
+    referencia: String,
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
+    },
+    politico: {
+        type: Schema.Types.ObjectId,
+        ref: 'politico'
+    }
 });
 
 mongoose.model('evento', evento);

@@ -1,10 +1,10 @@
 const graphql = require('graphql');
 const { GraphQLObjectType,  GraphQLString,  GraphQLID } = graphql;
 const mongoose = require('mongoose');
-const Evento = mongoose.model('evento');
+const SolicitudEvento = mongoose.model('solicitud_evento');
 
-const EventoType = new GraphQLObjectType({
-  name:  'EventoType',
+const SolicitudEventoType = new GraphQLObjectType({
+  name:  'SolicitudEventoType',
   fields: () => ({
     id: { type: GraphQLID },
     fecha: { type: GraphQLString },
@@ -14,18 +14,18 @@ const EventoType = new GraphQLObjectType({
     usuario: {
       type: require('./usuario'),
       resolve(parentValue) {
-        return Evento.findById(parentValue).populate('usuario')
+        return SolicitudEvento.findById(parentValue).populate('usuario')
           .then(evento => evento.usuario );
       }
     },
     politico: {
       type: require('./politico'),
       resolve(parentValue) {
-        return Evento.findById(parentValue).populate('politico')
+        return SolicitudEvento.findById(parentValue).populate('politico')
           .then(evento => evento.politico );
       }
     }
   })
 });
 
-module.exports = EventoType;
+module.exports = SolicitudEventoType;

@@ -1,34 +1,50 @@
+//Librerias de express
 const express = require('express');
-const models = require('./models');
-const expressGraphQL = require('express-graphql');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const passport = require('passport');
-const configPassport = require('./config_passport');
-const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
-const schema = require('./src');
+const createServer = require('http').createServer;
 const app = express();
+const port = process.env.PORT || 3000;
+
+//Librerias de la base de datos
+const mongoose = require('mongoose');
+const models = require('./models');
+
+//Librerias de autenticacion
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const passport = require('passport');
 const cors = require('cors');
+const configPassport = require('./config_passport');
+
+//Librerias de graphql
+const expressGraphQL = require('express-graphql');
+const SubscriptionServer = require('subscriptions-transport-ws').SubscriptionServer;
+const execute = require('graphql').execute;
+const subscribe = require('graphql').subscribe;
+const PubSub = require('graphql-subscriptions').PubSub;
+//const apolloUploadExpress = require('apollo-upload-server').apolloUploadExpress;
+
+//Importar schemas
+const schema = require('./src');
+
+//Configuracion de la base de datos
 const config = {
   user: 'admin',
   password: 'n0m3l0',
 }
-
 const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 mongoose.Promise = require('bluebird');
-mongoose.connect(MONGO_URI, { useMongoClient: true }).catch(err => console.error(err));
-mongoose.connection.once('open', () => console.log('Conectado a la base de datos'))
-  .on('error', error => console.log('Error al conectar a la base de datos:', error));
+mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
-app.use(bodyParser.json());
 
+//Configruacion del CORS
 const corsOptions = {
     origin: 'https://demos-web.herokuapp.com',
     credentials: true,
-
 }
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
+
+//Configuracion de las sesiones e integracion con mongodb
 app.use(session({
   resave: true,
   saveUninitialized: true,
@@ -38,16 +54,16 @@ app.use(session({
     autoReconnect: true
   })
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use('/graphql', expressGraphQL({
+//Integracion de graphql
+app.use('/graphql', bodyParser.json(),  
+//apolloUploadExpress(),
+expressGraphQL({
   schema,
   graphiql: true
 }));
-
 
 //Area de pruebas
 app.get('/pruebas', function (req, res) {
@@ -56,7 +72,19 @@ app.get('/pruebas', function (req, res) {
   res.end();
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log('Listening on port: ' + port);
+
+//Configuracion 
+const pubsub = new PubSub();
+const server = createServer(app);
+server.listen(port, () => {
+  new SubscriptionServer({
+    execute,
+    subscribe,
+    schema: schema,
+  }, {
+    server: server,
+    path: '/subscriptions',
+  });
+  console.log(`Escuchando por http en : http://localhost:${port}`); 
+  console.log(`Escuchando por  ws  en:  ws://localhost:${port}/subscriptions`); 
 });

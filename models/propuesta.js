@@ -9,7 +9,19 @@ const propuesta = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'tipo_propuesta'
     },
-    referencia: String
+    referencia: String,
+    usuario: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
+    },
+    politico: {
+        type: Schema.Types.ObjectId,
+        ref: 'politico'
+    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
+    }]
 });
 
 mongoose.model('propuesta', propuesta);

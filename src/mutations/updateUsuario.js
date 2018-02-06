@@ -4,10 +4,11 @@ const Usuario = mongoose.model('usuario');
 
 //Funcion
 function updateUsuario({ args, req }) {
-
+   
     const {
         id, nombre, password, avatar
     } = args;
+
     if (!id) {
         throw new Error('Falta id del Usuario');
     }
@@ -23,15 +24,18 @@ function updateUsuario({ args, req }) {
     if (!password) {
         throw new Error('Falta contraseña');
     }
+    console.log(password);
     if (password != undefined) {
         var re = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})\S{6,}$/;
         if (!re.test(password)) {
+
             throw new Error('Password invalido');
         }
     }
     if (!avatar) {
         throw new Error('Falta avatar');
     }
+        console.log("Entra");
     //Area de registro
     const usuario = Usuario.findById(id).then((registro) => {
         registro.set({ nombre, password, avatar });

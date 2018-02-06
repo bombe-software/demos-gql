@@ -34,10 +34,8 @@ const {
   denegarSolicitudEvento
 } = require('./manageSolicitudEvento');
 
-const {
-  likePropuesta,
-  dislikePropuesta
-} = require('./manageLike');
+const {  likePropuesta } = require('./like');
+const { dislikePropuesta } = require('./dislike');
 
 
 const RootMutation = new GraphQLObjectType({

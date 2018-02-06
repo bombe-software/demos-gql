@@ -20,28 +20,11 @@ function dislikePropuesta({ args, req }) {
 
           var usuariosLike = propuesta.likes;
           var nuevosUsuariosLike = usuariosLike.slice(usuariosLike.indexOf(id_usuario));
-
+          console.log('dislike');
           propuesta.set({ likes: nuevosUsuariosLike });
           return Promise.resolve(propuesta.save());
         });
 }
 
-function likePropuesta({ args, req }) {
-    const {
-        id_propuesta,
-        id_usuario
-    } = args;
 
-
-
-    return Propuesta.findById(id_propuesta)
-        .then(propuesta => {
-            propuesta.likes.push(id_usuario);
-            return Promise.resolve(propuesta.save());
-        });
-}
-
-module.exports = {
-    dislikePropuesta,
-    likePropuesta
-};
+module.exports = { dislikePropuesta };

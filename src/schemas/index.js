@@ -218,7 +218,34 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue, { id }) {
         return Evento.findById(id);
       }
-    }
+    },
+    solicitudPolitico: {
+      type: require('./solicitud_politico'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudPolitico.findById(id);
+      }
+    },
+    SolicitudEvento: {
+      type: require('./solicitud_evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEvento.findById(id);
+      }
+    },
+    SolicitudPropuesta: {
+      type: require('./solicitud_propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudPropuesta.findById(id);
+      }
+    },
   })
 });
 

@@ -8,9 +8,7 @@ function likePropuesta({ args, req }) {
         id_propuesta,
         id_usuario
     } = args;
-
-    console.log('like');
-
+    
     return Propuesta.findById(id_propuesta)
         .then(propuesta => {
             propuesta.likes.push(id_usuario);

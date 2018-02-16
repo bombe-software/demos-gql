@@ -3,6 +3,7 @@
  */
 const mongoose = require('mongoose');
 const User = mongoose.model('usuario');
+const CryptoJS = require('crypto-js');
 /**
  * passport
  */
@@ -21,8 +22,11 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
   User.findOne({ email: email.toLowerCase() }, (err, user) => {
     if (err) { return done(err); }
     if (!user) { return done(null, false, 'Password o email incorrecto'); }
-    console.log(user.password != password);
-    if(user.password != password){ return done(null, false, 'Password o email incorrecto.')}
+    let bytes = CryptoJS.AES.decrypt(password, 'jaiba');
+    let ticketDecript = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if(ticketDecript.date.toString()  != (new Date().getDay() + "/" + new Date().getMonth() + "/" + new Date().getFullYear())){
+      return done(null, false, 'Password o email incorrecto'); 
+    }
     return done(null, user);
   });
 }));

@@ -16,7 +16,7 @@ function addPolitico({ args, req }) {
     const {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario, referencia
     } = args
-
+    console.log(args);
     if (!usuario) {
         throw new Error('Falta id del Usuario');
     }
@@ -35,6 +35,7 @@ function addPolitico({ args, req }) {
     if (!cargo) {
         throw new Error('Falta cargo');
     }
+
     if (!grado_academico) {
         throw new Error('Falta grado academico');
     }
@@ -56,10 +57,11 @@ function addPolitico({ args, req }) {
                 throw new Error('Link invalido');
             }
     }
-
+    if(grado_academico){
     const estudios = new Estudio({
         titulo, grado_academico, lugar_estudio
     });
+    }
     //Area de registro
     var estudioId;
     estudios.save(function (err, estudio) {

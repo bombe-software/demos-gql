@@ -15,15 +15,17 @@ function dislikePropuesta({ args, req }) {
         throw new Error('Error al hacer fetch con el Usuario');
     }
 
-    return Propuesta.findById(id_propuesta)
-        .then(propuesta => {
-
-          var usuariosLike = propuesta.likes;
-          var nuevosUsuariosLike = usuariosLike.slice(usuariosLike.indexOf(id_usuario));
-          console.log('dislike');
-          propuesta.set({ likes: nuevosUsuariosLike });
-          return Promise.resolve(propuesta.save());
+    Propuesta.findById(id_propuesta).then(propuesta => {
+        const nuevos_usuarios = _.remove(propuesta.likes, function(n) {
+            return n != id_usuario;
         });
+        propuesta.set({likes: nuevos_usuarios});
+        propuesta.save((err, prop) => {
+            if(err) console.log(err);
+        });
+    });
+
+    return Propuesta.findById(id_propuesta);
 }
 
 

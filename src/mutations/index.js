@@ -11,7 +11,7 @@ const EventoType = require('../schemas/evento');
 const PropuestaType = require('../schemas/propuesta');
 
 //Funciones de la mutacion
-const { voto_estado } = require('./voto_estado');
+const { votoEstado } = require('./votoEstado');
 const { addEvento } = require('./addEvento');
 const { login } = require('./login');
 const { signup } = require('./signup');
@@ -125,11 +125,13 @@ const RootMutation = new GraphQLObjectType({
     voto_estado: {
       type: VotacionType,
       args: {
+        id_votacion: { type: GraphQLID },
         id_usuario: { type: GraphQLID },
-        id_politico: { type: GraphQLID }
+        id_preferencia: { type: GraphQLID },
+        id_estado: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
-        return voto_estado({ args, req });
+        return votoEstado({ args, req });
       }
     },
     like_propuesta: {
@@ -218,19 +220,7 @@ const RootMutation = new GraphQLObjectType({
       },resolve(parentValue, args, req) {
           return aceptarSolicitudEvento({ args, req });
         }
-    },
-
-      voto_estado: {
-        type: VotacionType,
-        args: {
-          id_votacion: { type: GraphQLID },
-          id_usuario: { type: GraphQLID },
-          id_politico: { type: GraphQLID }
-        },
-        resolve(parentValue, args, req) {
-          return voto_estado({ args, req });
-        }
-      }
+    }
   }
 });
 

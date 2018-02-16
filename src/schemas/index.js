@@ -154,9 +154,9 @@ const RootQuery = new GraphQLObjectType({
       args: {
         estado: { type: GraphQLID }
       },
-      type: new GraphQLList(VotacionType),
+      type: VotacionType,
       resolve(parentValue, args, req) {
-        return Votacion.find({estado: args.estado});
+        return Votacion.findOne({estado: args.estado});
       }
     },
     estado: {
@@ -237,7 +237,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEvento.findById(id);
       }
     },
-    SolicitudPropuesta: {
+    solicitudPropuesta: {
       type: require('./solicitud_propuesta'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }

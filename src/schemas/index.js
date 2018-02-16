@@ -237,7 +237,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEvento.findById(id);
       }
     },
-    SolicitudPropuesta: {
+    solicitudPropuesta: {
       type: require('./solicitud_propuesta'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }

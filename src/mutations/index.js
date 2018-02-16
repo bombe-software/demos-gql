@@ -1,6 +1,6 @@
 //Configuracion de GraphQL
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = graphql;
 
 //Tipos de chemas
 const UsuarioType = require('./../schemas/usuario');
@@ -18,6 +18,7 @@ const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
 const { addPropuesta } = require('./addPropuesta');
 const { updateUsuario } = require('./updateUsuario');
+const { modifyPolitico } = require('./modifyPolitico')
 
 const {
   aceptarSolicitudPolitico,
@@ -33,6 +34,11 @@ const {
   aceptarSolicitudEvento,
   denegarSolicitudEvento
 } = require('./manageSolicitudEvento');
+
+const {
+  aceptarModificarSolicitudPolitico,
+  denegarModificarSolicitudPolitico
+} =require('./manageSolicitudModificarPolitico')
 
 const {  likePropuesta } = require('./like');
 const { dislikePropuesta } = require('./dislike');
@@ -220,7 +226,47 @@ const RootMutation = new GraphQLObjectType({
       },resolve(parentValue, args, req) {
           return aceptarSolicitudEvento({ args, req });
         }
-    }
+    },
+    modifyPolitico: {
+      type: PoliticoType,
+      args: {
+        id_politico: { type: GraphQLID },
+        nombre: { type: GraphQLString },
+        cargo: { type: GraphQLString },
+        partido: { type: GraphQLID },
+        estado: { type: GraphQLID },
+        estudios: { type: GraphQLID },
+        lugar_estudio: { type: GraphQLID },
+        grado_academico: { type: GraphQLID },
+        titulo: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        referencia: { type: GraphQLString }
+      },
+    },
+    aceptarModificarSolicitudPolitico: {
+      type: PoliticoType,
+      args: {
+        id_politico: { type: GraphQLID },
+        id_solicitud: { type: GraphQLID },
+        cargo: { type: GraphQLString },
+        partido: { type: GraphQLID },
+        estado: { type: GraphQLID },
+        estudios: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return aceptarModificarSolicitudPolitico({ args, req });
+      }
+    },
+    denegarSolicitudPolitico: {
+      type: PoliticoType,
+      args: {
+        id_solicitud: { type: GraphQLID }/*,
+          id_usuario: { type: GraphQLID }*/
+      },
+      resolve(parentValue, args, req) {
+        return denegarModificarSolicitudPolitico({ args, req });
+      }
+    },
   }
 });
 

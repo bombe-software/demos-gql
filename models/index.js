@@ -15,3 +15,6 @@ require('./zona');//requiere [[estados]]
 require('./solicitud_evento');  //requiere [usuario, idPolitico, evento]
 require('./solicitud_politico');  //requiere [usuario, politico]
 require('./solicitud_propuesta');  //requiere [usuario, idPolitico, propuesta]
+require('./solicitud_modificar_politico');
+require('./solicitud_modificar_propuesta');
+require('./soliticitud_modificar_evento');

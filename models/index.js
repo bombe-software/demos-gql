@@ -2,6 +2,7 @@ require('./estado');
 require('./evento');
 require('./grado_academico');
 require('./lugar_estudio');
+require('./logs');
 require('./estudio'); //requiere [lugar_estudio, grado_academico]
 require('./partido');
 require('./tipo_propuesta');

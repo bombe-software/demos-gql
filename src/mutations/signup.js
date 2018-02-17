@@ -4,7 +4,7 @@
  */
 const axios = require("axios");
 const mongoose = require('mongoose');
-const User = mongoose.model('usuario');
+const User = mongoose.model('usuario_confirmar');
 
 //Funcion
 function signup({ args, req }) {
@@ -72,7 +72,7 @@ function signup({ args, req }) {
         .then(user => {
             const ticket = {
                 email: user.email,
-                id: user.id
+                id_usuario: user.id
             };
       
             const request = axios.post("http://localhost:5000/send_email", ticket);

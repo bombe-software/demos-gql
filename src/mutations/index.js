@@ -11,6 +11,7 @@ const EventoType = require('../schemas/evento');
 const PropuestaType = require('../schemas/propuesta');
 
 //Funciones de la mutacion
+const { confirmEmail } = require('./confirmEmail');
 const { votoEstado } = require('./votoEstado');
 const { addEvento } = require('./addEvento');
 const { login } = require('./login');
@@ -219,6 +220,15 @@ const RootMutation = new GraphQLObjectType({
         id_evento: { type: GraphQLID }
       },resolve(parentValue, args, req) {
           return aceptarSolicitudEvento({ args, req });
+        }
+    },
+    confirmEmail: {
+      type: UsuarioType,
+      args: {
+        email: { type: GraphQLString },
+        firma: { type: GraphQLString }
+      },resolve(parentValue, args, req) {
+          return confirmEmail({ args, req });
         }
     }
   }

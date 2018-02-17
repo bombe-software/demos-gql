@@ -9,6 +9,7 @@ require('./tipo_usuario');
 require('./propuesta');//requiere [tipo_propuesta]
 require('./politico'); //requiere [partido, estado, [eventos], [estudios], [propuestas]
 require('./usuario');//requiere [tipo_usuario]
+require('./usuario_confirmar');//requiere [tipo_usuario]
 require('./preferencia');//requiere [politico, [usuarios]]
 require('./votacion');//requiere [estado, [preferencias]]
 require('./zona');//requiere [[estados]]

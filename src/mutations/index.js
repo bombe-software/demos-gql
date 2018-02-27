@@ -19,6 +19,7 @@ const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
 const { addPropuesta } = require('./addPropuesta');
 const { updateUsuario } = require('./updateUsuario');
+const { mensaje } = require('./mensaje');
 
 const {
   aceptarSolicitudPolitico,
@@ -229,6 +230,14 @@ const RootMutation = new GraphQLObjectType({
         firma: { type: GraphQLString }
       },resolve(parentValue, args, req) {
           return confirmEmail({ args, req });
+        }
+    },
+    mensaje: {
+      type: GraphQLString,
+      args: {
+        mensajeUser: { type: GraphQLString }
+      },resolve(parentValue, args, req) {
+          return mensaje({ args, req });
         }
     }
   }

@@ -86,28 +86,6 @@ function addPolitico({ args, req }) {
 
     });
 
-    var cargos = [];
-    if (cargo === "Candidato") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.candidatos;
-                cargos.push(politico._id);
-                estado.set({ candidatos: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    } else if (cargo === "Funcionario") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.funcionarios;
-                cargos.push(politico._id);
-                estado.set({ funcionarios: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    }
     console.log(args);
     var integrantes = [];
     Partido.findById(partido).then(partido => {

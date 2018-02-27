@@ -30,7 +30,8 @@ const politico = mongoose.Schema({
     propuestas: [{
         type: Schema.Types.ObjectId,
         ref: 'propuesta'
-    }]
+    }],
+    referencia: String
     
 });
 /*

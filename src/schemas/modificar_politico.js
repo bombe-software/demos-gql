@@ -9,6 +9,7 @@ const ModificarPoliticoType = new GraphQLObjectType({
     name: 'ModificarPoliticoType',
     fields: () => ({
         id: { type: GraphQLID },
+        id_politico: { type: GraphQLID },
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLString },
         usuario: {

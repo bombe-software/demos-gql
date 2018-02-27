@@ -22,6 +22,7 @@ function aceptarModificarSolicitudPolitico({args, req}) {
     }
     SolicitudModificarPolitico.findById(id_solicitud)
     .then((politico) => {
+        
         const { _id } = politico;
         Politico.findByIdAndUpdate(id_politico, update, function (err, resp) {
             if (err) return console.error(err);

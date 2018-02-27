@@ -11,8 +11,9 @@ const pubsub  = require('graphql-subscriptions').PubSub;
 
 //Funcion
 function modifyPolitico({ args, req }) {
+    console.log(args);
 
-    const {
+    let {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, estudios, partido, usuario, referencia, id_politico
     } = args
 
@@ -55,27 +56,32 @@ function modifyPolitico({ args, req }) {
                 throw new Error('Link invalido');
             }
     }
-
-    Estudios.findById(estudios, function(est, error){
+ 
+    console.log(estudios);
+    Estudio.findById(estudios, function(error, est){
         var estudioId;
-        if(est.grado_academico.grado !== grado || est.lugar_estudio.nombre !== nombre || est.titulo !== titulo){
-            const e = new Estudio({
+           console.log("aqui");
+        console.log(est);
+      //  console.log(error);
+        if(est.grado_academico.id !== grado_academico || est.lugar_estudio.id !== lugar_estudio || est.titulo !== titulo){
+           console.log("Lgrase NASA");
+            var e = new Estudio({
                 titulo, grado_academico, lugar_estudio
             });
             //Area de registro
             e.save(function (err, estudio) {
         
                 if (err) return console.error(err);
-                estudioId = estudio.id
+                estudios = estudio.id
         
             });
         } else {
-            estudioId = estudios;
+            estudios;
         }
     });
 
-    const politico = new SolicitudModificarPolitico({
-        nombre, cargo, partido, estado, usuario, referencia
+    var politico = new SolicitudModificarPolitico({
+        nombre, cargo, partido, estado, usuario, referencia, estudios
     });
 
     //Guardar
@@ -83,7 +89,7 @@ function modifyPolitico({ args, req }) {
     politico.save(function (err, poli) {
         if (err) return console.error(err);
         arregloEstudios = poli.estudios;
-        arregloEstudios.push(estudioId);
+        arregloEstudios.push(estudios);
         poli.set({ estudios: arregloEstudios });
         poli.save(function (err) {
             if (err) return console.error(err);

@@ -11,11 +11,34 @@ function aceptarSolicitudPolitico({args, req}) {
     }
     SolicitudPolitico.findById(id_politico)
     .then((politico) => {
-        const { nombre, cargo, estado, partido, estudios,referencia, _id } = politico;
+        const { nombre, cargo, estado, partido, estudios,referencia , _id } = politico;
 
         politicoAprovado = new Politico({
             nombre, cargo, estado, partido, estudios, referencia
         });
+
+        var cargos = [];
+        if (cargo === "Candidato") {
+            Estado.findById(estado)
+                .then(estado => {
+                    cargos = estado.candidatos;
+                    cargos.push(politicoAprovado._id);
+                    estado.set({ candidatos: cargos });
+                    estado.save(function (err) {
+                        if (err) return console.error(err);
+                    });
+                });
+        } else if (cargo === "Funcionario") {
+            Estado.findById(estado)
+                .then(estado => {
+                    cargos = estado.funcionarios;
+                    cargos.push(politicoAprovado._id);
+                    estado.set({ funcionarios: cargos });
+                    estado.save(function (err) {
+                        if (err) return console.error(err);
+                    });
+                });
+        }
 
         politicoAprovado.save(function (err, resp) {
             if (err) return console.error(err);
@@ -30,7 +53,7 @@ function aceptarSolicitudPolitico({args, req}) {
 }
 
 function denegarSolicitudPolitico({args, req}) {
-    const { id_politico, /*id_usuario*/ } = args;
+    const { id_politico /*id_usuario*/ } = args;
 
     SolicitudPolitico.findByIdAndRemove(id_politico, (err)=> {
         if(err) return console.error(err);

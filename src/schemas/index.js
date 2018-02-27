@@ -26,7 +26,7 @@ const SolicitudPolitico = mongoose.model('solicitud_politico');
 const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const SolicitudEvento = mongoose.model('solicitud_evento');
 //Solicitud de modificaciones
-const SolicitudModificarPolitico = mongoose. model('solicitud_modificar_politico');
+const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
 
 
 
@@ -49,7 +49,6 @@ const PreferenciaType = require('./preferencia');
 const VotacionType = require('./votacion');
 const ZonaType = require('./zona');
 //const SolicitudPoliticoType = ('./solicitud_politico');
-
 
 const RootQuery = new GraphQLObjectType({
   name: 'Consultas',

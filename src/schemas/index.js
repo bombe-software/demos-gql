@@ -247,7 +247,7 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     solicitudesModificarPolitico: {
-      type: require('./modificar_politico'),
+      type: new GraphQLList(require('./modificar_politico')),
       resolve() {
         return SolicitudModificarPolitico.find({});
       }

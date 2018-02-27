@@ -9,7 +9,10 @@ function mensaje({ args, req }) {
 
     return client.message(mensajeUser, {})
     .then((data) => {
-        return  data.entities.intent[0].value;
+        if(JSON.stringify(data.entities) != '{}'){
+            return  data.entities.datos[0].value;
+        }
+        return "No logro entenderte";
     })
     .catch(console.error);
 }

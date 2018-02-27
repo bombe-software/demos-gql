@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const SolicitudPolitico = mongoose.model('solicitud_politico');
 const Politico = mongoose.model('politico');
 const Usuario = mongoose.model('usuario');
+const Estado = mongoose.model('estado');
 
 function aceptarSolicitudPolitico({args, req}) {
     const { id_politico } = args;

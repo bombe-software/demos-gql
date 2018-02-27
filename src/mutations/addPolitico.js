@@ -1,3 +1,4 @@
+
 //Importar models
 const mongoose = require('mongoose');
 const Solicitud_Politico = mongoose.model('solicitud_politico');
@@ -16,7 +17,7 @@ function addPolitico({ args, req }) {
     const {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, partido, usuario, referencia
     } = args
-    console.log(args);
+
     if (!usuario) {
         throw new Error('Falta id del Usuario');
     }
@@ -35,7 +36,6 @@ function addPolitico({ args, req }) {
     if (!cargo) {
         throw new Error('Falta cargo');
     }
-
     if (!grado_academico) {
         throw new Error('Falta grado academico');
     }
@@ -57,11 +57,10 @@ function addPolitico({ args, req }) {
                 throw new Error('Link invalido');
             }
     }
-    if(grado_academico){
+
     const estudios = new Estudio({
         titulo, grado_academico, lugar_estudio
     });
-    }
     //Area de registro
     var estudioId;
     estudios.save(function (err, estudio) {
@@ -88,28 +87,6 @@ function addPolitico({ args, req }) {
 
     });
 
-    var cargos = [];
-    if (cargo === "Candidato") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.candidatos;
-                cargos.push(politico._id);
-                estado.set({ candidatos: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    } else if (cargo === "Funcionario") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.funcionarios;
-                cargos.push(politico._id);
-                estado.set({ funcionarios: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    }
     console.log(args);
     var integrantes = [];
     Partido.findById(partido).then(partido => {
@@ -128,3 +105,4 @@ function addPolitico({ args, req }) {
 
 //Se exporta la funcion
 module.exports = { addPolitico };
+

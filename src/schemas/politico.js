@@ -11,14 +11,6 @@ const PoliticoType = new GraphQLObjectType({
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLString },
-        usuario: {
-            type: require('./usuario'),
-            resolve(parentValue) {
-                return Politico.findById(parentValue)
-                .populate('usuario')
-                .then(politico => politico.usuario);
-            }
-        },
         estado: {
             type: require('./estado'),
             resolve(parentValue) {

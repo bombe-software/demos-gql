@@ -33,9 +33,8 @@ const config = {
   password: 'n0m3l0',
 }
 
-//const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 const MONGO_URI = `mongodb://localhost/demos_db`;
-
+//const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
@@ -59,6 +58,40 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(bodyParser.json(),(req, res, next)=>{
+  const Logs = require('mongoose').model('logs');
+  if(JSON.stringify(req.body) == undefined){
+    const logs = new Logs({
+      metodo: req.method, 
+      ip: req.ip,
+      url: req.originalUrl
+    });
+    logs.save();
+  }else{
+    if(req.user){
+      const logs = new Logs({
+        metodo: req.method, 
+        ip: req.ip,
+        url: req.originalUrl,
+        query: req.body.query,
+        usuario: req.user.id
+      });
+      logs.save();
+    }else{
+      const logs = new Logs({
+        metodo: req.method, 
+        ip: req.ip,
+        url: req.originalUrl,
+        query: req.body.query
+      });
+      logs.save();
+    }
+
+  }
+  next();
+});
 
 //Integracion de graphql
 app.use('/graphql', bodyParser.json(),  

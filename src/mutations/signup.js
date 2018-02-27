@@ -2,8 +2,9 @@
 /**
  * Mongoose
  */
+const axios = require("axios");
 const mongoose = require('mongoose');
-const User = mongoose.model('usuario');
+const User = mongoose.model('usuario_confirmar');
 
 //Funcion
 function signup({ args, req }) {
@@ -69,7 +70,12 @@ function signup({ args, req }) {
             return user.save();
         })
         .then(user => {
-            console.log(user);
+            const ticket = {
+                email: user.email,
+                id_usuario: user.id
+            };
+      
+            const request = axios.post("http://localhost:5000/send_email", ticket);
             return new Promise((resolve, reject) => {
                 req.logIn(user, (err) => {
                     if (err) {

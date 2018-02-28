@@ -95,4 +95,3 @@ function addPolitico({ args, req }) {
 
 //Se exporta la funcion
 module.exports = { addPolitico };
->>>>>>> origin/anguiano

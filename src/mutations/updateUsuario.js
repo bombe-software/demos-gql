@@ -1,3 +1,4 @@
+
 //Importar models
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('usuario');

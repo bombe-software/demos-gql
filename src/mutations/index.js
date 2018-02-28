@@ -271,15 +271,15 @@ const RootMutation = new GraphQLObjectType({
             return confirmEmail({ args, req });
           }
       },
-      mensaje: {
-        type: GraphQLString,
-        args: {
-          mensajeUser: { type: GraphQLString }
-        },resolve(parentValue, args, req) {
-            return mensaje({ args, req });
-          }
-    }
-      /*denegarSolicitudPolitico: {
+    mensaje: {
+      type: GraphQLString,
+      args: {
+        mensajeUser: { type: GraphQLString }
+      },resolve(parentValue, args, req) {
+          return mensaje({ args, req });
+      }
+    },
+    denegarModificarSolicitudPolitico: {
         type: PoliticoType,
         args: {
           id_solicitud: { type: GraphQLID }
@@ -287,7 +287,7 @@ const RootMutation = new GraphQLObjectType({
         resolve(parentValue, args, req) {
           return denegarModificarSolicitudPolitico({ args, req });
         } 
-      },*/
+      }
     }
 });
 

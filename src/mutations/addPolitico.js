@@ -86,17 +86,6 @@ function addPolitico({ args, req }) {
 
     });
 
-    console.log(args);
-    var integrantes = [];
-    Partido.findById(partido).then(partido => {
-        integrantes = partido.integrantes;
-        integrantes.push(politico._id);
-        partido.set({ integrantes: integrantes });
-        partido.save(function (err) {
-            if (err) return console.error(err);
-        });
-    })
-
     //Area del resolver
     new pubsub().publish(POLITICO_AGREGADO, { politicoAdded: Solicitud_Politico.findOne({ nombre }) });
     return Solicitud_Politico.findOne({ nombre });

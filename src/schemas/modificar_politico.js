@@ -15,7 +15,7 @@ const ModificarPoliticoType = new GraphQLObjectType({
         usuario: {
             type: require('./usuario'),
             resolve(parentValue) {
-                return SolicitudPolitico.findById(parentValue)
+                return SolicitudModificarPolitico.findById(parentValue)
                 .populate('usuario')
                 .then(politico => politico.usuario);
             }
@@ -23,21 +23,21 @@ const ModificarPoliticoType = new GraphQLObjectType({
         estado: {
             type: require('./estado'),
             resolve(parentValue) {
-                return SolicitudPolitico.findById(parentValue).populate('estado')
+                return SolicitudModificarPolitico.findById(parentValue).populate('estado')
                     .then(politico => politico.estado);
             }
         },
         partido: {
             type: require('./partido'),
             resolve(parentValue) {
-                return SolicitudPolitico.findById(parentValue).populate('partido')
+                return SolicitudModificarPolitico.findById(parentValue).populate('partido')
                     .then(politico => politico.partido);
             }
         },
         estudios: {
             type: new GraphQLList(require('./estudio')),
             resolve(parentValue) {
-                return SolicitudPolitico.findById(parentValue.id)
+                return SolicitudModificarPolitico.findById(parentValue.id)
                     .populate('estudios')
                     .then(politico => politico.estudios);
             }

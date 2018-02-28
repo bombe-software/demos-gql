@@ -56,15 +56,12 @@ function modifyPolitico({ args, req }) {
                 throw new Error('Link invalido');
             }
     }
+
+    var estudiosAModificar;
  
-    console.log(estudios);
-    Estudio.findById(estudios, function(error, est){
+    Estudio.findById(estudios, function(err, est){
         var estudioId;
-           console.log("aqui");
-        console.log(est);
-      //  console.log(error);
-        if(est.grado_academico.id !== grado_academico || est.lugar_estudio.id !== lugar_estudio || est.titulo !== titulo){
-           console.log("Lgrase NASA");
+        if(est.grado_academico !== grado_academico || est.lugar_estudio !== lugar_estudio || est.titulo !== titulo){
             var e = new Estudio({
                 titulo, grado_academico, lugar_estudio
             });
@@ -72,53 +69,35 @@ function modifyPolitico({ args, req }) {
             e.save(function (err, estudio) {
         
                 if (err) return console.error(err);
-                estudios = estudio.id
-        
+                estudiosAModificar = estudio._id
+                console.log(estudiosAModificar);
             });
         } else {
-            estudios;
+            console.log("pasa");
+            estudiosAModificar = estudios;
+            console.log("Estudios a modificar: "+estudiosAModificar)
         }
-    });
-
-    var politico = new SolicitudModificarPolitico({
-        nombre, cargo, partido, estado, usuario, referencia, estudios
-    });
-
-    //Guardar
-    var arregloEstudios;
-    politico.save(function (err, poli) {
-        if (err) return console.error(err);
-        arregloEstudios = poli.estudios;
-        arregloEstudios.push(estudios);
-        poli.set({ estudios: arregloEstudios });
-        poli.save(function (err) {
-            if (err) return console.error(err);
+        var politico = new SolicitudModificarPolitico({
+            nombre, cargo, partido, estado, usuario, referencia, id_politico
         });
-
+        console.log("pasa");
+        //Guardar
+        var arregloEstudios;
+        politico.save(function (err, poli) {
+            if (err) return console.error(err);
+            console.log("hola" + poli);
+            arregloEstudios = [];
+            console.log(estudiosAModificar);
+            arregloEstudios.push(estudiosAModificar);
+            console.log(arregloEstudios);
+            poli.set({ estudios: arregloEstudios });
+            console.log(poli);
+            poli.save(function (err) {
+                if (err) return console.error(err);
+            });
+        });
     });
 
-    var cargos = [];
-    if (cargo === "Candidato") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.candidatos;
-                cargos.push(politico._id);
-                estado.set({ candidatos: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    } else if (cargo === "Funcionario") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.funcionarios;
-                cargos.push(politico._id);
-                estado.set({ funcionarios: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    }
     console.log(args);
 
     //Area del resolver

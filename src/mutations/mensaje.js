@@ -9,7 +9,7 @@ function mensaje({ args, req }) {
 
     return client.message(mensajeUser, {})
     .then((data) => {
-        console.log(data);
+        console.log(data.entities.entities);
         if(JSON.stringify(data.entities) != '{}'){
             return  data.entities.datos[0].value;
         }

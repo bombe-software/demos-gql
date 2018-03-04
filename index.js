@@ -40,7 +40,7 @@ mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
 //Configruacion del CORS
 const corsOptions = {
-    origin: 'https://demos-web.herokuapp.com/',
+    origin: 'https://demos-web.herokuapp.com',
     credentials: true,
 }
 app.use(cors(corsOptions));

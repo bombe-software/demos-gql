@@ -18,22 +18,30 @@ function mensaje({ args, req }) {
             const registro = data.entities['registro'];
             const incompatibles = data.entities['incompatibles'];
             const tendenciasPoliticas = data.entities['tendenciasPoliticas'];
-            if(bombe){
-                return  data.entities.bombe[0].value;
+            if(bombe){	
+                let id = Math.floor(Math.random()*bombe.length);
+                return  data.entities.bombe[id].value;
             }else if(humor){
-                return  data.entities.humor[0].value;
+                let id = Math.floor(Math.random()*humor.length);
+                return  data.entities.humor[id].value;
             }else if(datos){
-                return  data.entities.datos[0].value;
+                let id = Math.floor(Math.random()*datos.length);
+                return  data.entities.datos[id].value;
             }else if(politicos){
-                return  data.entities.politicos[0].value;
+                let id = Math.floor(Math.random()*politicos.length);
+                return  data.entities.politicos[id].value;
             }else if(conversacion){
-                return  data.entities.conversacion[0].value;
+                let id = Math.floor(Math.random()*conversacion.length);
+                return  data.entities.conversacion[id].value;
             }else if(registro){
-                return  data.entities.registro[0].value;
+                let id = Math.floor(Math.random()*registro.length);
+                return  data.entities.registro[id].value;
             }else if(incompatibles){
-                return  data.entities.incompatibles[0].value;
+                let id = Math.floor(Math.random()*incompatibles.length);
+                return  data.entities.incompatibles[id].value;
             }else if(tendenciasPoliticas){
-                return  data.entities.tendenciasPoliticas[0].value;
+                let id = Math.floor(Math.random()*tendenciasPoliticas.length);
+                return  data.entities.tendenciasPoliticas[id].value;
             }
         }
         return "No logro entenderte";

@@ -40,11 +40,18 @@ mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
 
+const corsOptions = {
+  origin: 'http://localhost:9000',
+  credentials: true,
+}
+/*
 //Configruacion del CORS
 const corsOptions = {
-    origin: 'https://demos-web.herokuapp.com',
+    origin: 'http://localhost:9000',  
+  //origin: 'https://demos-web.herokuapp.com',
     credentials: true,
 }
+*/
 app.use(cors(corsOptions));
 
 //Configuracion de las sesiones e integracion con mongodb

@@ -280,7 +280,7 @@ const RootMutation = new GraphQLObjectType({
     aceptarModificarSolicitudPolitico: {
       type: PoliticoType,
       args: {
-        id_solicitud: { type: GraphQLID },
+        id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return aceptarModificarSolicitudPolitico({ args, req });

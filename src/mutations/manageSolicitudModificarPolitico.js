@@ -9,7 +9,7 @@ function aceptarModificarSolicitudPolitico({args, req}) {
         id_solicitud
      } = args;
      if (!id_solicitud) {
-        throw new Error('Error al hacer fetch con el Solicitud');
+        throw new Error('Error al hacer fetch con el Politico');
     }
     SolicitudModificarPolitico.findById(id_solicitud)
     .then((politico) => {

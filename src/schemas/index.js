@@ -260,6 +260,15 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarEvento.find({});
       }
     },
+    solicitudModificarEvento: {
+      type: require('./modificar_evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve() {
+        return SolicitudModificarEvento.findById(id);
+      }
+    },
     solicitudModificarPolitico: {
       type: require('./modificar_politico'),
       args: {

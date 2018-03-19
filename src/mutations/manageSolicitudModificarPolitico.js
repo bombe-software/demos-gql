@@ -11,13 +11,11 @@ function aceptarModificarSolicitudPolitico({args, req}) {
      if (!id_solicitud) {
         throw new Error('Error al hacer fetch con el Politico');
     }
+
     SolicitudModificarPolitico.findById(id_solicitud)
     .then((politico) => {
-        
+         console.log("politico bonito: " + politico);
         var {nombre, cargo, estado, partido, estudios, id_politico, _id} = politico;
-        console.log("POlitico: " + politico);
-        console.log(id_politico);
-
         Politico.findById(id_politico)
         .then((poli)=> {
             console.log(poli);
@@ -33,7 +31,7 @@ function aceptarModificarSolicitudPolitico({args, req}) {
 }
 
 function denegarModificarSolicitudPolitico({args, req}) {
-    const { id_politico, /*id_usuario*/ } = args;
+    const { id_solicitud, /*id_usuario*/ } = args;
 
     SolicitudModificarPolitico.findByIdAndRemove(id_solicitud, (err)=> {
         if(err) return console.error(err);

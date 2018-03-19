@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const solicitud_modificar_politico = mongoose.Schema({
-  id_politico: {
-    type: Schema.Types.ObjectId,
-    ref: 'politico' 
-  },
+
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'usuario'
+  },
+    id_politico: {
+    type: Schema.Types.ObjectId,
+    ref: 'politico' 
   },
   nombre: String,
   cargo: {

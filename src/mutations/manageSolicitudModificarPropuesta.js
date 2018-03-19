@@ -1,7 +1,7 @@
 //Importar models
 const mongoose = require('mongoose');
 const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
-const Propuesta = mongoose.model('evento');
+const Propuesta = mongoose.model('propuesta');
 const Usuario = mongoose.model('usuario');
 
 function aceptarModificarSolicitudPolitico({args, req}) {

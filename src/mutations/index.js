@@ -318,13 +318,13 @@ const RootMutation = new GraphQLObjectType({
         return denegarModificarSolicitudPolitico({ args, req });
       }
     },
-    denegarModificarSolicitudEvento: {
+    aceptarModificarSolicitudEvento: {
       type: EventoType,
       args: {
         id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
-        return denegarModificarSolicitudEvento({ args, req });
+        return aceptarModificarSolicitudEvento({ args, req });
       }
     },
     denegarModificarSolicitudEvento: {

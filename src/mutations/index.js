@@ -271,7 +271,7 @@ const RootMutation = new GraphQLObjectType({
         referencia: { type: GraphQLString },
         usuario: { type: GraphQLID },
         fecha: { type: GraphQLString },
-        politico: { type: GraphQLID },
+        politico: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return modifyEvento({ args, req });

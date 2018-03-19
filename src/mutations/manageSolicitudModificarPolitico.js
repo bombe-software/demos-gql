@@ -21,9 +21,19 @@ function aceptarModificarSolicitudPolitico({args, req}) {
             console.log(poli);
             poli.nombre = nombre;
             poli.cargo = cargo;
-            poli.estado = partido;
+            poli.partido = partido;
+            poli.estado = estado;
             poli.estudios = estudios;
-            poli.save((err)=>{return console.log(err)});
+           
+            poli.save(function (err, resp) {
+            if (err) return console.error(err);
+            SolicitudModificarPolitico.findByIdAndRemove(_id, (err)=>{
+                if (err) return console.error(err);
+            });
+            console.log(resp._id);
+            return Politico.findById(resp._id);
+        });
+        
         })
         
     });

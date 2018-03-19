@@ -27,6 +27,7 @@ const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const SolicitudEvento = mongoose.model('solicitud_evento');
 //Solicitud de modificaciones
 const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
+const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
 const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 
 
@@ -251,6 +252,12 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(require('./modificar_politico')),
       resolve() {
         return SolicitudModificarPolitico.find({});
+      }
+    },
+    solicitudesModificarEvento: {
+      type: new GraphQLList(require('./modificar_evento')),
+      resolve() {
+        return SolicitudModificarEvento.find({});
       }
     },
     solicitudModificarPolitico: {

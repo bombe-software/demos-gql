@@ -20,6 +20,7 @@ const { addPropuesta } = require('./addPropuesta');
 const { updateUsuario } = require('./updateUsuario');
 const { modifyPolitico } = require('./modifyPolitico')
 const { modifyEvento } = require('./modifyEvento')
+const { modifyPropuesta } = require('./modifyPropuesta')
 const { confirmEmail } = require('./confirmEmail');
 const { mensaje } = require('./mensaje');
 const { deletePolitico } = require('./deletePolitico');
@@ -48,6 +49,11 @@ const {
   aceptarModificarSolicitudEvento,
   denegarModificarSolicitudEvento
 } = require('./manageSolicitudModificarEvento')
+
+const {
+  aceptarModificarSolicitudPropuesta,
+  denegarModificarSolicitudPropuesta
+} = require('./manageSolicitudModificarPropuesta')
 
 const {
   aceptarSolicitudDeletePolitico,
@@ -283,6 +289,22 @@ const RootMutation = new GraphQLObjectType({
         return modifyEvento({ args, req });
       }
     },
+    modifyPropuesta: {
+      type: EventoType,
+      args: {
+        id_propuesta: { type: GraphQLID },
+        usuario: { type: GraphQLID }, 
+        politico: { type: GraphQLID },
+        fecha: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        titulo:  { type: GraphQLString },
+        tipo_propuesta: { type: GraphQLID },
+        referencia:  { type: GraphQLString },
+      },
+      resolve(parentValue, args, req) {
+        return modifyPropuesta({ args, req });
+      }
+    },
     aceptarModificarSolicitudPolitico: {
       type: PoliticoType,
       args: {
@@ -334,6 +356,24 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return denegarModificarSolicitudEvento({ args, req });
+      }
+    },
+    aceptarModificarSolicitudPropuesta: {
+      type: PropuestaType,
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return aceptarModificarSolicitudPropuesta({ args, req });
+      }
+    },
+    denegarModificarSolicitudPropuesta: {
+      type: PropuestaType,
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return denegarModificarSolicitudPropuesta({ args, req });
       }
     },
      deletePolitico: {

@@ -1,7 +1,7 @@
 //Importar models
 const mongoose = require('mongoose');
-const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
-const Politico = mongoose.model('politico');
+const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
+const Propuesta = mongoose.model('evento');
 const Usuario = mongoose.model('usuario');
 
 function aceptarModificarSolicitudPolitico({args, req}) {
@@ -12,18 +12,21 @@ function aceptarModificarSolicitudPolitico({args, req}) {
         throw new Error('Error al hacer fetch con el Politico');
     }
 
-    SolicitudModificarPolitico.findById(id_solicitud)
-    .then((politico) => {
-         console.log("politico bonito: " + politico);
-        var {nombre, cargo, estado, partido, estudios, id_politico, _id} = politico;
-        Politico.findById(id_politico)
-        .then((poli)=> {
-            console.log(poli);
-            poli.nombre = nombre;
-            poli.cargo = cargo;
-            poli.estado = partido;
-            poli.estudios = estudios;
-            poli.save((err)=>{return console.log(err)});
+    SolicitudModificarPropuesta.findById(id_solicitud)
+    .then((propuesta) => {
+        var {id_propuesta, usuario, politico,
+            fecha, descripcion, titulo,
+            tipo_propuesta, referencia} = propuesta;
+        Propuesta.findById(id_propuesta)
+        .then((prop)=> {
+            prop.usuario = usuario;
+            prop.politico = politico;
+            prop.fecha = fecha;
+            prop.descripcion = descripcion;
+            prop.titulo = titulo;
+            prop.tipo_propuesta = tipo_propuesta;
+            prop.referencia = referencia;
+            prop.save((err)=>{return console.log(err)});
         })
         
     });
@@ -33,7 +36,7 @@ function aceptarModificarSolicitudPolitico({args, req}) {
 function denegarModificarSolicitudPolitico({args, req}) {
     const { id_solicitud, /*id_usuario*/ } = args;
 
-    SolicitudModificarPolitico.findByIdAndRemove(id_solicitud, (err)=> {
+    SolicitudModificarEvento.findByIdAndRemove(id_solicitud, (err)=> {
         if(err) return console.error(err);
     });
 

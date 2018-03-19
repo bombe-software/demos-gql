@@ -45,6 +45,11 @@ const {
 } = require('./manageSolicitudModificarPolitico')
 
 const {
+  aceptarModificarSolicitudEvento,
+  denegarModificarSolicitudEvento
+} = require('./manageSolicitudModificarEvento')
+
+const {
   aceptarSolicitudDeletePolitico,
   denegarSolicitudDeletePolitico
 } = require('./manageSolicitudDeletePolitico')
@@ -311,6 +316,24 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return denegarModificarSolicitudPolitico({ args, req });
+      }
+    },
+    denegarModificarSolicitudEvento: {
+      type: EventoType,
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return denegarModificarSolicitudEvento({ args, req });
+      }
+    },
+    denegarModificarSolicitudEvento: {
+      type: EventoType,
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return denegarModificarSolicitudEvento({ args, req });
       }
     },
      deletePolitico: {

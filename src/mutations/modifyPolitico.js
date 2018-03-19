@@ -16,7 +16,7 @@ function modifyPolitico({ args, req }) {
     let {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, estudios, partido, usuario, referencia, id_politico
     } = args
-
+    console.log(`Politico: ${id_politico}`);
     if (!usuario) {
         throw new Error('Falta id del Usuario');
     }

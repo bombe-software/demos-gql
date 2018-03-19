@@ -10,7 +10,9 @@ const {
 const Estado = mongoose.model('estado');
 const Evento = mongoose.model('evento');
 const GradoAcademico = mongoose.model('grado_academico');
+const Gabinete = mongoose.model('gabinete');
 const LugarEstudio = mongoose.model('lugar_estudio');
+const LikeNacional = mongoose.model('like_nacional');
 const Estudio = mongoose.model('estudio');
 const Partido = mongoose.model('partido');
 //const TipoPolitico = mongoose.model('tipo_politico');
@@ -34,7 +36,9 @@ const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico'
 const EstadoType = require('./estado');
 const EventoType = require('./evento');
 const GradoAcademicoType = require('./grado_academico');
+const GabineteType = require('./gabinete');
 const LugarEstudioType = require('./lugar_estudio');
+const LikeNacionalType = require('./like_nacional');
 const EstudioType = require('./estudio');
 const PartidoType = require('./partido');
 //const TipoPoliticoType = require('./tipo_politico');
@@ -71,10 +75,22 @@ const RootQuery = new GraphQLObjectType({
         return GradoAcademico.find({});
       }
     },
+    gabinetes: {
+      type: new GraphQLList(GabineteType),
+      resolve() {
+        return Gabinete.find({});
+      }
+    },
     lugares_estudio: {
       type: new GraphQLList(LugarEstudioType),
       resolve() {
         return LugarEstudio.find({});
+      }
+    },
+    like_nacional: {
+      type: new GraphQLList(LikeNacionalType),
+      resolve() {
+        return LikeNacional.find({});
       }
     },
     estudios: {

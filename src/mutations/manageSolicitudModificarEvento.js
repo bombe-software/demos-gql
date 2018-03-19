@@ -25,7 +25,7 @@ function aceptarModificarSolicitudEvento({args, req}) {
             eve.usuario = usuario;
             eve.fecha = fecha;
             eve.politico = politico;
-            poli.save((err)=>{return console.log(err)});
+            eve.save((err)=>{return console.log(err)});
         })
         
     });

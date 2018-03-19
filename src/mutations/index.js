@@ -24,6 +24,8 @@ const { modifyPropuesta } = require('./modifyPropuesta')
 const { confirmEmail } = require('./confirmEmail');
 const { mensaje } = require('./mensaje');
 const { deletePolitico } = require('./deletePolitico');
+const { deletePropuesta } = require('./deletePropuesta');
+const { deleteEvento } = require('./deleteEvento');
 
 const {
   aceptarSolicitudPolitico,
@@ -376,7 +378,7 @@ const RootMutation = new GraphQLObjectType({
         return denegarModificarSolicitudPropuesta({ args, req });
       }
     },
-     deletePolitico: {
+    deletePolitico: {
       type: PoliticoType,
       args: {
         id_politico: { type: GraphQLID },
@@ -384,6 +386,26 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return deletePolitico({ args, req });
+      }
+    },
+    deleteEvento: {
+      type: EventoType,
+      args: {
+        id_evento: { type: GraphQLID },
+        id_usuario: {type: GraphQLID}
+      },
+      resolve(parentValue, args, req) {
+        return deleteEvento({ args, req });
+      }
+    },
+    deletePropuesta: {
+      type: PropuestaType,
+      args: {
+        id_evento: { type: GraphQLID },
+        id_usuario: {type: GraphQLID}
+      },
+      resolve(parentValue, args, req) {
+        return deletePropuesta({ args, req });
       }
     },
     aceptarSolicitudDeletePolitico: {

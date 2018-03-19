@@ -265,7 +265,7 @@ const RootQuery = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
       },
-      resolve() {
+      resolve(parentValue, { id }) {
         return SolicitudModificarEvento.findById(id);
       }
     },

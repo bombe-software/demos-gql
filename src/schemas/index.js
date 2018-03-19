@@ -265,7 +265,8 @@ const RootQuery = new GraphQLObjectType({
     solicitudDeletePolitico:{
      type: require('./eliminar_politico'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
+        id_politico: { type: new GraphQLNonNull(GraphQLID) },
+        id_usuario: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
         return SolicitudEliminarPolitico.findById(id);

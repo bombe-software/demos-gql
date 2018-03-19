@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const solicitud_modificar_politico = mongoose.Schema({
   id_politico: {
     type: Schema.Types.ObjectId,
-    ref: 'politico'
+    ref: 'politico' 
   },
   usuario: {
     type: Schema.Types.ObjectId,

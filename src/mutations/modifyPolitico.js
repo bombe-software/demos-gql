@@ -77,6 +77,8 @@ function modifyPolitico({ args, req }) {
             estudiosAModificar = estudios;
             console.log("Estudios a modificar: "+estudiosAModificar)
         }
+        console.log("SAUL AMA A PANY");
+        console.log(id_politico);
         var politico = new SolicitudModificarPolitico({
             nombre, cargo, partido, estado, usuario, referencia, id_politico
         });

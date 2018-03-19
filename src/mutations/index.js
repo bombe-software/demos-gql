@@ -19,6 +19,7 @@ const { addPolitico } = require('./addPolitico');
 const { addPropuesta } = require('./addPropuesta');
 const { updateUsuario } = require('./updateUsuario');
 const { modifyPolitico } = require('./modifyPolitico')
+const { modifyEvento } = require('./modifyEvento')
 const { confirmEmail } = require('./confirmEmail');
 const { mensaje } = require('./mensaje');
 const { deletePolitico } = require('./deletePolitico');

@@ -99,7 +99,7 @@ function modifyPolitico({ args, req }) {
     console.log(args);
 
     //Area del resolver
-    return SolicitudModificarPolitico.findOne({ nombre });
+    return SolicitudModificarPolitico.findById( id_politico );
 }
 
 //Se exporta la funcion

@@ -2,9 +2,7 @@
 const mongoose = require('mongoose');
 const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 const Politico = mongoose.model('politico');
-const Partido = mongoose.model('partido');
-const Estado = mongoose.model('estado');
-const Estudio = mongoose.model('estudio');
+const Usuario = mongoose.model('usuario');
 
 //Importar modulos de las suscripciones
 //Funcion
@@ -12,16 +10,18 @@ function deletePolitico({ args, req }) {
     console.log(args);
 
     let {
-        idpolitico, usuario
+        id_politico, id_usuario
     } = args
 
     var politico = new SolicitudEliminarPolitico({
-        idpolitico, usuario
+        id_politico, id_usuario
     });
-    politico.save();
+    politico.save(function (err) {
+        if (err) return console.log(err);
+    });
 
     //Area del resolver
-    return SolicitudEliminarPolitico.findOne({ idpolitico });
+    return SolicitudEliminarPolitico.findOne({ id_politico });
 }
 
 //Se exporta la funcion

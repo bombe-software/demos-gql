@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const solicitud_modificar_propuesta = mongoose.Schema({
-    id_propuesta: {
-        type: Schema.Types.ObjectId,
-        ref: 'propuesta'
-      },
+  id_propuesta: {
+    type: Schema.Types.ObjectId,
+    ref: 'propuesta'
+  },
   usuario: {
     type: Schema.Types.ObjectId,
     ref: 'usuario'
@@ -18,8 +18,8 @@ const solicitud_modificar_propuesta = mongoose.Schema({
   descripcion: String,
   titulo: String,
   tipo_propuesta: {
-      type: Schema.Types.ObjectId,
-      ref: 'tipo_propuesta'
+    type: Schema.Types.ObjectId,
+    ref: 'tipo_propuesta'
   },
   referencia: String
 });

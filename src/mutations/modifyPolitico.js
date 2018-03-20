@@ -48,7 +48,8 @@ function modifyPolitico({ args, req }) {
         throw new Error('Falta link de referencia');
 
     } else if (referencia != undefined) {
-        var re = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/;
+         var re = /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/
+        //var re = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9]\.[^\s]{2,})/;
         if (/^\s+|\s+$/.test(referencia)) {
             throw new Error('Link invalido');
         } else
@@ -56,15 +57,12 @@ function modifyPolitico({ args, req }) {
                 throw new Error('Link invalido');
             }
     }
+
+    var estudiosAModificar;
  
-    console.log(estudios);
-    Estudio.findById(estudios, function(error, est){
+    Estudio.findById(estudios, function(err, est){
         var estudioId;
-           console.log("aqui");
-        console.log(est);
-      //  console.log(error);
-        if(est.grado_academico.id !== grado_academico || est.lugar_estudio.id !== lugar_estudio || est.titulo !== titulo){
-           console.log("Lgrase NASA");
+        if(est.grado_academico !== grado_academico || est.lugar_estudio !== lugar_estudio || est.titulo !== titulo){
             var e = new Estudio({
                 titulo, grado_academico, lugar_estudio
             });
@@ -72,57 +70,38 @@ function modifyPolitico({ args, req }) {
             e.save(function (err, estudio) {
         
                 if (err) return console.error(err);
-                estudios = estudio.id
-        
+                estudiosAModificar = estudio._id
+                console.log(estudiosAModificar);
             });
         } else {
-            estudios;
+            estudiosAModificar = estudios;
+            console.log("Estudios a modificar: "+estudiosAModificar)
         }
-    });
-
-    var politico = new SolicitudModificarPolitico({
-        nombre, cargo, partido, estado, usuario, referencia, estudios
-    });
-
-    //Guardar
-    var arregloEstudios;
-    politico.save(function (err, poli) {
-        if (err) return console.error(err);
-        arregloEstudios = poli.estudios;
-        arregloEstudios.push(estudios);
-        poli.set({ estudios: arregloEstudios });
-        poli.save(function (err) {
-            if (err) return console.error(err);
+        console.log("SAUL AMA A PANY");
+        console.log(id_politico);
+        var politico = new SolicitudModificarPolitico({
+            nombre, cargo, partido, estado, usuario, referencia, id_politico
         });
-
+        //Guardar
+        var arregloEstudios;
+        politico.save(function (err, poli) {
+            if (err) return console.error(err);
+            arregloEstudios = [];
+            console.log(estudiosAModificar);
+            arregloEstudios.push(estudiosAModificar);
+            console.log(arregloEstudios);
+            poli.set({ estudios: arregloEstudios });
+            console.log(poli);
+            poli.save(function (err) {
+                if (err) return console.error(err);
+            });
+        });
     });
 
-    var cargos = [];
-    if (cargo === "Candidato") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.candidatos;
-                cargos.push(politico._id);
-                estado.set({ candidatos: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    } else if (cargo === "Funcionario") {
-        Estado.findById(estado)
-            .then(estado => {
-                cargos = estado.funcionarios;
-                cargos.push(politico._id);
-                estado.set({ funcionarios: cargos });
-                estado.save(function (err) {
-                    if (err) return console.error(err);
-                });
-            });
-    }
     console.log(args);
 
     //Area del resolver
-    return SolicitudModificarPolitico.findOne({ nombre });
+    return SolicitudModificarPolitico.findById( id_politico );
 }
 
 //Se exporta la funcion

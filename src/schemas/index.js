@@ -29,6 +29,9 @@ const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const SolicitudEvento = mongoose.model('solicitud_evento');
 //Solicitud de modificaciones
 const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
+const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
+const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
+const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 
 
 
@@ -268,6 +271,36 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPolitico.find({});
       }
     },
+    solicitudesModificarEvento: {
+      type: new GraphQLList(require('./modificar_evento')),
+      resolve() {
+        return SolicitudModificarEvento.find({});
+      }
+    },
+    solicitudModificarEvento: {
+      type: require('./modificar_evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudModificarEvento.findById(id);
+      }
+    },
+    solicitudesModificarPropuesta: {
+      type: new GraphQLList(require('./modificar_propuesta')),
+      resolve() {
+        return SolicitudModificarPropuesta.find({});
+      }
+    },
+    solicitudModificarPropuesta: {
+      type: require('./modificar_propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudModificarPropuesta.findById(id);
+      }
+    },
     solicitudModificarPolitico: {
       type: require('./modificar_politico'),
       args: {
@@ -277,6 +310,22 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPolitico.findById(id);
       }
     },
+    solicitudDeletePolitico:{
+     type: require('./eliminar_politico'),
+      args: {
+        id_politico: { type: new GraphQLNonNull(GraphQLID) },
+        id_usuario: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEliminarPolitico.findById(id);
+      }
+    },
+    solicitudesDeletePolitico:{
+     type: new GraphQLList(require('./eliminar_politico')),
+      resolve() {
+        return SolicitudEliminarPolitico.find({});
+      }
+    }
   })
 });
 

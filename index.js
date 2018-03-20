@@ -32,17 +32,26 @@ const config = {
   user: 'admin',
   password: 'n0m3l0',
 }
+
 const MONGO_URI = `mongodb://localhost/demos_db`;
 //const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
+
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
 
+const corsOptions = {
+  origin: 'http://localhost:9000',
+  credentials: true,
+}
+/*
 //Configruacion del CORS
 const corsOptions = {
-    origin: 'http://localhost:9000',
+    origin: 'http://localhost:9000',  
+  //origin: 'https://demos-web.herokuapp.com',
     credentials: true,
 }
+*/
 app.use(cors(corsOptions));
 
 //Configuracion de las sesiones e integracion con mongodb

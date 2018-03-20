@@ -4,6 +4,7 @@ const SolicitudPolitico = mongoose.model('solicitud_politico');
 const Politico = mongoose.model('politico');
 const Usuario = mongoose.model('usuario');
 const Estado = mongoose.model('estado');
+const Partido = mongoose.model('partido');
 
 function aceptarSolicitudPolitico({args, req}) {
     const { id_politico } = args;
@@ -40,6 +41,16 @@ function aceptarSolicitudPolitico({args, req}) {
                     });
                 });
         }
+
+        var integrantes = [];
+        Partido.findById(partido).then(partido => {
+            integrantes = partido.integrantes;
+            integrantes.push(politico._id);
+            partido.set({ integrantes: integrantes });
+            partido.save(function (err) {
+                if (err) return console.error(err);
+            });
+        });
 
         politicoAprovado.save(function (err, resp) {
             if (err) return console.error(err);

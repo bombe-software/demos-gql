@@ -22,3 +22,6 @@ require('./solicitud_modificar_propuesta');
 require('./soliticitud_modificar_evento');
 require('./gabinete');
 require('./like_nacional');
+require('./solicitud_eliminar_politico');
+require('./solicitud_eliminar_evento');
+require('./solicitud_eliminar_propuesta');

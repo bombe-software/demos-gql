@@ -20,7 +20,13 @@ const UsuarioType = new GraphQLObjectType({
     curp: { type: GraphQLString },
     avatar: { type: GraphQLString },
     puntos: { type: GraphQLInt },
-    localidad: { type: GraphQLString },
+    localidad: {
+      type: require('./estado'),
+      resolve(parentValue) {
+        return Usuario.findById(parentValue.id).populate('localidad')
+          .then(usuario => usuario.localidad);
+      }
+    },
     fecha_registro: { type: GraphQLString }
   })
 });

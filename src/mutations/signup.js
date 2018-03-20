@@ -4,7 +4,9 @@
  */
 const axios = require("axios");
 const mongoose = require('mongoose');
-const User = mongoose.model('usuario_confirmar');
+const User = mongoose.model('usuario');
+
+const Estado = mongoose.model('estado');
 
 //Funcion
 function signup({ args, req }) {
@@ -55,11 +57,18 @@ function signup({ args, req }) {
     const tipo_usuario ="5a68bca9e9bfc6a2fee8cb06";
   
     //Area de registro
-    const user = new User({
-        nombre, email,  tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
-        password, curp, avatar,
-        puntos: 0, localidad
+    console.log(localidad);
+    let estadoBuscado, user;
+    Estado.findOne({ nombre: localidad }).then((est)=>{
+        user = new User({
+            nombre, email,  tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
+            password, curp, avatar,
+            puntos: 0, localidad: est
+        });
     });
+    console.log(estadoBuscado);
+
+    console.log(user);
 
     //Area del resolver
     return User.findOne({ email })
@@ -75,7 +84,7 @@ function signup({ args, req }) {
                 id_usuario: user.id
             };
       
-            const request = axios.post("http://localhost:5000/send_email", ticket);
+            /*const request = axios.post("http://localhost:5000/send_email", ticket);
             return new Promise((resolve, reject) => {
                 req.logIn(user, (err) => {
                     if (err) {
@@ -83,7 +92,8 @@ function signup({ args, req }) {
                     }
                     resolve(user);
                 });
-            });
+            });*/
+            
         });
 }
 

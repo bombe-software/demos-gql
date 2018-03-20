@@ -14,7 +14,7 @@ function aceptarSolicitudPolitico({args, req}) {
     SolicitudPolitico.findById(id_politico)
     .then((politico) => {
         const { nombre, cargo, estado, partido, estudios,referencia , _id } = politico;
-
+        console.log("Partido: " + partido);
         politicoAprovado = new Politico({
             nombre, cargo, estado, partido, estudios, referencia
         });
@@ -43,11 +43,11 @@ function aceptarSolicitudPolitico({args, req}) {
         }
 
         var integrantes = [];
-        Partido.findById(partido).then(partido => {
-            integrantes = partido.integrantes;
+        Partido.findById(partido).then(p => {
+            integrantes = p.integrantes;
             integrantes.push(politico._id);
-            partido.set({ integrantes: integrantes });
-            partido.save(function (err) {
+            p.set({ integrantes: integrantes });
+            p.save(function (err) {
                 if (err) return console.error(err);
             });
         });

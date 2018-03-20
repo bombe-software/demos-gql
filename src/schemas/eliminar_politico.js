@@ -9,8 +9,20 @@ const EliminarPoliticoType = new GraphQLObjectType({
     name: 'EliminarPoliticoType',
     fields: () => ({
         id: { type: GraphQLID },
-        id_politico: { type: GraphQLID },
-        id_usuario: { type: GraphQLID }
+        id_politico: {
+          type: require('./politico'),
+          resolve(parentValue) {
+            return SolicitudEliminarPolitico.findById(parentValue).populate('politico')
+              .then(politico => politico.politico);
+          }
+        },
+       id_usuario: {
+          type: require('./usuario'),
+          resolve(parentValue) {
+            return SolicitudEliminarPolitico.findById(parentValue).populate('usuario')
+              .then(politico => politico.usuario );
+          }
+        },
     })
 });
 

@@ -9,8 +9,7 @@ const solicitud_eliminar_politico = mongoose.Schema({
     id_usuario: {
         type: Schema.Types.ObjectId,
         ref: 'usuario'
-    },
-    referencia: String
+    }
 });
 
 mongoose.model('solicitud_eliminar_politico', solicitud_eliminar_politico);

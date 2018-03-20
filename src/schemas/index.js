@@ -305,8 +305,8 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     solicitudesDeletePolitico:{
-     type: require('./eliminar_politico'),
-      resolve(parentValue, { id }) {
+     type: new GraphQLList(require('./eliminar_politico')),
+      resolve() {
         return SolicitudEliminarPolitico.find({});
       }
     }

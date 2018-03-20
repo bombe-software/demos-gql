@@ -12,7 +12,10 @@ const usuario_confirmar = mongoose.Schema({
     curp: String,			
     avatar: String,		
     puntos: Number,		
-    localidad: String,			
+    localidad: {
+        type: Schema.Types.ObjectId,
+        ref: 'estado'
+    },			
     fecha_registro: { type: Date, default: Date.now }
 });
 

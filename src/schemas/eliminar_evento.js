@@ -3,27 +3,27 @@ const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList } = graphql;
 
 //importar modelos
-const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
+const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 
-const EliminarPoliticoType = new GraphQLObjectType({
-    name: 'EliminarPoliticoType',
+const EliminarEventoType = new GraphQLObjectType({
+    name: 'EliminarEventoType',
     fields: () => ({
         id: { type: GraphQLID },
-        id_politico: {
-          type: require('./politico'),
+        id_evento: {
+          type: require('./evento'),
           resolve(parentValue) {
-            return SolicitudEliminarPolitico.findById(parentValue).populate('id_politico')
-              .then(politico => politico.id_politico);
+            return SolicitudEliminarEvento.findById(parentValue).populate('id_evento')
+              .then(evento => evento.id_evento);
           }
         },
        id_usuario: {
           type: require('./usuario'),
           resolve(parentValue) {
-            return SolicitudEliminarPolitico.findById(parentValue).populate('id_usuario')
-              .then(politico => politico.id_usuario );
+            return SolicitudEliminarEvento.findById(parentValue).populate('id_usuario')
+              .then(evento => evento.id_usuario );
           }
         },
     })
 });
 
-module.exports = EliminarPoliticoType;
+module.exports = EliminarEventoType;

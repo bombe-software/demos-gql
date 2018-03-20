@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const { 
-  GraphQLObjectType, GraphQLList, GraphQLID, 
+const {
+  GraphQLObjectType, GraphQLList, GraphQLID,
   GraphQLNonNull, GraphQLString
- } = graphql;
+} = graphql;
 
 
 //Importar models
@@ -32,8 +32,8 @@ const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico'
 const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
 const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
 const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
-
-
+const SolicitudEliminarPropuesta = mongoose.model('solicitud_eliminar_propuesta');
+const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 
 //Importar schemas
 const EstadoType = require('./estado');
@@ -165,8 +165,8 @@ const RootQuery = new GraphQLObjectType({
     politicosPorEstado: {
       type: new GraphQLList(PoliticoType),
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }){
-        return Politico.find({'estado': id});
+      resolve(parentValue, { id }) {
+        return Politico.find({ 'estado': id });
       }
     },
     votacion: {
@@ -175,7 +175,7 @@ const RootQuery = new GraphQLObjectType({
       },
       type: VotacionType,
       resolve(parentValue, args, req) {
-        return Votacion.findOne({estado: args.estado});
+        return Votacion.findOne({ estado: args.estado });
       }
     },
     estado: {
@@ -195,10 +195,10 @@ const RootQuery = new GraphQLObjectType({
 
       }
     },
-    politicosPorId:{
+    politicosPorId: {
       type: PoliticoType,
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }){
+      resolve(parentValue, { id }) {
         return Politico.findById(id);
       }
     },
@@ -214,7 +214,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudPropuesta.find({});
       }
     },
-     solicitudEventos: {
+    solicitudEventos: {
       type: new GraphQLList(require('./solicitud_evento')),
       resolve() {
         return SolicitudEvento.find({});
@@ -223,7 +223,7 @@ const RootQuery = new GraphQLObjectType({
     propuesta: {
       type: require('./propuesta'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) } 
+        id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
         return Propuesta.findById(id);
@@ -232,7 +232,7 @@ const RootQuery = new GraphQLObjectType({
     evento: {
       type: require('./evento'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) } 
+        id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
         return Evento.findById(id);
@@ -310,20 +310,49 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPolitico.findById(id);
       }
     },
-    solicitudDeletePolitico:{
-     type: require('./eliminar_politico'),
+    solicitudDeletePolitico: {
+      type: require('./eliminar_politico'),
       args: {
-        id_politico: { type: new GraphQLNonNull(GraphQLID) },
-        id_usuario: { type: new GraphQLNonNull(GraphQLID) }
+        id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
         return SolicitudEliminarPolitico.findById(id);
       }
     },
-    solicitudesDeletePolitico:{
-     type: new GraphQLList(require('./eliminar_politico')),
+    solicitudesDeletePolitico: {
+      type: new GraphQLList(require('./eliminar_politico')),
       resolve() {
         return SolicitudEliminarPolitico.find({});
+      }
+    },
+    solicitudesDeletePropuesta: {
+      type: new GraphQLList(require('./eliminar_propuesta')),
+      resolve() {
+        return SolicitudEliminarPropuesta.find({});
+      }
+    },
+    solicitudDeletePropuesta: {
+      type: require('./eliminar_propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEliminarPropuesta.findById(id);
+      }
+    },
+    solicitudesDeleteEvento: {
+      type: new GraphQLList(require('./eliminar_evento')),
+      resolve() {
+        return SolicitudEliminarEvento.find({});
+      }
+    },
+    solicitudDeleteEvento: {
+      type: require('./eliminar_evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEliminarEvento.findById(id);
       }
     }
   })

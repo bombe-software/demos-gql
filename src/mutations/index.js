@@ -401,7 +401,7 @@ const RootMutation = new GraphQLObjectType({
     deletePropuesta: {
       type: PropuestaType,
       args: {
-        id_evento: { type: GraphQLID },
+        id_propuesta: { type: GraphQLID },
         id_usuario: {type: GraphQLID}
       },
       resolve(parentValue, args, req) {
@@ -411,7 +411,7 @@ const RootMutation = new GraphQLObjectType({
     aceptarSolicitudDeletePolitico: {
       type: PoliticoType,
       args: {
-        id_politico: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       }, resolve(parentValue, args, req) {
         return aceptarSolicitudDeletePolitico({ args, req });
       }
@@ -419,7 +419,7 @@ const RootMutation = new GraphQLObjectType({
     denegarSolicitudDeletePolitico: {
       type: PoliticoType,
       args: {
-        id_politico: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return denegarSolicitudDeletePolitico({ args, req });
@@ -428,7 +428,7 @@ const RootMutation = new GraphQLObjectType({
     aceptarSolicitudDeleteEvento: {
       type: EventoType,
       args: {
-        id_evento: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       }, resolve(parentValue, args, req) {
         return aceptarSolicitudDeleteEvento({ args, req });
       }
@@ -436,7 +436,7 @@ const RootMutation = new GraphQLObjectType({
     denegarSolicitudDeleteEvento: {
       type: EventoType,
       args: {
-        id_evento: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return denegarSolicitudDeleteEvento({ args, req });
@@ -445,7 +445,7 @@ const RootMutation = new GraphQLObjectType({
     aceptarSolicitudDeletePropuesta: {
       type: PropuestaType,
        args: {
-        id_propuesta: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       }, resolve(parentValue, args, req) {
         return aceptarSolicitudDeletePropuesta({ args, req });
       }
@@ -453,12 +453,12 @@ const RootMutation = new GraphQLObjectType({
     denegarSolicitudDeletePropuesta: {
       type: PropuestaType,
       args: {
-        id_propuesta: { type: GraphQLID }
+        id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return denegarSolicitudDeletePropuesta({ args, req });
       }
-    },
+    }
 
   }
 });

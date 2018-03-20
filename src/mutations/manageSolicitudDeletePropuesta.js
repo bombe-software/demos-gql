@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 const SolicitudEliminarPropuesta = mongoose.model('solicitud_eliminar_propuesta');
 const pubsub  = require('graphql-subscriptions').PubSub;
+const Propuesta = mongoose.model('propuesta');
 
 //Funcion
 function aceptarSolicitudDeletePropuesta({args, req}) {

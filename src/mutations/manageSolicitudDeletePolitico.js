@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 const pubsub  = require('graphql-subscriptions').PubSub;
-
+const Politico = mongoose.model('politico');
 //Funcion
 function aceptarSolicitudDeletePolitico({args, req}) {
     const { id_politico } = args;

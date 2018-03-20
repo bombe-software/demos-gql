@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 const pubsub  = require('graphql-subscriptions').PubSub;
-
+const Evento = mongoose.model('evento');
 //Funcion
 function aceptarSolicitudDeleteEvento({args, req}) {
     const { id_evento } = args;

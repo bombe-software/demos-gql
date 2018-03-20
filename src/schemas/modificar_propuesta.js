@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString, GraphQLList } = graphql;
+const Propuesta = mongoose.model('propuesta');
 
 //importar modelos
-const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
+const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
 
 const ModificarPropuestaType = new GraphQLObjectType({
     name: 'ModificarPropuestaType',
@@ -16,14 +17,14 @@ const ModificarPropuestaType = new GraphQLObjectType({
         tipo_propuesta: {
           type: require('./tipo_propuesta'),
           resolve(parentValue) {
-            return Propuesta.findById(parentValue).populate('tipo_propuesta')
+            return SolicitudModificarPropuesta.findById(parentValue).populate('tipo_propuesta')
               .then(propuesta => propuesta.tipo_propuesta );
           }
         },
         usuario: {
           type: require('./usuario'),
           resolve(parentValue) {
-            return Propuesta.findById(parentValue).populate('usuario')
+            return SolicitudModificarPropuesta.findById(parentValue).populate('usuario')
               .then(propuesta => propuesta.usuario );
           }
         },
@@ -31,14 +32,14 @@ const ModificarPropuestaType = new GraphQLObjectType({
         politico: {
           type: require('./politico'),
           resolve(parentValue) {
-            return Propuesta.findById(parentValue).populate('politico')
+            return SolicitudModificarPropuesta.findById(parentValue).populate('politico')
               .then(propuesta => propuesta.politico );
           }
         },
         likes: {
           type: new GraphQLList(require('./usuario')),
           resolve(parentValue) {
-              return Propuesta.findById(parentValue.id)
+              return SolicitudModificarPropuesta.findById(parentValue.id)
               .populate('likes')
               .then(propuesta => propuesta.likes );
           }

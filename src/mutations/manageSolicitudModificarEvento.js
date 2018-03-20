@@ -44,7 +44,6 @@ function aceptarModificarSolicitudEvento({args, req}) {
 
 function denegarModificarSolicitudEvento({args, req}) {
     const { id_solicitud } = args;
-    console.log("pipi")
     SolicitudModificarEvento.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });

@@ -12,15 +12,15 @@ const EliminarPoliticoType = new GraphQLObjectType({
         id_politico: {
           type: require('./politico'),
           resolve(parentValue) {
-            return SolicitudEliminarPolitico.findById(parentValue).populate('politico')
-              .then(politico => politico.politico);
+            return SolicitudEliminarPolitico.findById(parentValue).populate('id_politico')
+              .then(politico => politico.id_politico);
           }
         },
        id_usuario: {
           type: require('./usuario'),
           resolve(parentValue) {
-            return SolicitudEliminarPolitico.findById(parentValue).populate('usuario')
-              .then(politico => politico.usuario );
+            return SolicitudEliminarPolitico.findById(parentValue).populate('id_usuario')
+              .then(politico => politico.id_usuario );
           }
         },
     })

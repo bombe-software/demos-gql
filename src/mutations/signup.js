@@ -84,7 +84,7 @@ function signup({ args, req }) {
                 id_usuario: user.id
             };
       
-            /*const request = axios.post("http://localhost:5000/send_email", ticket);
+            /*const request = axios.post("http://localhost:5000/send_email", ticket);*/
             return new Promise((resolve, reject) => {
                 req.logIn(user, (err) => {
                     if (err) {
@@ -92,7 +92,7 @@ function signup({ args, req }) {
                     }
                     resolve(user);
                 });
-            });*/
+            });
             
         });
 }

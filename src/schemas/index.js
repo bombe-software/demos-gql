@@ -90,7 +90,7 @@ const RootQuery = new GraphQLObjectType({
         return LugarEstudio.find({});
       }
     },
-    like_nacional: {
+    likes_nacional: {
       type: new GraphQLList(LikeNacionalType),
       resolve() {
         return LikeNacional.find({});
@@ -353,6 +353,15 @@ const RootQuery = new GraphQLObjectType({
       },
       resolve(parentValue, { id }) {
         return SolicitudEliminarEvento.findById(id);
+      }
+    },
+    likes_nacionalPorEstado: {
+      type: new GraphQLList(require('./like_nacional')),
+      args: {
+        id_estado: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id_estado }) {
+        return LikeNacional.find({estado: id_estado});
       }
     }
   })

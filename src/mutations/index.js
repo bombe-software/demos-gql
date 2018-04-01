@@ -26,6 +26,10 @@ const { mensaje } = require('./mensaje');
 const { deletePolitico } = require('./deletePolitico');
 const { deletePropuesta } = require('./deletePropuesta');
 const { deleteEvento } = require('./deleteEvento');
+const {
+  aumentarPuntosUsuario,
+  restarPuntosUsuario
+} = require('./managePuntosUsuario');
 
 const {
   aceptarSolicitudPolitico,
@@ -457,6 +461,24 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return denegarSolicitudDeletePropuesta({ args, req });
+      }
+    },
+    aumentarPuntosUsuario: {
+      type: UsuarioType,
+      args: {
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return aumentarPuntosUsuario({ args, req });
+      }
+    },
+    restarPuntosUsuario: {
+      type: UsuarioType,
+      args: {
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return restarPuntosUsuario({ args, req });
       }
     }
 

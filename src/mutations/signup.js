@@ -1,10 +1,11 @@
+//Funcion
 //Librerias y configuraciones requeridas
 /**
  * Mongoose
  */
 const axios = require("axios");
 const mongoose = require('mongoose');
-const User = mongoose.model('usuario');
+const User = mongoose.model('usuario_confirmar');
 
 const Estado = mongoose.model('estado');
 
@@ -54,47 +55,40 @@ function signup({ args, req }) {
         throw new Error('Falta avatar');
     }
     if (!localidad) throw new Error('Falta localidad');
-    const tipo_usuario ="5a68bca9e9bfc6a2fee8cb06";
-  
-    //Area de registro
-    console.log(localidad);
-    let estadoBuscado, user;
-    Estado.findOne({ nombre: localidad }).then((est)=>{
-        user = new User({
-            nombre, email,  tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
-            password, curp, avatar,
-            puntos: 0, localidad: est
-        });
-    });
-    console.log(estadoBuscado);
-
-    console.log(user);
 
     //Area del resolver
-    return User.findOne({ email })
-        .then(existingUser => {
-            if (existingUser) {
-                throw new Error('Email en uso');
-            }
-            return user.save();
-        })
-        .then(user => {
-            const ticket = {
-                email: user.email,
-                id_usuario: user.id
-            };
-      
-            /*const request = axios.post("http://localhost:5000/send_email", ticket);*/
-            return new Promise((resolve, reject) => {
-                req.logIn(user, (err) => {
-                    if (err) {
-                        reject(err);
-                    }
-                    resolve(user);
-                });
-            });
-            
+    return Estado.findOne({ nombre: localidad }).then(est => {
+        return new User({
+            nombre, email, tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
+            password, curp, avatar,
+            puntos: 0, localidad: est.id
         });
+    }).then(user => {
+        User.findOne({ email })
+            .then(existingUser => {
+                if (existingUser) {
+                    throw new Error('Email en uso');
+                }
+                return user.save();
+            })
+            .then(user => {
+                const ticket = {
+                    email: user.email,
+                    id_usuario: user.id
+                };
+
+                const request = axios.post("http://localhost:5000/send_email", ticket);
+                return new Promise((resolve, reject) => {
+                    req.logIn(user, (err) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        resolve(user);
+                    });
+                });
+
+            });
+    })
 }
 
 //Se exporta la funcion

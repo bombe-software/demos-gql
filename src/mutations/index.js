@@ -74,6 +74,8 @@ const {
   denegarSolicitudDeletePropuesta
 } = require('./manageSolicitudDeletePropuesta')
 
+const { votarNacional } = require('./votarNacional')
+
 const { likePropuesta } = require('./like');
 const { dislikePropuesta } = require('./dislike');
 
@@ -480,8 +482,18 @@ const RootMutation = new GraphQLObjectType({
       resolve(parentValue, args, req) {
         return restarPuntosUsuario({ args, req });
       }
+    },
+    votarNacional:{
+      type: require('./../schemas/like_nacional'),
+      args: {
+        id_politico: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }, 
+        id_estado: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return votarNacional({ args, req });
+      }
     }
-
   }
 });
 

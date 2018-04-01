@@ -17,7 +17,7 @@ function aceptarSolicitudPolitico({ args, req }) {
     SolicitudPolitico.findById(id_politico)
         .then((politico) => {
             const { nombre, cargo, estado, partido, estudios, referencia, _id } = politico;
-            
+
             politicoAprovado = new Politico({
                 nombre, cargo, estado, partido, estudios, referencia
             });
@@ -32,15 +32,15 @@ function aceptarSolicitudPolitico({ args, req }) {
                         estado.save(function (err) {
                             if (err) return console.error(err);
                         });
-                });
+                    });
                 if (estado == "5a68b566f5985aaea61a93ce") {
-                    Estado.find({}).then(estados =>{
-                        estados.map(estadoPuntero=>{
+                    Estado.find({}).then(estados => {
+                        estados.map(estadoPuntero => {
                             let votacionNacional = new VotacionNacional({
                                 politico: politicoAprovado._id, estado: estadoPuntero._id, usuarios: []
                             });
                             votacionNacional.save((err, pref) => {
-                                if(err) console.log(err);
+                                if (err) console.log(err);
                             });
                         })
                     })
@@ -48,18 +48,39 @@ function aceptarSolicitudPolitico({ args, req }) {
                 } else {
                     Votacion.findOne({ estado })
                         .then(votacion => {
-                            preferenciaGenerada = new Preferencia({
-                                politico: politicoAprovado._id, usuarios: []
-                            });
-                            preferenciaGenerada.save(function (err) {
-                                if (err) return console.error(err);
-                            });
-                            preferencias = votacion.preferencias;
-                            preferencias.push(preferenciaGenerada._id);
-                            votacion.set({ preferencias });
-                            votacion.save(function (err) {
-                                if (err) return console.error(err);
-                            });
+                            if (votacion != null) {
+                                preferenciaGenerada = new Preferencia({
+                                    politico: politicoAprovado._id, usuarios: []
+                                });
+                                preferenciaGenerada.save(function (err) {
+                                    if (err) return console.error(err);
+                                });
+                                preferencias = votacion.preferencias;
+                                preferencias.push(preferenciaGenerada._id);
+                                votacion.set({ preferencias });
+                                votacion.save(function (err) {
+                                    if (err) return console.error(err);
+                                });
+                            }else{
+                                let votacionNueva = new Votacion({
+                                    estado, preferencias: []
+                                });
+                                votacionNueva.save((err, pref) => {
+                                    if (err) console.log(err);
+                                });
+                                preferenciaGenerada = new Preferencia({
+                                    politico: politicoAprovado._id, usuarios: []
+                                });
+                                preferenciaGenerada.save(function (err) {
+                                    if (err) return console.error(err);
+                                });
+                                preferencias = votacionNueva.preferencias;
+                                preferencias.push(preferenciaGenerada._id);
+                                votacionNueva.set({ preferencias });
+                                votacionNueva.save(function (err) {
+                                    if (err) return console.error(err);
+                                });
+                            }
                         })
                 }
             } else if (cargo === "Funcionario") {

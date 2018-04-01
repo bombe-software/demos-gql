@@ -14,9 +14,7 @@ function aumentarPuntosUsuario({ args, req }) {
             var { puntos, _id } = usuario;
             var puntosConversion = puntos + puntosUsuario
             usuario.puntos = puntosConversion;
-            console.log(usuario);
             usuario.save(function (err, resp) {
-                console.log(resp._id);
                 return Usuario.findById(resp._id);
             });
         });
@@ -33,9 +31,7 @@ function restarPuntosUsuario({ args, req }) {
             var { puntos, _id } = usuario;
             var puntosConversion = puntos - puntosUsuario
             usuario.puntos = puntosConversion;
-            console.log(usuario);
             usuario.save(function (err, resp) {
-                console.log(resp._id);
                 return Usuario.findById(resp._id);
             });
         });

@@ -15,12 +15,14 @@ function confirmEmail({ args, req }) {
 
             //Checar esta linea
             let descifrado = firma; // rsa.descifrar(firma, 5, 309);
-
+            /*
             for (var index = 0; index < descifrado.length; index++) {
                 descifrado = descifrado.replace("*", "8");
                 descifrado = descifrado.replace("¨", "9");
                 descifrado = descifrado.replace("Û", "b");
             }
+            */
+
             if (firma_1.length != descifrado.length) {
                 for (let x = 0; x < (firma_1.length - descifrado.length); x++) {
                     descifrado = "0" + descifrado;

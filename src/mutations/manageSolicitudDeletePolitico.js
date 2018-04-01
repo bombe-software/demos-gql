@@ -14,6 +14,8 @@ function aceptarSolicitudDeletePolitico({args, req}) {
         .then((politico) => {
             console.log("politico bonito: " + politico);
             var {nombre, cargo, estado, partido, estudios, id_politico, _id} = politico;
+            console.log("hey mi amor");
+            console.log(id_politico);
             Politico.findByIdAndRemove(id_politico, (err,resp) => {
                 if (err) return console.error(err);
                 console.log(_id);

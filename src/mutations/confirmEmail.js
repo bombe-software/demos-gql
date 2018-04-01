@@ -13,7 +13,8 @@ function confirmEmail({ args, req }) {
         if (user != null) {
             let firma_1 = SHA256("Como estas?" + user.email + "Yo jaiba y tu?" + user._id).toString();
 
-            let descifrado = rsa.descifrar(firma, 5, 309);
+            //Checar esta linea
+            let descifrado = firma; // rsa.descifrar(firma, 5, 309);
 
             for (var index = 0; index < descifrado.length; index++) {
                 descifrado = descifrado.replace("*", "8");

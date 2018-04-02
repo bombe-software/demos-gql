@@ -12,7 +12,7 @@ function recoverPassword({ args, req }) {
     if(!email){
         throw new Error('Escriba el email');
     }
-    Usuario.findOne({email})
+    return Usuario.findOne({email})
         .then((usuario) => {
             console.log(usuario);
             if(usuario!=null){
@@ -21,8 +21,8 @@ function recoverPassword({ args, req }) {
             } else {
                 throw new Error('Correo no registrado');
             }
+            return "Todo Bien"
         });
-    return "Todo Bien";
 }
 
 //Se exporta la funcion

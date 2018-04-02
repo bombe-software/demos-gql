@@ -187,14 +187,6 @@ const RootQuery = new GraphQLObjectType({
         return Estado.findById(args.id);
       }
     },
-    politicosPorEstado: {
-      type: new GraphQLList(PoliticoType),
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }) {
-        return Politico.find({ 'estado': id });
-
-      }
-    },
     politicosPorId: {
       type: PoliticoType,
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
@@ -363,7 +355,16 @@ const RootQuery = new GraphQLObjectType({
       resolve(parentValue, { id_estado }) {
         return LikeNacional.find({estado: id_estado});
       }
-    }
+    },
+    candidatosPorEstado: {
+      type: require('./estado'),
+      args: {
+        id_estado: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, {id}) {
+        return Estado.findById(id);
+      }
+    },
   })
 });
 

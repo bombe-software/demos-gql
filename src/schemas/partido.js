@@ -10,6 +10,7 @@ const PartidoType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     nombre: { type: GraphQLString },
+    color: { type: GraphQLString },
     integrantes: {
       type: GraphQLList(require('./politico')),
       resolve(parentValue) {

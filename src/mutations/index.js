@@ -26,6 +26,7 @@ const { mensaje } = require('./mensaje');
 const { deletePolitico } = require('./deletePolitico');
 const { deletePropuesta } = require('./deletePropuesta');
 const { deleteEvento } = require('./deleteEvento');
+const { recoverPassword } = require('./recoverPassword');
 const {
   aumentarPuntosUsuario,
   restarPuntosUsuario
@@ -493,7 +494,18 @@ const RootMutation = new GraphQLObjectType({
       resolve(parentValue, args, req) {
         return votarNacional({ args, req });
       }
-    }
+    },
+     recoverPassword:{
+      type: GraphQLString,
+      args: {
+        email: { type: GraphQLString}
+      },
+      resolve(parentValue, args, req) {
+        return recoverPassword({ args, req });
+      }
+    },
+
+
   }
 });
 

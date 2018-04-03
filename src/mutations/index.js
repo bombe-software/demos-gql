@@ -27,6 +27,7 @@ const { deletePolitico } = require('./deletePolitico');
 const { deletePropuesta } = require('./deletePropuesta');
 const { deleteEvento } = require('./deleteEvento');
 const { recoverPassword } = require('./recoverPassword');
+const { ascenderModerador } = require('./ascenderModerador');
 const {
   aumentarPuntosUsuario,
   restarPuntosUsuario
@@ -504,8 +505,15 @@ const RootMutation = new GraphQLObjectType({
         return recoverPassword({ args, req });
       }
     },
-
-
+    ascenderModerador:{
+      type: UsuarioType,
+      args: {
+        id_usuario: { type: GraphQLID}
+      },
+      resolve(parentValue, args, req) {
+        return ascenderModerador({ args, req });
+      }
+    }
   }
 });
 

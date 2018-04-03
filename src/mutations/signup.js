@@ -5,8 +5,8 @@
  */
 const axios = require("axios");
 const mongoose = require('mongoose');
-const User = mongoose.model('usuario_confirmar');
-
+//const User = mongoose.model('usuario_confirmar');
+const User = mongoose.model('usuario');
 const Estado = mongoose.model('estado');
 
 //Funcion

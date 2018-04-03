@@ -17,7 +17,7 @@ function recoverPassword({ args, req }) {
             console.log(usuario);
             if(usuario!=null){
             const { password} = usuario;
-            axios.post("http://localhost:5000/recover_password", {email,password});
+            axios.post("https://demos-krb.herokuapp.com/recover_password", {email,password});
             } else {
                 throw new Error('Correo no registrado');
             }

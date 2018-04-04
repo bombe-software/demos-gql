@@ -41,7 +41,7 @@ mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
 
 const corsOptions = {
-  origin: 'http://www.demos-web.com',
+  origin: 'https://www.demos-web.com',
   credentials: true,
 }
 /*

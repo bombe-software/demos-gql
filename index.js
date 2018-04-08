@@ -1,3 +1,5 @@
+import { demos_gql_http } from './deploy';
+
 //Librerias de express
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -33,25 +35,17 @@ const config = {
   password: 'n0m3l0',
 }
 
-//const MONGO_URI = `mongodb://localhost/demos_db`;
-const MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
+const MONGO_URI = require('./deploy').MONGO_URI;
 
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI).catch(err => console.error(err));
 
-
+const demos_web_http = require('./deploy').demos_web_http;
 const corsOptions = {
-  origin: 'https://www.demos-web.com',
+  origin: demos_web_http,
   credentials: true,
 }
-/*
-//Configruacion del CORS
-const corsOptions = {
-    origin: 'http://localhost:9000',  
-  //origin: 'https://demos-web.herokuapp.com',
-    credentials: true,
-}
-*/
+
 app.use(cors(corsOptions));
 
 //Configuracion de las sesiones e integracion con mongodb
@@ -101,12 +95,13 @@ app.use(bodyParser.json(),(req, res, next)=>{
   next();
 });
 
+const deploy = require('./deploy').deploy;
 //Integracion de graphql
 app.use('/graphql', bodyParser.json(),  
 //apolloUploadExpress(),
 expressGraphQL({
   schema,
-  graphiql: true
+  graphiql: deploy
 }));
 
 //Area de pruebas
@@ -129,6 +124,6 @@ server.listen(port, () => {
     server: server,
     path: '/subscriptions',
   });
-  console.log(`Escuchando por http en : http://localhost:${port}`); 
-  console.log(`Escuchando por  ws  en:  ws://localhost:${port}/subscriptions`); 
+  console.log(`Escuchando por http en : ${demos_gql_http}${port}`); 
+  console.log(`Escuchando por  ws  en:  ${demos_gql_http}${port}/subscriptions`); 
 });

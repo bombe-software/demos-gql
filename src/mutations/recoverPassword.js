@@ -3,6 +3,7 @@
 const mongoose = require('mongoose');
 const Usuario = mongoose.model('usuario');
 const axios = require('axios');
+const demos_krb_http = require('./../../deploy').demos_krb_http;
 
 //Funcion
 function recoverPassword({ args, req }) {
@@ -17,7 +18,7 @@ function recoverPassword({ args, req }) {
             console.log(usuario);
             if(usuario!=null){
             const { password} = usuario;
-            axios.post("https://demos-krb.herokuapp.com/recover_password", {email,password});
+            axios.post((`${demos_krb_http}/recover_password`, {email,password});
             } else {
                 throw new Error('Correo no registrado');
             }

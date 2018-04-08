@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('usuario_confirmar');
 //const User = mongoose.model('usuario');
 const Estado = mongoose.model('estado');
+const demos_krb_http = require('./../../deploy').demos_krb_http;
 
 //Funcion
 function signup({ args, req }) {
@@ -77,7 +78,7 @@ function signup({ args, req }) {
                     id_usuario: user.id
                 };
 
-                const request = axios.post("https://demos-krb.herokuapp.com/send_email", ticket);
+                const request = axios.post(`${demos_krb_http}/send_email`, ticket);
                 return new Promise((resolve, reject) => {
                     req.logIn(user, (err) => {
                         if (err) {

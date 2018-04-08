@@ -1,4 +1,4 @@
-import { demos_gql_http } from './deploy';
+const demos_gql_http = require('./deploy').demos_gql_http;
 
 //Librerias de express
 const express = require('express');
@@ -28,15 +28,7 @@ const PubSub = require('graphql-subscriptions').PubSub;
 
 //Importar schemas
 const schema = require('./src');
-
-//Configuracion de la base de datos
-const config = {
-  user: 'admin',
-  password: 'n0m3l0',
-}
-
 const MONGO_URI = require('./deploy').MONGO_URI;
-
 mongoose.Promise = require('bluebird');
 mongoose.connect(MONGO_URI).catch(err => console.error(err));
 

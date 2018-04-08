@@ -18,7 +18,7 @@ function recoverPassword({ args, req }) {
             console.log(usuario);
             if(usuario!=null){
             const { password} = usuario;
-            axios.post((`${demos_krb_http}/recover_password`, {email,password});
+            axios.post(`${demos_krb_http}/recover_password`, {email,password});
             } else {
                 throw new Error('Correo no registrado');
             }

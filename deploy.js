@@ -7,7 +7,7 @@ exports.demos_krb_http = "https://demos-krb.herokuapp.com";
 exports.demos_gql_http = "https://demos-gql.herokuapp.com";
 exports.demos_gql_ws = "wss://demos-gql.herokuapp.com";
 exports.deploy = true;
-exports.MONGO_URI = `mongodb://${config.user}:${config.password}@ds255767.mlab.com:55767/demos_db`;
+exports.MONGO_URI = `mongodb://${admin}:${n0m3l0}@ds255767.mlab.com:55767/demos_db`;
  */
 
 

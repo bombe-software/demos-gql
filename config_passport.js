@@ -24,7 +24,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, don
     if (!user) { return done(null, false, 'Password o email incorrecto'); }
     let bytes = CryptoJS.AES.decrypt(password, 'jaiba');
     let ticketDecript = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    if(ticketDecript.date.toString()  != (new Date().getDay() + "/" + new Date().getMonth() + "/" + new Date().getFullYear())){
+    if(ticketDecript.date.toString()  != (new Date().getMonth() + "/" + new Date().getFullYear())){
       return done(null, false, 'Password o email incorrecto'); 
     }
     return done(null, user);

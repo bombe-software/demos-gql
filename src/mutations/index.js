@@ -2,7 +2,8 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = graphql;
 
-//Tipos de chemas
+//Tipos de schemas
+const BugType = require('./../schemas/bug');
 const UsuarioType = require('./../schemas/usuario');
 const PoliticoType = require('./../schemas/politico');
 const PartidoType = require('../schemas/partido');
@@ -77,6 +78,7 @@ const {
 } = require('./manageSolicitudDeletePropuesta')
 
 const { votarNacional } = require('./votarNacional')
+const { deleteBug } = require('./deleteBug')
 
 const { likePropuesta } = require('./like');
 const { dislikePropuesta } = require('./dislike');
@@ -465,6 +467,15 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return denegarSolicitudDeletePropuesta({ args, req });
+      }
+    },
+    deleteBug: {
+      type: GraphQLString,
+      args: {
+        id_bug: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return deleteBug({ args, req });
       }
     },
     aumentarPuntosUsuario: {

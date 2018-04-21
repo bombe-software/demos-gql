@@ -7,6 +7,8 @@ const {
 
 
 //Importar models
+const Bug = mongoose.model('bug');
+const Log = mongoose.model('logs');
 const Estado = mongoose.model('estado');
 const Evento = mongoose.model('evento');
 const GradoAcademico = mongoose.model('grado_academico');
@@ -36,6 +38,8 @@ const SolicitudEliminarPropuesta = mongoose.model('solicitud_eliminar_propuesta'
 const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 
 //Importar schemas
+const BugType = require('./bug');
+const LogType = require('./log');
 const EstadoType = require('./estado');
 const EventoType = require('./evento');
 const GradoAcademicoType = require('./grado_academico');
@@ -60,6 +64,18 @@ const ZonaType = require('./zona');
 const RootQuery = new GraphQLObjectType({
   name: 'Consultas',
   fields: () => ({
+    bugs: {
+      type: new GraphQLList(BugType),
+      resolve() {
+        return Bug.find({});
+      }
+    },
+    logs: {
+      type: new GraphQLList(LogType),
+      resolve() {
+        return Log.find({});
+      }
+    },
     estados: {
       type: new GraphQLList(EstadoType),
       resolve() {

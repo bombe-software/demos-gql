@@ -1,3 +1,4 @@
+require('./bug');
 require('./estado');
 require('./evento');
 require('./grado_academico');

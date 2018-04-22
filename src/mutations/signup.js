@@ -14,7 +14,7 @@ const demos_krb_http = require('./../../deploy').demos_krb_http;
 function signup({ args, req }) {
     const {
         nombre, email,
-        password, curp, avatar,
+        password, avatar,
         localidad
     } = args
 
@@ -40,15 +40,6 @@ function signup({ args, req }) {
             throw new Error('Password invalido');
         }
     }
-    if (!curp) {
-        throw new Error('Falta CURP');
-    }
-    if (curp != undefined) {
-        var ri = /^([A-Z]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[A-Z]{3}[0-9A-Z]\d)$/i
-        if (!ri.test(curp)) {
-            throw new Error('CURP invalido');
-        }
-    }
     if (email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
         throw new Error('Email inválido');
     }
@@ -61,7 +52,7 @@ function signup({ args, req }) {
     return Estado.findOne({ nombre: localidad }).then(est => {
         return new User({
             nombre, email, tipo_usuario: "5a68bca9e9bfc6a2fee8cb06",
-            password, curp, avatar,
+            password, avatar,
             puntos: 0, localidad: est.id
         });
     }).then(user => {

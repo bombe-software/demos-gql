@@ -20,6 +20,5 @@ exports.demos_web_http = "http://localhost:9000";
 exports.demos_krb_http = "http://localhost:5000";
 exports.demos_gql_http = "http://localhost:3000";
 exports.demos_gql_ws = "ws://localhost:3000";
-exports.deploy = false;
+exports.deploy = true;
 exports.MONGO_URI = `mongodb://localhost/demos_db`;
-

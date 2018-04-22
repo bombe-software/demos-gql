@@ -7,10 +7,10 @@ function deleteBug({ args, req }) {
     if (!id_bug) {
         throw new Error('Error al hacer fetch con el Usuario');
     }
-    Bug.remove({ _id: 'large' }, (err) => {
+    Bug.remove({ _id: id_bug }, (err) => {
         if (err) return JSON.stringify(err);
     });
-    return "Todo bien"
+    return Bug.findById(id_bug).then(user=> {return user});
 }
 module.exports = {
     deleteBug

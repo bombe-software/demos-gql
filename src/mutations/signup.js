@@ -65,7 +65,7 @@ function signup({ args, req }) {
             puntos: 0, localidad: est.id
         });
     }).then(user => {
-        User.findOne({ email })
+        return User.findOne({ email })
             .then(existingUser => {
                 if (existingUser) {
                     throw new Error('Email en uso');

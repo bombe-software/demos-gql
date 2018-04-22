@@ -13,7 +13,9 @@ const PropuestaType = require('../schemas/propuesta');
 
 //Funciones de la mutacion
 const { votoEstado } = require('./votoEstado');
+const { deleteUser } = require('./deleteUser');
 const { addEvento } = require('./addEvento');
+const { addBug } = require('./addBug');
 const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
@@ -469,8 +471,19 @@ const RootMutation = new GraphQLObjectType({
         return denegarSolicitudDeletePropuesta({ args, req });
       }
     },
+    addBug: {
+      type: BugType,
+      args: {
+        titulo: { type: GraphQLString}, 
+        descripcion: { type: GraphQLString}, 
+        url: { type: GraphQLString}
+      },
+      resolve(parentValue, args, req) {
+        return addBug({ args, req });
+      } 
+    },
     deleteBug: {
-      type: GraphQLString,
+      type: BugType,
       args: {
         id_bug: { type: GraphQLID }
       },
@@ -514,6 +527,15 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return recoverPassword({ args, req });
+      }
+    },
+    deleteUser: {
+      type: UsuarioType,
+      args: {
+        id_usuario: { type: GraphQLID}
+      },
+      resolve(parentValue, args, req) {
+        return deleteUser({ args, req });
       }
     },
     ascenderModerador:{

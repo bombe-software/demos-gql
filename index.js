@@ -93,7 +93,7 @@ app.use('/graphql', bodyParser.json(),
 //apolloUploadExpress(),
 expressGraphQL({
   schema,
-  graphiql: deploy
+  graphiql: !deploy
 }));
 
 //Area de pruebas

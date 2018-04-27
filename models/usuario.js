@@ -8,8 +8,7 @@ const usuario = mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'tipo_usuario'
     },
-    password: String,			
-    curp: String,			
+    password: String,					
     avatar: String,		
     puntos: Number,		
     localidad: {

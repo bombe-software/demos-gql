@@ -2,7 +2,8 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = graphql;
 
-//Tipos de chemas
+//Tipos de schemas
+const BugType = require('./../schemas/bug');
 const UsuarioType = require('./../schemas/usuario');
 const PoliticoType = require('./../schemas/politico');
 const PartidoType = require('../schemas/partido');
@@ -12,7 +13,9 @@ const PropuestaType = require('../schemas/propuesta');
 
 //Funciones de la mutacion
 const { votoEstado } = require('./votoEstado');
+const { deleteUser } = require('./deleteUser');
 const { addEvento } = require('./addEvento');
+const { addBug } = require('./addBug');
 const { login } = require('./login');
 const { signup } = require('./signup');
 const { addPolitico } = require('./addPolitico');
@@ -77,6 +80,7 @@ const {
 } = require('./manageSolicitudDeletePropuesta')
 
 const { votarNacional } = require('./votarNacional')
+const { deleteBug } = require('./deleteBug')
 
 const { likePropuesta } = require('./like');
 const { dislikePropuesta } = require('./dislike');
@@ -467,6 +471,26 @@ const RootMutation = new GraphQLObjectType({
         return denegarSolicitudDeletePropuesta({ args, req });
       }
     },
+    addBug: {
+      type: BugType,
+      args: {
+        titulo: { type: GraphQLString}, 
+        descripcion: { type: GraphQLString}, 
+        url: { type: GraphQLString}
+      },
+      resolve(parentValue, args, req) {
+        return addBug({ args, req });
+      } 
+    },
+    deleteBug: {
+      type: BugType,
+      args: {
+        id_bug: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return deleteBug({ args, req });
+      }
+    },
     aumentarPuntosUsuario: {
       type: UsuarioType,
       args: {
@@ -503,6 +527,15 @@ const RootMutation = new GraphQLObjectType({
       },
       resolve(parentValue, args, req) {
         return recoverPassword({ args, req });
+      }
+    },
+    deleteUser: {
+      type: UsuarioType,
+      args: {
+        id_usuario: { type: GraphQLID}
+      },
+      resolve(parentValue, args, req) {
+        return deleteUser({ args, req });
       }
     },
     ascenderModerador:{

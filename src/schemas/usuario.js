@@ -17,7 +17,6 @@ const UsuarioType = new GraphQLObjectType({
       }
     },
     password: { type: GraphQLString },
-    curp: { type: GraphQLString },
     avatar: { type: GraphQLString },
     puntos: { type: GraphQLInt },
     localidad: {

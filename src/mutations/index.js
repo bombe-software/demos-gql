@@ -1,128 +1,94 @@
 //Configuracion de GraphQL
 const graphql = require('graphql');
+
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = graphql;
 
-//Tipos de schemas
-const BugType = require('./../schemas/bug');
-const UsuarioType = require('./../schemas/usuario');
-const PoliticoType = require('./../schemas/politico');
-const PartidoType = require('../schemas/partido');
-const VotacionType = require('../schemas/votacion');
-const EventoType = require('../schemas/evento');
-const PropuestaType = require('../schemas/propuesta');
+//Funciones add
+const { add_bug } = require('./bug');
+const { add_evento } = require('./evento');
+const { add_politico } = require('./politico');
+const { add_propuesta } = require('./propuesta');
 
-//Funciones de la mutacion
-const { votoEstado } = require('./votoEstado');
-const { deleteUser } = require('./deleteUser');
-const { addEvento } = require('./addEvento');
-const { addBug } = require('./addBug');
+
+//Funciones update
+const { update_usuario } = require('./usuario');//Hacerlo poliformico
+const { update_evento } = require('./evento');
+const { update_politico } = require('./politico');
+const { update_propuesta } = require('./propuesta');
+
+
+//Funciones delete
+const { delete_bug } = require('./bug');
+const { delete_usuario } = require('./usuario');
+const { delete_evento } = require('./evento');
+const { delete_politico } = require('./politico');
+const { delete_propuesta } = require('./propuesta');
+
+//Funciones moderador de aceptacion (patch) 
+const { patch_add_evento } = require('./evento');
+const { patch_add_politico } = require('./politico');
+const { patch_add_propuesta } = require('./propuesta');
+const { patch_update_evento } = require('./evento');
+const { patch_update_politico } = require('./politico');
+const { patch_update_propuesta } = require('./propuesta');
+const { patch_delete_evento } = require('./evento');
+const { patch_delete_politico } = require('./politico');
+const { patch_delete_propuesta } = require('./propuesta');
+
+//Funciones moderador de negacion (patchd) 
+const { patchd_add_evento } = require('./evento');
+const { patchd_add_politico } = require('./politico');
+const { patchd_add_propuesta } = require('./propuesta');
+const { patchd_update_evento } = require('./evento');
+const { patchd_update_politico } = require('./politico');
+const { patchd_update_propuesta } = require('./propuesta');
+const { patchd_delete_evento } = require('./evento');
+const { patchd_delete_politico } = require('./politico');
+const { patchd_delete_propuesta } = require('./propuesta');
+
+
+//Funciones especiales
 const { login } = require('./login');
 const { signup } = require('./signup');
-const { addPolitico } = require('./addPolitico');
-const { addPropuesta } = require('./addPropuesta');
-const { updateUsuario } = require('./updateUsuario');
-const { modifyPolitico } = require('./modifyPolitico')
-const { modifyEvento } = require('./modifyEvento')
-const { modifyPropuesta } = require('./modifyPropuesta')
-const { confirmEmail } = require('./confirmEmail');
+const { recover_password } = require('./recover_password');
+const { confirm_email } = require('./confirm_email');
+const { estatal_voto } = require('./voto');
+const { nacional_voto } = require('./voto');
+const { like_propuesta } = require('./propuesta');
+const { dislike_propuesta } = require('./propuesta');
 const { mensaje } = require('./mensaje');
-const { deletePolitico } = require('./deletePolitico');
-const { deletePropuesta } = require('./deletePropuesta');
-const { deleteEvento } = require('./deleteEvento');
-const { recoverPassword } = require('./recoverPassword');
-const { ascenderModerador } = require('./ascenderModerador');
-const {
-  aumentarPuntosUsuario,
-  restarPuntosUsuario
-} = require('./managePuntosUsuario');
-
-const {
-  aceptarSolicitudPolitico,
-  denegarSolicitudPolitico
-} = require('./manageSolicitudPolitico');
-
-const {
-  aceptarSolicitudPropuesta,
-  denegarSolicitudPropuesta
-} = require('./manageSolicitudPropuesta');
-
-const {
-  aceptarSolicitudEvento,
-  denegarSolicitudEvento
-} = require('./manageSolicitudEvento');
-
-const {
-  aceptarModificarSolicitudPolitico,
-  denegarModificarSolicitudPolitico
-} = require('./manageSolicitudModificarPolitico')
-
-const {
-  aceptarModificarSolicitudEvento,
-  denegarModificarSolicitudEvento
-} = require('./manageSolicitudModificarEvento')
-
-const {
-  aceptarModificarSolicitudPropuesta,
-  denegarModificarSolicitudPropuesta
-} = require('./manageSolicitudModificarPropuesta')
-
-const {
-  aceptarSolicitudDeletePolitico,
-  denegarSolicitudDeletePolitico
-} = require('./manageSolicitudDeletePolitico')
-const {
-  aceptarSolicitudDeleteEvento,
-  denegarSolicitudDeleteEvento
-} = require('./manageSolicitudDeleteEvento')
-const {
-  aceptarSolicitudDeletePropuesta,
-  denegarSolicitudDeletePropuesta
-} = require('./manageSolicitudDeletePropuesta')
-
-const { votarNacional } = require('./votarNacional')
-const { deleteBug } = require('./deleteBug')
-
-const { likePropuesta } = require('./like');
-const { dislikePropuesta } = require('./dislike');
 
 
 const RootMutation = new GraphQLObjectType({
   name: 'Mutaciones',
   fields: {
-    signup: {
-      type: UsuarioType,
+    add_bug: {
+      type: require('./../schemas/bug'),
       args: {
-        nombre: { type: GraphQLString },
-        email: { type: GraphQLString },
-        password: { type: GraphQLString },
-        curp: { type: GraphQLString },
-        avatar: { type: GraphQLString },
-        localidad: { type: GraphQLString }
+        titulo: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        url: { type: GraphQLString }
       },
       resolve(parentValue, args, req) {
-        return signup({ args, req });
+        return add_bug({ args, req });
       }
     },
-    logout: {
-      type: UsuarioType,
-      resolve(parentValue, args, req) {
-        const { user } = req;
-        req.logout();
-        return user;
-      }
-    },
-    login: {
-      type: UsuarioType,
+    add_evento: {
+      type: require('../schemas/evento'),
       args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString }
+        fecha: { type: GraphQLString },
+        titulo: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        referencia: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        politico: { type: GraphQLID }
       },
-      resolve(parentValue, { email, password }, req) {
-        return login({ email, password, req });
+      resolve(parentValue, args, req) {
+        return add_evento({ args, req });
       }
     },
-    addPolitico: {
-      type: PoliticoType,
+    add_politico: {
+      type: require('./../schemas/politico'),
       args: {
         nombre: { type: GraphQLString },
         cargo: { type: GraphQLString },
@@ -134,28 +100,12 @@ const RootMutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         referencia: { type: GraphQLString }
       },
-      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
-        return addPolitico({ args, req });
+        return add_politico({ args, req });
       }
     },
-    addEvento: {
-      type: EventoType,
-      args: {
-        fecha: { type: GraphQLString },
-        titulo: { type: GraphQLString },
-        descripcion: { type: GraphQLString },
-        referencia: { type: GraphQLString },
-        usuario: { type: GraphQLID },
-        politico: { type: GraphQLID }
-      },
-      subscribe: some => console.log(some),
-      resolve(parentValue, args, req) {
-        return addEvento({ args, req });
-      }
-    },
-    addPropuesta: {
-      type: PropuestaType,
+    add_propuesta: {
+      type: require('../schemas/propuesta'),
       args: {
         fecha: { type: GraphQLString },
         titulo: { type: GraphQLString },
@@ -165,65 +115,12 @@ const RootMutation = new GraphQLObjectType({
         usuario: { type: GraphQLID },
         politico: { type: GraphQLID }
       },
-      subscribe: some => console.log(some),
       resolve(parentValue, args, req) {
-        return addPropuesta({ args, req });
+        return add_propuesta({ args, req });
       }
     },
-    voto_estado: {
-      type: VotacionType,
-      args: {
-        id_votacion: { type: GraphQLID },
-        id_usuario: { type: GraphQLID },
-        id_preferencia: { type: GraphQLID },
-        id_estado: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return votoEstado({ args, req });
-      }
-    },
-    like_propuesta: {
-      type: PropuestaType,
-      args: {
-        id_propuesta: { type: GraphQLID },
-        id_usuario: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return likePropuesta({ args, req });
-      }
-    },
-    dislike_propuesta: {
-      type: PropuestaType,
-      args: {
-        id_propuesta: { type: GraphQLID },
-        id_usuario: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return dislikePropuesta({ args, req });
-      }
-    },
-    denegarSolicitudPolitico: {
-      type: PoliticoType,
-      args: {
-        id_politico: { type: GraphQLID }/*,
-            id_usuario: { type: GraphQLID }*/
-      },
-      resolve(parentValue, args, req) {
-        return denegarSolicitudPolitico({ args, req });
-      }
-    },
-    aceptarSolicitudPolitico: {
-      type: PoliticoType,
-      args: {
-        id_politico: { type: GraphQLID }/*,
-            id_usuario: { type: GraphQLID }*/
-      },
-      resolve(parentValue, args, req) {
-        return aceptarSolicitudPolitico({ args, req });
-      }
-    },
-    updateUsuario: {
-      type: UsuarioType,
+    update_usuario: {
+      type: require('./../schemas/usuario'),
       args: {
         id: { type: GraphQLID },
         nombre: { type: GraphQLString },
@@ -234,43 +131,23 @@ const RootMutation = new GraphQLObjectType({
         return updateUsuario({ args, req });
       }
     },
-    denegarSolicitudPropuesta: {
-      type: PropuestaType,
+    update_evento: {
+      type: require('../schemas/evento'),
       args: {
-        id_propuesta: { type: GraphQLID }
+        id_evento: { type: GraphQLID },
+        titulo: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        referencia: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        fecha: { type: GraphQLString },
+        politico: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
-        return denegarSolicitudPropuesta({ args, req });
+        return update_evento({ args, req });
       }
     },
-    aceptarSolicitudPropuesta: {
-      type: PropuestaType,
-      args: {
-        id_propuesta: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return aceptarSolicitudPropuesta({ args, req });
-      }
-    },
-    denegarSolicitudEvento: {
-      type: EventoType,
-      args: {
-        id_evento: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarSolicitudEvento({ args, req });
-      }
-    },
-    aceptarSolicitudEvento: {
-      type: EventoType,
-      args: {
-        id_evento: { type: GraphQLID }
-      }, resolve(parentValue, args, req) {
-        return aceptarSolicitudEvento({ args, req });
-      }
-    },
-    modifyPolitico: {
-      type: PoliticoType,
+    update_politico: {
+      type: require('./../schemas/politico'),
       args: {
         id_politico: { type: GraphQLID },
         nombre: { type: GraphQLString },
@@ -285,56 +162,323 @@ const RootMutation = new GraphQLObjectType({
         referencia: { type: GraphQLString }
       },
       resolve(parentValue, args, req) {
-        return modifyPolitico({ args, req });
+        return update_politico({ args, req });
       }
     },
-    modifyEvento: {
-      type: EventoType,
-      args: {
-        id_evento: { type: GraphQLID },
-        titulo: { type: GraphQLString },
-        descripcion: { type: GraphQLString },
-        referencia: { type: GraphQLString },
-        usuario: { type: GraphQLID },
-        fecha: { type: GraphQLString },
-        politico: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return modifyEvento({ args, req });
-      }
-    },
-    modifyPropuesta: {
-      type: EventoType,
+    update_propuesta: {
+      type: require('../schemas/evento'),
       args: {
         id_propuesta: { type: GraphQLID },
-        usuario: { type: GraphQLID }, 
+        usuario: { type: GraphQLID },
         politico: { type: GraphQLID },
         fecha: { type: GraphQLString },
         descripcion: { type: GraphQLString },
-        titulo:  { type: GraphQLString },
+        titulo: { type: GraphQLString },
         tipo_propuesta: { type: GraphQLID },
-        referencia:  { type: GraphQLString },
+        referencia: { type: GraphQLString },
       },
       resolve(parentValue, args, req) {
-        return modifyPropuesta({ args, req });
+        return update_propuesta({ args, req });
       }
     },
-    aceptarModificarSolicitudPolitico: {
-      type: PoliticoType,
+    delete_bug: {
+      type: require('./../schemas/bug'),
+      args: {
+        id_bug: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return delete_bug({ args, req });
+      }
+    },
+    delete_usuario: {
+      type: require('./../schemas/usuario'),
+      args: {
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return delete_usuario({ args, req });
+      }
+    },
+    delete_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_politico: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return delete_politico({ args, req });
+      }
+    },
+    delete_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_evento: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return delete_evento({ args, req });
+      }
+    },
+    delete_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_propuesta: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return delete_propuesta({ args, req });
+      }
+    },
+    patch_add_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_evento: { type: GraphQLID }
+      }, resolve(parentValue, args, req) {
+        return patch_add_evento({ args, req });
+      }
+    },
+    patch_add_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_politico: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patch_add_politico({ args, req });
+      }
+    },
+    patch_add_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_propuesta: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patch_add_propuesta({ args, req });
+      }
+    },
+    patch_update_evento: {
+      type: require('../schemas/evento'),
       args: {
         id_solicitud: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
-        return aceptarModificarSolicitudPolitico({ args, req });
+        return patch_update_evento({ args, req });
       }
     },
-    confirmEmail: {
-      type: UsuarioType,
+    patch_update_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patch_update_politico({ args, req });
+      }
+    },
+    patch_update_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patch_update_propuesta({ args, req });
+      }
+    },
+    patch_delete_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      }, resolve(parentValue, args, req) {
+        return patch_delete_evento({ args, req });
+      }
+    },
+    patch_delete_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      }, resolve(parentValue, args, req) {
+        return patch_delete_politico({ args, req });
+      }
+    },
+    patch_delete_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      }, resolve(parentValue, args, req) {
+        return patch_delete_propuesta({ args, req });
+      }
+    },
+    patchd_add_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_evento: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_add_evento({ args, req });
+      }
+    },
+    patchd_add_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_politico: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_add_politico({ args, req });
+      }
+    },
+    patchd_add_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_propuesta: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_add_propuesta({ args, req });
+      }
+    },
+    patchd_update_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_update_politico({ args, req });
+      }
+    },
+    patchd_update_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_update_evento({ args, req });
+      }
+    },
+    patchd_update_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_update_propuesta({ args, req });
+      }
+    },
+    patchd_delete_politico: {
+      type: require('./../schemas/politico'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_delete_politico({ args, req });
+      }
+    },
+    patchd_delete_evento: {
+      type: require('../schemas/evento'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_delete_evento({ args, req });
+      }
+    },
+
+    patchd_delete_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_solicitud: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return patchd_delete_propuesta({ args, req });
+      }
+    },
+    login: {
+      type: require('./../schemas/usuario'),
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString }
+      },
+      resolve(parentValue, { email, password }, req) {
+        return login({ email, password, req });
+      }
+    },
+    logout: {
+      type: require('./../schemas/usuario'),
+      resolve(parentValue, args, req) {
+        const { user } = req;
+        req.logout();
+        return user;
+      }
+    },
+    signup: {
+      type: require('./../schemas/usuario'),
+      args: {
+        nombre: { type: GraphQLString },
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+        curp: { type: GraphQLString },
+        avatar: { type: GraphQLString },
+        localidad: { type: GraphQLString }
+      },
+      resolve(parentValue, args, req) {
+        return signup({ args, req });
+      }
+    },
+    confirm_email: {
+      type: require('./../schemas/usuario'),
       args: {
         email: { type: GraphQLString },
         firma: { type: GraphQLString }
       }, resolve(parentValue, args, req) {
-        return confirmEmail({ args, req });
+        return confirm_email({ args, req });
+      }
+    },
+    recover_password:{
+      type: GraphQLString,
+      args: {
+        email: { type: GraphQLString}
+      },
+      resolve(parentValue, args, req) {
+        return recover_password({ args, req });
+      }
+    },
+    estatal_voto: {
+      type: require('../schemas/votacion'),
+      args: {
+        id_votacion: { type: GraphQLID },
+        id_usuario: { type: GraphQLID },
+        id_preferencia: { type: GraphQLID },
+        id_estado: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return estatal_voto({ args, req });
+      }
+    },
+    nacional_voto:{
+      type: require('./../schemas/like_nacional'),
+      args: {
+        id_politico: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }, 
+        id_estado: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return nacional_voto({ args, req });
+      }
+    },
+    like_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_propuesta: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return like_propuesta({ args, req });
+      }
+    },
+    dislike_propuesta: {
+      type: require('../schemas/propuesta'),
+      args: {
+        id_propuesta: { type: GraphQLID },
+        id_usuario: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return dislike_propuesta({ args, req });
       }
     },
     mensaje: {
@@ -343,208 +487,6 @@ const RootMutation = new GraphQLObjectType({
         mensajeUser: { type: GraphQLString }
       }, resolve(parentValue, args, req) {
         return mensaje({ args, req });
-      }
-    },
-    denegarModificarSolicitudPolitico: {
-      type: PoliticoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarModificarSolicitudPolitico({ args, req });
-      }
-    },
-    aceptarModificarSolicitudEvento: {
-      type: EventoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return aceptarModificarSolicitudEvento({ args, req });
-      }
-    },
-    denegarModificarSolicitudEvento: {
-      type: EventoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarModificarSolicitudEvento({ args, req });
-      }
-    },
-    aceptarModificarSolicitudPropuesta: {
-      type: PropuestaType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return aceptarModificarSolicitudPropuesta({ args, req });
-      }
-    },
-    denegarModificarSolicitudPropuesta: {
-      type: PropuestaType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarModificarSolicitudPropuesta({ args, req });
-      }
-    },
-    deletePolitico: {
-      type: PoliticoType,
-      args: {
-        id_politico: { type: GraphQLID },
-        id_usuario: {type: GraphQLID}
-      },
-      resolve(parentValue, args, req) {
-        return deletePolitico({ args, req });
-      }
-    },
-    deleteEvento: {
-      type: EventoType,
-      args: {
-        id_evento: { type: GraphQLID },
-        id_usuario: {type: GraphQLID}
-      },
-      resolve(parentValue, args, req) {
-        return deleteEvento({ args, req });
-      }
-    },
-    deletePropuesta: {
-      type: PropuestaType,
-      args: {
-        id_propuesta: { type: GraphQLID },
-        id_usuario: {type: GraphQLID}
-      },
-      resolve(parentValue, args, req) {
-        return deletePropuesta({ args, req });
-      }
-    },
-    aceptarSolicitudDeletePolitico: {
-      type: PoliticoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      }, resolve(parentValue, args, req) {
-        return aceptarSolicitudDeletePolitico({ args, req });
-      }
-    },
-    denegarSolicitudDeletePolitico: {
-      type: PoliticoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarSolicitudDeletePolitico({ args, req });
-      }
-    },
-    aceptarSolicitudDeleteEvento: {
-      type: EventoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      }, resolve(parentValue, args, req) {
-        return aceptarSolicitudDeleteEvento({ args, req });
-      }
-    },
-    denegarSolicitudDeleteEvento: {
-      type: EventoType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarSolicitudDeleteEvento({ args, req });
-      }
-    },
-    aceptarSolicitudDeletePropuesta: {
-      type: PropuestaType,
-       args: {
-        id_solicitud: { type: GraphQLID }
-      }, resolve(parentValue, args, req) {
-        return aceptarSolicitudDeletePropuesta({ args, req });
-      }
-    },
-    denegarSolicitudDeletePropuesta: {
-      type: PropuestaType,
-      args: {
-        id_solicitud: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return denegarSolicitudDeletePropuesta({ args, req });
-      }
-    },
-    addBug: {
-      type: BugType,
-      args: {
-        titulo: { type: GraphQLString}, 
-        descripcion: { type: GraphQLString}, 
-        url: { type: GraphQLString}
-      },
-      resolve(parentValue, args, req) {
-        return addBug({ args, req });
-      } 
-    },
-    deleteBug: {
-      type: BugType,
-      args: {
-        id_bug: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return deleteBug({ args, req });
-      }
-    },
-    aumentarPuntosUsuario: {
-      type: UsuarioType,
-      args: {
-        id_usuario: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return aumentarPuntosUsuario({ args, req });
-      }
-    },
-    restarPuntosUsuario: {
-      type: UsuarioType,
-      args: {
-        id_usuario: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return restarPuntosUsuario({ args, req });
-      }
-    },
-    votarNacional:{
-      type: require('./../schemas/like_nacional'),
-      args: {
-        id_politico: { type: GraphQLID },
-        id_usuario: { type: GraphQLID }, 
-        id_estado: { type: GraphQLID }
-      },
-      resolve(parentValue, args, req) {
-        return votarNacional({ args, req });
-      }
-    },
-     recoverPassword:{
-      type: GraphQLString,
-      args: {
-        email: { type: GraphQLString}
-      },
-      resolve(parentValue, args, req) {
-        return recoverPassword({ args, req });
-      }
-    },
-    deleteUser: {
-      type: UsuarioType,
-      args: {
-        id_usuario: { type: GraphQLID}
-      },
-      resolve(parentValue, args, req) {
-        return deleteUser({ args, req });
-      }
-    },
-    ascenderModerador:{
-      type: UsuarioType,
-      args: {
-        id_usuario: { type: GraphQLID}
-      },
-      resolve(parentValue, args, req) {
-        return ascenderModerador({ args, req });
       }
     }
   }

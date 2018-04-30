@@ -6,19 +6,15 @@ const axios = require('axios');
 const demos_krb_http = require('./../../deploy').demos_krb_http;
 
 //Funcion
-function recoverPassword({ args, req }) {
+function recover_password({ args, req }) {
     let {
         email
     } = args;
-    if(!email){
-        throw new Error('Escriba el email');
-    }
-    return Usuario.findOne({email})
+    return Usuario.findOne({ email })
         .then((usuario) => {
-            console.log(usuario);
-            if(usuario!=null){
-            const { password} = usuario;
-            axios.post(`${demos_krb_http}/recover_password`, {email,password});
+            if (usuario != null) {
+                const { password } = usuario;
+                axios.post(`${demos_krb_http}/recover_password`, { email, password });
             } else {
                 throw new Error('Correo no registrado');
             }
@@ -27,4 +23,4 @@ function recoverPassword({ args, req }) {
 }
 
 //Se exporta la funcion
-module.exports = {recoverPassword };
+module.exports = { recover_password };

@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const {
-  GraphQLObjectType, GraphQLList, GraphQLID,
-  GraphQLNonNull, GraphQLString
+const { 
+  GraphQLObjectType, GraphQLList, GraphQLID, 
+  GraphQLNonNull, GraphQLString 
 } = graphql;
-
 
 //Importar models
 const Bug = mongoose.model('bug');
@@ -17,7 +16,6 @@ const LugarEstudio = mongoose.model('lugar_estudio');
 const LikeNacional = mongoose.model('like_nacional');
 const Estudio = mongoose.model('estudio');
 const Partido = mongoose.model('partido');
-//const TipoPolitico = mongoose.model('tipo_politico');
 const TipoPropuesta = mongoose.model('tipo_propuesta');
 const TipoUsuario = mongoose.model('tipo_usuario');
 const Propuesta = mongoose.model('propuesta');
@@ -29,7 +27,6 @@ const Zona = mongoose.model('zona');
 const SolicitudPolitico = mongoose.model('solicitud_politico');
 const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const SolicitudEvento = mongoose.model('solicitud_evento');
-//Solicitud de modificaciones
 const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
 const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
 const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
@@ -37,204 +34,79 @@ const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 const SolicitudEliminarPropuesta = mongoose.model('solicitud_eliminar_propuesta');
 const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 
-//Importar schemas
-const BugType = require('./bug');
-const LogType = require('./log');
-const EstadoType = require('./estado');
-const EventoType = require('./evento');
-const GradoAcademicoType = require('./grado_academico');
-const GabineteType = require('./gabinete');
-const LugarEstudioType = require('./lugar_estudio');
-const LikeNacionalType = require('./like_nacional');
-const EstudioType = require('./estudio');
-const PartidoType = require('./partido');
-//const TipoPoliticoType = require('./tipo_politico');
-const TipoPropuestaType = require('./tipo_propuesta');
-const TipoUsuarioType = require('./tipo_usuario');
-const PropuestaType = require('./propuesta');
-//const SolicitudPropuestaType = require('./solicitud_propuesta');
-//const SolicitudEventoType = require('./solicitud_evento');
-const PoliticoType = require('./politico');
-const UsuarioType = require('./usuario');
-const PreferenciaType = require('./preferencia');
-const VotacionType = require('./votacion');
-const ZonaType = require('./zona');
-//const SolicitudPoliticoType = ('./solicitud_politico');
-
 const RootQuery = new GraphQLObjectType({
   name: 'Consultas',
   fields: () => ({
-    bugs: {
-      type: new GraphQLList(BugType),
+    bug: {
+      type: new GraphQLList(require('./bug')),
       resolve() {
         return Bug.find({});
       }
     },
-    logs: {
-      type: new GraphQLList(LogType),
+    eliminar_evento: {
+      type: new GraphQLList(require('./eliminar_evento')),
       resolve() {
-        return Log.find({});
+        return SolicitudEliminarEvento.find({});
       }
     },
-    estados: {
-      type: new GraphQLList(EstadoType),
-      resolve() {
-        return Estado.find({});
-      }
-    },
-    eventos: {
-      type: new GraphQLList(EventoType),
-      resolve() {
-        return Evento.find({});
-      }
-    },
-    grados_academico: {
-      type: new GraphQLList(GradoAcademicoType),
-      resolve() {
-        return GradoAcademico.find({});
-      }
-    },
-    gabinetes: {
-      type: new GraphQLList(GabineteType),
-      resolve() {
-        return Gabinete.find({});
-      }
-    },
-    lugares_estudio: {
-      type: new GraphQLList(LugarEstudioType),
-      resolve() {
-        return LugarEstudio.find({});
-      }
-    },
-    likes_nacional: {
-      type: new GraphQLList(LikeNacionalType),
-      resolve() {
-        return LikeNacional.find({});
-      }
-    },
-    estudios: {
-      type: new GraphQLList(EstudioType),
-      resolve() {
-        return Estudio.find({});
-      }
-    },
-    partidos: {
-      type: new GraphQLList(PartidoType),
-      resolve() {
-        return Partido.find({});
-      }
-    },
-    tipos_propuesta: {
-      type: new GraphQLList(TipoPropuestaType),
-      resolve() {
-        return TipoPropuesta.find({});
-      }
-    },
-    tipos_usuario: {
-      type: new GraphQLList(TipoUsuarioType),
-      resolve() {
-        return TipoUsuario.find({});
-      }
-    },
-    propuestas: {
-      type: new GraphQLList(PropuestaType),
-      resolve() {
-        return Propuesta.find({});
-      }
-    },
-    politicos: {
-      type: new GraphQLList(PoliticoType),
-      resolve() {
-        return Politico.find({});
-      }
-    },
-    usuarios: {
-      type: new GraphQLList(UsuarioType),
-      resolve() {
-        return Usuario.find({});
-      }
-    },
-    preferencias: {
-      type: new GraphQLList(PreferenciaType),
-      resolve() {
-        return Preferencia.find({});
-      }
-    },
-    votaciones: {
-      type: new GraphQLList(VotacionType),
-      resolve() {
-        return Votacion.find({});
-      }
-    },
-    zonas: {
-      type: new GraphQLList(ZonaType),
-      resolve() {
-        return Zona.find({});
-      }
-    },
-    usuario: {
-      type: UsuarioType,
-      resolve(parentValue, args, req) {
-        return req.user;
-      }
-    },
-    politicosPorEstado: {
-      type: new GraphQLList(PoliticoType),
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }) {
-        return Politico.find({ 'estado': id });
-      }
-    },
-    votacion: {
-      args: {
-        estado: { type: GraphQLID }
-      },
-      type: VotacionType,
-      resolve(parentValue, args, req) {
-        return Votacion.findOne({ estado: args.estado });
-      }
-    },
-    estado: {
-      args: {
-        id: { type: GraphQLID }
-      },
-      type: EstadoType,
-      resolve(parentValue, args, req) {
-        return Estado.findById(args.id);
-      }
-    },
-    politicosPorId: {
-      type: PoliticoType,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve(parentValue, { id }) {
-        return Politico.findById(id);
-      }
-    },
-    solicitudPoliticos: {
-      type: new GraphQLList(require('./solicitud_politico')),
-      resolve() {
-        return SolicitudPolitico.find({});
-      }
-    },
-    solicitudPropuestas: {
-      type: new GraphQLList(require('./solicitud_propuesta')),
-      resolve() {
-        return SolicitudPropuesta.find({});
-      }
-    },
-    solicitudEventos: {
-      type: new GraphQLList(require('./solicitud_evento')),
-      resolve() {
-        return SolicitudEvento.find({});
-      }
-    },
-    propuesta: {
-      type: require('./propuesta'),
+    eliminar_evento: {
+      type: require('./eliminar_evento'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
-        return Propuesta.findById(id);
+        return SolicitudEliminarEvento.findById(id);
+      }
+    },
+    eliminar_politico: {
+      type: require('./eliminar_politico'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEliminarPolitico.findById(id);
+      }
+    },
+    eliminar_politico: {
+      type: new GraphQLList(require('./eliminar_politico')),
+      resolve() {
+        return SolicitudEliminarPolitico.find({});
+      }
+    },
+    eliminar_propuesta: {
+      type: new GraphQLList(require('./eliminar_propuesta')),
+      resolve() {
+        return SolicitudEliminarPropuesta.find({});
+      }
+    },
+    eliminar_propuesta: {
+      type: require('./eliminar_propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEliminarPropuesta.findById(id);
+      }
+    },
+    estado: {
+      type: new GraphQLList(require('./estado')),
+      resolve() {
+        return Estado.find({});
+      }
+    },
+    estado: {
+      type: require('./estado'),
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return Estado.findById(args.id);
+      }
+    },
+    evento: {
+      type: new GraphQLList(require('./evento')),
+      resolve() {
+        return Evento.find({});
       }
     },
     evento: {
@@ -246,46 +118,58 @@ const RootQuery = new GraphQLObjectType({
         return Evento.findById(id);
       }
     },
-    solicitudPolitico: {
-      type: require('./solicitud_politico'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return SolicitudPolitico.findById(id);
-      }
-    },
-    SolicitudEvento: {
-      type: require('./solicitud_evento'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return SolicitudEvento.findById(id);
-      }
-    },
-    solicitudPropuesta: {
-      type: require('./solicitud_propuesta'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return SolicitudPropuesta.findById(id);
-      }
-    },
-    solicitudesModificarPolitico: {
-      type: new GraphQLList(require('./modificar_politico')),
+    grado_academico: {
+      type: new GraphQLList(require('./grado_academico')),
       resolve() {
-        return SolicitudModificarPolitico.find({});
+        return GradoAcademico.find({});
       }
     },
-    solicitudesModificarEvento: {
+    gabinete: {
+      type: new GraphQLList(require('./gabinete')),
+      resolve() {
+        return Gabinete.find({});
+      }
+    },
+    lugar_estudio: {
+      type: new GraphQLList(require('./lugar_estudio')),
+      resolve() {
+        return LugarEstudio.find({});
+      }
+    },
+    like_nacional: {
+      type: new GraphQLList(require('./like_nacional')),
+      resolve() {
+        return LikeNacional.find({});
+      }
+    },
+    like_nacional: {
+      type: new GraphQLList(require('./like_nacional')),
+      args: {
+        id_estado: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id_estado }) {
+        return LikeNacional.find({ estado: id_estado });
+      }
+    },
+    log: {
+      type: new GraphQLList(require('./log')),
+      resolve() {
+        return Log.find({});
+      }
+    },
+    estudio: {
+      type: new GraphQLList(require('./estudio')),
+      resolve() {
+        return Estudio.find({});
+      }
+    },
+    modificar_evento: {
       type: new GraphQLList(require('./modificar_evento')),
       resolve() {
         return SolicitudModificarEvento.find({});
       }
     },
-    solicitudModificarEvento: {
+    modificar_evento: {
       type: require('./modificar_evento'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
@@ -294,22 +178,13 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarEvento.findById(id);
       }
     },
-    solicitudesModificarPropuesta: {
-      type: new GraphQLList(require('./modificar_propuesta')),
+    modificar_politico: {
+      type: new GraphQLList(require('./modificar_politico')),
       resolve() {
-        return SolicitudModificarPropuesta.find({});
+        return SolicitudModificarPolitico.find({});
       }
     },
-    solicitudModificarPropuesta: {
-      type: require('./modificar_propuesta'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return SolicitudModificarPropuesta.findById(id);
-      }
-    },
-    solicitudModificarPolitico: {
+    modificar_politico: {
       type: require('./modificar_politico'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
@@ -318,69 +193,162 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPolitico.findById(id);
       }
     },
-    solicitudDeletePolitico: {
-      type: require('./eliminar_politico'),
+    modificar_propuesta: {
+      type: new GraphQLList(require('./modificar_propuesta')),
+      resolve() {
+        return SolicitudModificarPropuesta.find({});
+      }
+    },
+    modificar_propuesta: {
+      type: require('./modificar_propuesta'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
-        return SolicitudEliminarPolitico.findById(id);
+        return SolicitudModificarPropuesta.findById(id);
       }
     },
-    solicitudesDeletePolitico: {
-      type: new GraphQLList(require('./eliminar_politico')),
+    partido: {
+      type: new GraphQLList(require('./partido')),
       resolve() {
-        return SolicitudEliminarPolitico.find({});
+        return Partido.find({});
       }
     },
-    solicitudesDeletePropuesta: {
-      type: new GraphQLList(require('./eliminar_propuesta')),
+    preferencia: {
+      type: new GraphQLList(require('./preferencia')),
       resolve() {
-        return SolicitudEliminarPropuesta.find({});
+        return Preferencia.find({});
       }
     },
-    solicitudDeletePropuesta: {
-      type: require('./eliminar_propuesta'),
+    propuesta: {
+      type: new GraphQLList(require('./propuesta')),
+      resolve() {
+        return Propuesta.find({});
+      }
+    },
+    propuesta: {
+      type: require('./propuesta'),
       args: {
         id: { type: new GraphQLNonNull(GraphQLID) }
       },
       resolve(parentValue, { id }) {
-        return SolicitudEliminarPropuesta.findById(id);
+        return Propuesta.findById(id);
       }
     },
-    solicitudesDeleteEvento: {
-      type: new GraphQLList(require('./eliminar_evento')),
+    politico: {
+      type: new GraphQLList(require('./politico')),
       resolve() {
-        return SolicitudEliminarEvento.find({});
+        return Politico.find({});
       }
     },
-    solicitudDeleteEvento: {
-      type: require('./eliminar_evento'),
-      args: {
-        id: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return SolicitudEliminarEvento.findById(id);
-      }
-    },
-    likes_nacionalPorEstado: {
-      type: new GraphQLList(require('./like_nacional')),
+    politico: {
+      type: new GraphQLList(require('./politico')),
       args: {
         id_estado: { type: new GraphQLNonNull(GraphQLID) }
       },
-      resolve(parentValue, { id_estado }) {
-        return LikeNacional.find({estado: id_estado});
+      resolve(parentValue, { id }) {
+        return Politico.find({ 'estado': id });
       }
     },
-    candidatosPorEstado: {
-      type: require('./estado'),
-      args: {
-        id_estado: { type: new GraphQLNonNull(GraphQLID) }
+    politico: {
+      type: require('./politico'),
+      args: { 
+        id: { type: new GraphQLNonNull(GraphQLID) } 
       },
-      resolve(parentValue, {id}) {
-        return Estado.findById(id);
+      resolve(parentValue, { id }) {
+        return Politico.findById(id);
       }
     },
+    solicitud_evento: {
+      type: require('./solicitud_evento'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudEvento.findById(id);
+      }
+    },
+    solicitud_evento: {
+      type: new GraphQLList(require('./solicitud_evento')),
+      resolve() {
+        return SolicitudEvento.find({});
+      }
+    },
+    solicitud_politico: {
+      type: new GraphQLList(require('./solicitud_politico')),
+      resolve() {
+        return SolicitudPolitico.find({});
+      }
+    },
+    solicitud_politico: {
+      type: require('./solicitud_politico'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudPolitico.findById(id);
+      }
+    },
+    solicitud_propuesta: {
+      type: new GraphQLList(require('./solicitud_propuesta')),
+      resolve() {
+        return SolicitudPropuesta.find({});
+      }
+    },
+    solicitud_propuesta: {
+      type: require('./solicitud_propuesta'),
+      args: {
+        id: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return SolicitudPropuesta.findById(id);
+      }
+    },
+    tipo_propuesta: {
+      type: new GraphQLList(require('./tipo_propuesta')),
+      resolve() {
+        return TipoPropuesta.find({});
+      }
+    },
+    tipo_usuario: {
+      type: new GraphQLList(require('./tipo_usuario')),
+      resolve() {
+        return TipoUsuario.find({});
+      }
+    },
+    usuario: {
+      type: new GraphQLList(require('./usuario')),
+      resolve() {
+        return Usuario.find({});
+      }
+    },
+    usuario_in: {
+      type: require('./usuario'),
+      resolve(parentValue, args, req) {
+        return req.user;
+      }
+    },
+    votacion: {
+      type: new GraphQLList(require('./votacion')),
+      resolve() {
+        return Votacion.find({});
+      }
+    },
+    votacion: {
+      type: require('./votacion'),
+      args: {
+        id_estado: { type: GraphQLID }
+      },
+      resolve(parentValue, args, req) {
+        return Votacion.findOne({ estado: args.estado });
+      }
+    },
+    zona: {
+      type: new GraphQLList(require('./zona')),
+      resolve() {
+        return Zona.find({});
+      }
+    }
   })
 });
 

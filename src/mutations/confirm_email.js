@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const UserAnt = mongoose.model('usuario_confirmar');
 const User = mongoose.model('usuario');
 
-function confirmEmail({ args, req }) {
+function confirm_email({ args, req }) {
     const {
         email,
         firma
@@ -56,4 +56,4 @@ function confirmEmail({ args, req }) {
 };
 
 //Se exporta la funcion
-module.exports = { confirmEmail };
+module.exports = { confirm_email };

@@ -1,4 +1,5 @@
 const demos_gql_http = require('./deploy').demos_gql_http;
+const demos_gql_ws = require('./deploy').demos_gql_ws;
 
 //Librerias de express
 const express = require('express');
@@ -116,6 +117,6 @@ server.listen(port, () => {
     server: server,
     path: '/subscriptions',
   });
-  console.log(`Escuchando por http en : ${demos_gql_http}${port}`); 
-  console.log(`Escuchando por  ws  en:  ${demos_gql_http}${port}/subscriptions`); 
+  console.log(`${demos_gql_http}`); 
+  console.log(`${demos_gql_ws}/subscriptions`); 
 });

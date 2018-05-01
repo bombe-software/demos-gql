@@ -316,7 +316,7 @@ const RootQuery = new GraphQLObjectType({
         return TipoUsuario.find({});
       }
     },
-    usuario: {
+    usuarios: {
       type: new GraphQLList(require('./usuario')),
       resolve() {
         return Usuario.find({});

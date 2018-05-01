@@ -1,7 +1,7 @@
 //Configuracion de GraphQL
 const graphql = require('graphql');
 
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList, GraphQLNonNull, GraphQLInt } = graphql;
 
 //Funciones add
 const { add_bug } = require('./bug');
@@ -122,10 +122,12 @@ const RootMutation = new GraphQLObjectType({
     update_usuario: {
       type: require('./../schemas/usuario'),
       args: {
-        id: { type: GraphQLID },
+        id: { type: new GraphQLNonNull(GraphQLID) },
         nombre: { type: GraphQLString },
         password: { type: GraphQLString },
-        avatar: { type: GraphQLString }
+        avatar: { type: GraphQLString },
+        tipo_usuario: { type: GraphQLInt },
+        puntos: { type: GraphQLInt }
       },
       resolve(parentValue, args, req) {
         return updateUsuario({ args, req });
@@ -166,7 +168,7 @@ const RootMutation = new GraphQLObjectType({
       }
     },
     update_propuesta: {
-      type: require('../schemas/evento'),
+      type: require('../schemas/propuesta'),
       args: {
         id_propuesta: { type: GraphQLID },
         usuario: { type: GraphQLID },

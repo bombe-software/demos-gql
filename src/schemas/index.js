@@ -37,13 +37,13 @@ const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 const RootQuery = new GraphQLObjectType({
   name: 'Consultas',
   fields: () => ({
-    bug: {
+    bugs: {
       type: new GraphQLList(require('./bug')),
       resolve() {
         return Bug.find({});
       }
     },
-    eliminar_evento: {
+    eliminar_eventos: {
       type: new GraphQLList(require('./eliminar_evento')),
       resolve() {
         return SolicitudEliminarEvento.find({});
@@ -58,6 +58,12 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEliminarEvento.findById(id);
       }
     },
+    eliminar_politicos: {
+      type: new GraphQLList(require('./eliminar_politico')),
+      resolve() {
+        return SolicitudEliminarPolitico.find({});
+      }
+    },
     eliminar_politico: {
       type: require('./eliminar_politico'),
       args: {
@@ -67,13 +73,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEliminarPolitico.findById(id);
       }
     },
-    eliminar_politico: {
-      type: new GraphQLList(require('./eliminar_politico')),
-      resolve() {
-        return SolicitudEliminarPolitico.find({});
-      }
-    },
-    eliminar_propuesta: {
+    eliminar_propuestas: {
       type: new GraphQLList(require('./eliminar_propuesta')),
       resolve() {
         return SolicitudEliminarPropuesta.find({});
@@ -88,7 +88,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEliminarPropuesta.findById(id);
       }
     },
-    estado: {
+    estados: {
       type: new GraphQLList(require('./estado')),
       resolve() {
         return Estado.find({});
@@ -103,7 +103,7 @@ const RootQuery = new GraphQLObjectType({
         return Estado.findById(args.id);
       }
     },
-    evento: {
+    eventos: {
       type: new GraphQLList(require('./evento')),
       resolve() {
         return Evento.find({});
@@ -118,31 +118,31 @@ const RootQuery = new GraphQLObjectType({
         return Evento.findById(id);
       }
     },
-    grado_academico: {
+    grado_academicos: {
       type: new GraphQLList(require('./grado_academico')),
       resolve() {
         return GradoAcademico.find({});
       }
     },
-    gabinete: {
+    gabinetes: {
       type: new GraphQLList(require('./gabinete')),
       resolve() {
         return Gabinete.find({});
       }
     },
-    lugar_estudio: {
+    lugar_estudios: {
       type: new GraphQLList(require('./lugar_estudio')),
       resolve() {
         return LugarEstudio.find({});
       }
     },
-    like_nacional: {
+    like_nacionals: {
       type: new GraphQLList(require('./like_nacional')),
       resolve() {
         return LikeNacional.find({});
       }
     },
-    like_nacional: {
+    like_nacionals: {
       type: new GraphQLList(require('./like_nacional')),
       args: {
         id_estado: { type: new GraphQLNonNull(GraphQLID) }
@@ -151,19 +151,19 @@ const RootQuery = new GraphQLObjectType({
         return LikeNacional.find({ estado: id_estado });
       }
     },
-    log: {
+    logs: {
       type: new GraphQLList(require('./log')),
       resolve() {
         return Log.find({});
       }
     },
-    estudio: {
+    estudios: {
       type: new GraphQLList(require('./estudio')),
       resolve() {
         return Estudio.find({});
       }
     },
-    modificar_evento: {
+    modificar_eventos: {
       type: new GraphQLList(require('./modificar_evento')),
       resolve() {
         return SolicitudModificarEvento.find({});
@@ -178,7 +178,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarEvento.findById(id);
       }
     },
-    modificar_politico: {
+    modificar_politicos: {
       type: new GraphQLList(require('./modificar_politico')),
       resolve() {
         return SolicitudModificarPolitico.find({});
@@ -193,7 +193,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPolitico.findById(id);
       }
     },
-    modificar_propuesta: {
+    modificar_propuestas: {
       type: new GraphQLList(require('./modificar_propuesta')),
       resolve() {
         return SolicitudModificarPropuesta.find({});
@@ -208,19 +208,19 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudModificarPropuesta.findById(id);
       }
     },
-    partido: {
+    partidos: {
       type: new GraphQLList(require('./partido')),
       resolve() {
         return Partido.find({});
       }
     },
-    preferencia: {
+    preferencias: {
       type: new GraphQLList(require('./preferencia')),
       resolve() {
         return Preferencia.find({});
       }
     },
-    propuesta: {
+    propuestas: {
       type: new GraphQLList(require('./propuesta')),
       resolve() {
         return Propuesta.find({});
@@ -235,19 +235,10 @@ const RootQuery = new GraphQLObjectType({
         return Propuesta.findById(id);
       }
     },
-    politico: {
+    politicos: {
       type: new GraphQLList(require('./politico')),
       resolve() {
         return Politico.find({});
-      }
-    },
-    politico: {
-      type: new GraphQLList(require('./politico')),
-      args: {
-        id_estado: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parentValue, { id }) {
-        return Politico.find({ 'estado': id });
       }
     },
     politico: {
@@ -259,6 +250,21 @@ const RootQuery = new GraphQLObjectType({
         return Politico.findById(id);
       }
     },
+    politicos_by_id_estado: {
+      type: new GraphQLList(require('./politico')),
+      args: {
+        id_estado: { type: new GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parentValue, { id }) {
+        return Politico.find({ 'estado': id });
+      }
+    },
+    solicitud_eventos: {
+      type: new GraphQLList(require('./solicitud_evento')),
+      resolve() {
+        return SolicitudEvento.find({});
+      }
+    },
     solicitud_evento: {
       type: require('./solicitud_evento'),
       args: {
@@ -268,13 +274,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudEvento.findById(id);
       }
     },
-    solicitud_evento: {
-      type: new GraphQLList(require('./solicitud_evento')),
-      resolve() {
-        return SolicitudEvento.find({});
-      }
-    },
-    solicitud_politico: {
+    solicitud_politicos: {
       type: new GraphQLList(require('./solicitud_politico')),
       resolve() {
         return SolicitudPolitico.find({});
@@ -289,7 +289,7 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudPolitico.findById(id);
       }
     },
-    solicitud_propuesta: {
+    solicitud_propuestas: {
       type: new GraphQLList(require('./solicitud_propuesta')),
       resolve() {
         return SolicitudPropuesta.find({});
@@ -304,13 +304,13 @@ const RootQuery = new GraphQLObjectType({
         return SolicitudPropuesta.findById(id);
       }
     },
-    tipo_propuesta: {
+    tipo_propuestas: {
       type: new GraphQLList(require('./tipo_propuesta')),
       resolve() {
         return TipoPropuesta.find({});
       }
     },
-    tipo_usuario: {
+    tipo_usuarios: {
       type: new GraphQLList(require('./tipo_usuario')),
       resolve() {
         return TipoUsuario.find({});
@@ -328,7 +328,7 @@ const RootQuery = new GraphQLObjectType({
         return req.user;
       }
     },
-    votacion: {
+    votacions: {
       type: new GraphQLList(require('./votacion')),
       resolve() {
         return Votacion.find({});
@@ -343,7 +343,7 @@ const RootQuery = new GraphQLObjectType({
         return Votacion.findOne({ estado: args.estado });
       }
     },
-    zona: {
+    zonas: {
       type: new GraphQLList(require('./zona')),
       resolve() {
         return Zona.find({});

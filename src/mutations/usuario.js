@@ -19,10 +19,32 @@ function update_usuario({ args, req }) {
     } = args;
     
     //Area de registro
-    const usuario = Usuario.findById(id).then((registro) => {
-        registro.set({ nombre, password, avatar, tipo_usuario, puntos });
-        registro.save();
-    });
+    if(nombre){
+        const usuario = Usuario.findById(id).then((registro) => {
+            registro.set({ nombre });
+            registro.save();
+        });
+    }else if(password){
+        const usuario = Usuario.findById(id).then((registro) => {
+            registro.set({ password });
+            registro.save();
+        });
+    }else if(avatar){
+        const usuario = Usuario.findById(id).then((registro) => {
+            registro.set({ avatar });
+            registro.save();
+        });
+    }else if(tipo_usuario){
+        const usuario = Usuario.findById(id).then((registro) => {
+            registro.set({ tipo_usuario });
+            registro.save();
+        });
+    }else if(puntos){
+        const usuario = Usuario.findById(id).then((registro) => {
+            registro.set({ puntos });
+            registro.save();
+        });
+    }
 
     if (!usuario) {
         throw new Error(`No se encontro usuario con ID  ${id}`);

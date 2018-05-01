@@ -122,7 +122,6 @@ const RootMutation = new GraphQLObjectType({
     update_usuario: {
       type: require('./../schemas/usuario'),
       args: {
-        id: { type: new GraphQLNonNull(GraphQLID) },
         nombre: { type: GraphQLString },
         password: { type: GraphQLString },
         avatar: { type: GraphQLString },
@@ -130,7 +129,7 @@ const RootMutation = new GraphQLObjectType({
         puntos: { type: GraphQLInt }
       },
       resolve(parentValue, args, req) {
-        return updateUsuario({ args, req });
+        return update_usuario({ args, req });
       }
     },
     update_evento: {

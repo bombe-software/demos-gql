@@ -15,42 +15,45 @@ function delete_usuario({ args, req }) {
 //Funcion
 function update_usuario({ args, req }) {
     const {
-        id, nombre, password, avatar, tipo_usuario, puntos
+        nombre, password, avatar, tipo_usuario, puntos
     } = args;
+    const { id } = req.user;
+
+    console.log(args);
+
+    if (!User.findById(id).then(usuario=>usuario)) {
+        throw new Error(`No se encontro usuario con ID  ${id}`);
+    }
     
     //Area de registro
     if(nombre){
-        const usuario = Usuario.findById(id).then((registro) => {
+        return User.findById(id).then((registro) => {
             registro.set({ nombre });
-            registro.save();
+            return registro.save();
         });
     }else if(password){
-        const usuario = Usuario.findById(id).then((registro) => {
+        return User.findById(id).then((registro) => {
             registro.set({ password });
-            registro.save();
+            return registro.save();
         });
     }else if(avatar){
-        const usuario = Usuario.findById(id).then((registro) => {
+        return User.findById(id).then((registro) => {
             registro.set({ avatar });
-            registro.save();
+            return registro.save();
         });
     }else if(tipo_usuario){
-        const usuario = Usuario.findById(id).then((registro) => {
+        return User.findById(id).then((registro) => {
             registro.set({ tipo_usuario });
-            registro.save();
+            return registro.save();
         });
     }else if(puntos){
-        const usuario = Usuario.findById(id).then((registro) => {
+        return User.findById(id).then((registro) => {
             registro.set({ puntos });
-            registro.save();
+            return registro.save();
         });
     }
-
-    if (!usuario) {
-        throw new Error(`No se encontro usuario con ID  ${id}`);
-    }
-
-    return usuario;
+    
+    return User.findById(id).then(usuario=>usuario)
 }
 
 //Se exporta la funcion

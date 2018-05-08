@@ -142,7 +142,7 @@ const RootQuery = new GraphQLObjectType({
         return LikeNacional.find({});
       }
     },
-    like_nacionals: {
+    like_nacionals_by_id_estado: {
       type: new GraphQLList(require('./like_nacional')),
       args: {
         id_estado: { type: new GraphQLNonNull(GraphQLID) }

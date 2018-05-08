@@ -42,12 +42,10 @@ function add_politico({ args, req }) {
         arregloEstudios = poli.estudios;
         arregloEstudios.push(estudioId);
         poli.set({ estudios: arregloEstudios });
+        //console.log(poli);
         poli.save();
-
     });
-
-    //Area del resolver
-    return SolicitudPolitico.findOne({ nombre });
+    return politico;
 }
 
 function update_politico({ args, req }) {

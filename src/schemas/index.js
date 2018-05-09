@@ -337,7 +337,7 @@ const RootQuery = new GraphQLObjectType({
     votacion: {
       type: require('./votacion'),
       args: {
-        id_estado: { type: GraphQLID }
+        estado: { type: GraphQLID }
       },
       resolve(parentValue, args, req) {
         return Votacion.findOne({ estado: args.estado });

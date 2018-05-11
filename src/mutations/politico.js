@@ -52,7 +52,7 @@ function update_politico({ args, req }) {
     let {
         nombre, cargo, lugar_estudio, grado_academico, titulo, estado, estudios, partido, usuario, referencia, id_politico
     } = args
-
+    //Estudios es undefined
     var estudiosAModificar;
 
     Estudio.findById(estudios, function (err, est) {

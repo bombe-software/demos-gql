@@ -95,7 +95,9 @@ function patch_add_propuesta({args, req}) {
 
 function patchd_add_propuesta({args, req}) {
     const { id_propuesta } = args;
-    SolicitudPropuesta.findByIdAndRemove(id_propuesta);
+    SolicitudPropuesta.findByIdAndRemove(id_propuesta, (err) => {
+        if (err) return console.error(err);
+    });
 }
 
 function patch_update_propuesta({args, req}) {
@@ -162,7 +164,9 @@ function patch_delete_propuesta({ args, req }) {
 function patchd_delete_propuesta({ args, req }) {
     const { id_solicitud } = args;
 
-    SolicitudEliminarPropuesta.findByIdAndRemove(id_solicitud);
+    SolicitudEliminarPropuesta.findByIdAndRemove(id_solicitud, (err) => {
+        if (err) return console.error(err);
+    });
 }
 
 

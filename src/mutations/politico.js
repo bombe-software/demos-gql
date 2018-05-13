@@ -183,7 +183,9 @@ function patch_add_politico({ args, req }) {
 
             politicoAprovado.save(function (err, resp) {
                 if (err) return console.error(err);
-                SolicitudPolitico.findByIdAndRemove(_id);
+                SolicitudPolitico.findByIdAndRemove(_id, (err) => {
+                    if (err) return console.error(err);
+                });
                 return Politico.findById(resp._id);
             });
         });
@@ -216,7 +218,9 @@ function patch_update_politico({ args, req }) {
 
                     poli.save(function (err, resp) {
                         if (err) return console.error(err);
-                        SolicitudModificarPolitico.findByIdAndRemove(_id);
+                        SolicitudModificarPolitico.findByIdAndRemove(_id, (err) => {
+                            if (err) return console.error(err);
+                        });
                         return Politico.findById(resp._id);
                     });
 
@@ -242,7 +246,9 @@ function patch_delete_politico({ args, req }) {
             var { nombre, cargo, estado, partido, estudios, id_politico, _id } = politico;
             Politico.findByIdAndRemove(id_politico, (err, resp) => {
                 if (err) return console.error(err);
-                SolicitudEliminarPolitico.findByIdAndRemove(_id);
+                SolicitudEliminarPolitico.findByIdAndRemove(_id, (err) => {
+                    if (err) return console.error(err);
+                });
                 return Politico.findById(resp._id);
             });
 
@@ -251,7 +257,9 @@ function patch_delete_politico({ args, req }) {
 
 function patchd_delete_politico({ args, req }) {
     const { id_solicitud } = args;
-    SolicitudEliminarPolitico.findByIdAndRemove(id_solicitud);
+    SolicitudEliminarPolitico.findByIdAndRemove(id_solicitud, (err) => {
+        if (err) return console.error(err);
+    });
 }
 
 //Se exporta la funcion

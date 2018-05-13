@@ -76,7 +76,9 @@ function patch_add_evento({ args, req }) {
 
             eventoAprovado.save(function (err, resp) {
                 if (err) return console.error(err);
-                SolicitudEvento.findByIdAndRemove(_id);
+                SolicitudEvento.findByIdAndRemove(_id, (err) => {
+                    if (err) return console.error(err);
+                });
                 Politico.findById(politico)
                     .then(p => {
                         newEventos = p.eventos;
@@ -119,7 +121,9 @@ function patch_update_evento({ args, req }) {
                     eve.politico = politico;
                     eve.save(function (err, resp) {
                         if (err) return console.error(err);
-                        SolicitudModificarEvento.findByIdAndRemove(_id);
+                        SolicitudModificarEvento.findByIdAndRemove(_id, (err) => {
+                            if (err) return console.error(err);
+                        });
                         return Evento.findById(resp._id);
                     });
                 })
@@ -134,14 +138,16 @@ function patchd_update_evento({ args, req }) {
         if (err) return console.error(err);
     });
 }
-
+ 
 function patch_delete_evento({ args, req }) {
     const { id_solicitud } = args;
     return SolicitudEliminarEvento.findById(id_solicitud)
         .then((evento) => {
             var { id_evento, titulo, descripcion, referencia, usuario, fecha, politico, _id } = evento;
             return Evento.findByIdAndRemove(id_evento, (err, resp) => {
-                SolicitudEliminarEvento.findByIdAndRemove(_id);
+                SolicitudEliminarEvento.findByIdAndRemove(_id, (err) => {
+                    if (err) return console.error(err);
+                });
                 return Evento.findById(resp._id);
             });
 
@@ -152,7 +158,9 @@ function patch_delete_evento({ args, req }) {
 function patchd_delete_evento({ args, req }) {
     const { id_solicitud } = args;
 
-    SolicitudEliminarEvento.findByIdAndRemove(id_solicitud);
+    SolicitudEliminarEvento.findByIdAndRemove(id_solicitud, (err) => {
+        if (err) return console.error(err);
+    });
 }
 
 //Se exporta la funcion

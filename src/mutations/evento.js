@@ -51,7 +51,6 @@ function delete_evento({ args, req }) {
     const {
         id_evento, id_usuario
     } = args
-
     //Area de registro
     var politico = new SolicitudEliminarEvento({
         id_evento, id_usuario
@@ -141,6 +140,7 @@ function patchd_update_evento({ args, req }) {
  
 function patch_delete_evento({ args, req }) {
     const { id_solicitud } = args;
+    console.log(args);
     return SolicitudEliminarEvento.findById(id_solicitud)
         .then((evento) => {
             var { id_evento, titulo, descripcion, referencia, usuario, fecha, politico, _id } = evento;

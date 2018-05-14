@@ -94,7 +94,6 @@ function delete_politico({ args, req }) {
     const {
         id_politico, id_usuario
     } = args;
-
     let politico = new SolicitudEliminarPolitico({
         id_politico, id_usuario
     });

@@ -69,7 +69,6 @@ function update_propuesta({ args, req }) {
 }
 
 function patch_add_propuesta({args, req}) {
-    console.log("SS");
     const { id_propuesta } = args;
     SolicitudPropuesta.findById(id_propuesta)
         .then((propuesta) => {

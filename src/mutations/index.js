@@ -326,7 +326,7 @@ const RootMutation = new GraphQLObjectType({
       }
     },
     patchd_add_propuesta: {
-      type: require('../schemas/propuesta'),
+      type: require('./../schemas/propuesta'),
       args: {
         id_propuesta: { type: GraphQLID }
       },

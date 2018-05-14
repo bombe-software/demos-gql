@@ -51,6 +51,7 @@ function delete_propuesta({ args, req }) {
 }
 
 function update_propuesta({ args, req }) {
+    console.log("pilin");
 
     let {
         id_propuesta, usuario, politico,
@@ -68,6 +69,7 @@ function update_propuesta({ args, req }) {
 }
 
 function patch_add_propuesta({args, req}) {
+    console.log("SS");
     const { id_propuesta } = args;
     SolicitudPropuesta.findById(id_propuesta)
         .then((propuesta) => {
@@ -205,11 +207,13 @@ function dislike_propuesta({ args, req }) {
 //Se exporta la funcion
 module.exports = {
     add_propuesta,
-    delete_propuesta,
     update_propuesta,
+    delete_propuesta, 
     patch_update_propuesta,
-    patchd_update_propuesta,
+    patch_add_propuesta,
     patch_delete_propuesta,
+    patchd_update_propuesta,
+    patchd_add_propuesta,
     patchd_delete_propuesta,
     like_propuesta,
     dislike_propuesta

@@ -205,12 +205,17 @@ function dislike_propuesta({ args, req }) {
 //Se exporta la funcion
 module.exports = {
     add_propuesta,
+    patch_add_propuesta,
+    patchd_add_propuesta,
+
     delete_propuesta,
+    patch_delete_propuesta,
+    patchd_delete_propuesta,
+
     update_propuesta,
     patch_update_propuesta,
     patchd_update_propuesta,
-    patch_delete_propuesta,
-    patchd_delete_propuesta,
+
     like_propuesta,
     dislike_propuesta
 };

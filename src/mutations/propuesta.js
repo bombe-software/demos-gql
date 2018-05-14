@@ -51,7 +51,6 @@ function delete_propuesta({ args, req }) {
 }
 
 function update_propuesta({ args, req }) {
-    console.log("pilin");
 
     let {
         id_propuesta, usuario, politico,

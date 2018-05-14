@@ -9,7 +9,13 @@ const ModificarEventoType = new GraphQLObjectType({
     name: 'ModificarEventoType',
     fields: () => ({
         id: { type: GraphQLID },
-        id_evento: { type: GraphQLID },
+        evento: {
+          type: require('./evento'),
+          resolve(parentValue) {
+            return SolicitudModificarEvento.findById(parentValue).populate('id_evento')
+              .then(evento => evento.id_evento );
+          }
+        },
         fecha: { type: GraphQLString },
         titulo: { type: GraphQLString },
         descripcion: { type: GraphQLString },

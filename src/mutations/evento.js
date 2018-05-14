@@ -36,7 +36,6 @@ function update_evento({ args, req }) {
         id_evento, titulo, descripcion,
         referencia, usuario, fecha, politico
     } = args;
-
     //Area de registro
     const evento = new SolicitudModificarEvento({
         id_evento, titulo, descripcion,

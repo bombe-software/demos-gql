@@ -10,7 +10,13 @@ const ModificarPropuestaType = new GraphQLObjectType({
     name: 'ModificarPropuestaType',
     fields: () => ({
         id: { type: GraphQLID },
-        id_propuesta: { type: GraphQLID },
+        propuesta: {
+          type: require('./propuesta'),
+          resolve(parentValue) {
+            return SolicitudModificarPropuesta.findById(parentValue).populate('id_propuesta')
+              .then(propuesta => propuesta.id_propuesta );
+          }
+        },
         fecha: { type: GraphQLString },
         descripcion: { type: GraphQLString },
         titulo: { type: GraphQLString },

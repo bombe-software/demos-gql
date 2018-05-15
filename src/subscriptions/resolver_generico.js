@@ -1,7 +1,6 @@
 //Funcion
 function resolver_generico(payload, args, context, info) {
     //console.log(payload);
-    console.log('some');
     //Area del resolver
     return payload;
 }

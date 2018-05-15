@@ -30,7 +30,9 @@ function add_propuesta({ args, req }) {
     });
 
     //Guardar
-    propuesta.save();
+    propuesta.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PROPUESTA_ADD,  subscription_response );
+    }); 
 
     return SolicitudPropuesta.findOne({ titulo });
 }
@@ -45,7 +47,9 @@ function delete_propuesta({ args, req }) {
         id_propuesta,
         id_usuario
     });
-    propuesta.save();
+    propuesta.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PROPUESTA_DELETE,  subscription_response );
+    });
 
     //Area del resolver
     return SolicitudEliminarPropuesta.findOne({ id_propuesta });
@@ -65,11 +69,16 @@ function update_propuesta({ args, req }) {
         tipo_propuesta, referencia
     });
 
-    return propuesta.save();
+    return propuesta.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PROPUESTA_UPDATE,  subscription_response );
+    });
 }
 
 function patch_add_propuesta({args, req}) {
     const { id_propuesta } = args;
+    SolicitudPropuesta.findById(id_propuesta, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_EVENTO_ADD_MODERADOR,  subscription_response );
+    });
     SolicitudPropuesta.findById(id_propuesta)
         .then((propuesta) => {
             const { fecha, descripcion, titulo, tipo_propuesta, usuario, referencia, politico, _id } = propuesta;
@@ -96,6 +105,9 @@ function patch_add_propuesta({args, req}) {
 
 function patchd_add_propuesta({args, req}) {
     const { id_propuesta } = args;
+    SolicitudPropuesta.findById(id_propuesta, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_PROPUESTA_ADD,  subscription_response );
+    });
     SolicitudPropuesta.findByIdAndRemove(id_propuesta, (err) => {
         if (err) return console.error(err);
     });
@@ -108,7 +120,9 @@ function patch_update_propuesta({args, req}) {
     if (!id_solicitud) {
         throw new Error('Error al hacer fetch con la propuesta');
     }
-
+    SolicitudModificarPropuesta.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_PROPUESTA_UPDATE_MODERADOR,  subscription_response );
+    });
     SolicitudModificarPropuesta.findById(id_solicitud)
         .then((propuesta) => {
             var {id_propuesta, usuario, politico,
@@ -139,7 +153,9 @@ function patch_update_propuesta({args, req}) {
 
 function patchd_update_propuesta({args, req}) {
     const { id_solicitud } = args;
-
+    SolicitudModificarPropuesta.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_PROPUESTA_UPDATE,  subscription_response );
+    });
     SolicitudModificarPropuesta.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });
@@ -148,6 +164,9 @@ function patchd_update_propuesta({args, req}) {
 
 function patch_delete_propuesta({ args, req }) {
     const { id_solicitud } = args;
+    SolicitudEliminarPropuesta.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_PROPUESTA_DELETE_MODERADOR,  subscription_response );
+    });
     SolicitudEliminarPropuesta.findById(id_solicitud)
         .then((propuesta) => {
             var { id_propuesta, usuario, politico, fecha, descripcion, titulo, tipo_propuesta, referencia, _id } = propuesta;
@@ -164,7 +183,9 @@ function patch_delete_propuesta({ args, req }) {
 
 function patchd_delete_propuesta({ args, req }) {
     const { id_solicitud } = args;
-
+    SolicitudEliminarPropuesta.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_PROPUESTA_DELETE,  subscription_response );
+    });
     SolicitudEliminarPropuesta.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });

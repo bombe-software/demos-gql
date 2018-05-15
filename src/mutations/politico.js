@@ -43,9 +43,11 @@ function add_politico({ args, req }) {
         arregloEstudios = poli.estudios;
         arregloEstudios.push(estudioId);
         poli.set({ estudios: arregloEstudios });
-        pubsub.publish(require('./../subscriptions/constantes').POLITICO_ADD,  poli );
-        poli.save();
-    });  
+        
+        poli.save(function (err, subscription_response) {
+            pubsub.publish(require('./../subscriptions/constantes').POLITICO_ADD,  subscription_response );
+        });
+    }); 
 
     return politico;
 }
@@ -83,7 +85,9 @@ function update_politico({ args, req }) {
             arregloEstudios = [];
             arregloEstudios.push(estudiosAModificar);
             poli.set({ estudios: arregloEstudios });
-            poli.save();
+            poli.save(function (err, subscription_response) {
+                pubsub.publish(require('./../subscriptions/constantes').POLITICO_UPDATE,  subscription_response );
+            });
         });
     });
 
@@ -99,8 +103,8 @@ function delete_politico({ args, req }) {
     let politico = new SolicitudEliminarPolitico({
         id_politico, id_usuario
     });
-    politico.save(function (err) {
-        if (err) return console.log(err);
+    politico.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').POLITICO_DELETE,  subscription_response );
     });
 
     //Area del resolver
@@ -109,6 +113,9 @@ function delete_politico({ args, req }) {
 
 function patch_add_politico({ args, req }) {
     const { id_politico } = args;
+    SolicitudPolitico.findById(id_politico, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_POLITICO_ADD_MODERADOR,  subscription_response );
+    });
     SolicitudPolitico.findById(id_politico)
         .then((politico) => {
             const { nombre, cargo, estado, partido, estudios, referencia, _id } = politico;
@@ -196,6 +203,10 @@ function patch_add_politico({ args, req }) {
 function patchd_add_politico({ args, req }) {
     const { id_politico } = args;
 
+    SolicitudPolitico.findById(id_politico, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_POLITICO_ADD,  subscription_response );
+    });
+
     SolicitudPolitico.findByIdAndRemove(id_politico, (err) => {
         if (err) return console.error(err);
     });
@@ -206,6 +217,9 @@ function patch_update_politico({ args, req }) {
     const {
         id_solicitud
     } = args;
+    SolicitudModificarPolitico.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_POLITICO_UPDATE_MODERADOR,  subscription_response );
+    });
     return SolicitudModificarPolitico.findById(id_solicitud)
         .then((politico) => {
             let { nombre, cargo, estado, partido, estudios, id_politico, _id } = politico;
@@ -232,7 +246,9 @@ function patch_update_politico({ args, req }) {
 
 function patchd_update_politico({ args, req }) {
     const { id_solicitud } = args;
-
+    SolicitudModificarPolitico.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_POLITICO_UPDATE,  subscription_response );
+    });
     return SolicitudModificarPolitico.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });
@@ -241,7 +257,9 @@ function patchd_update_politico({ args, req }) {
 
 function patch_delete_politico({ args, req }) {
     const { id_solicitud } = args;
-
+    SolicitudEliminarPolitico.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_POLITICO_DELETE_MODERADOR,  subscription_response );
+    });
     SolicitudEliminarPolitico.findById(id_solicitud)
         .then((politico) => {
             var { nombre, cargo, estado, partido, estudios, id_politico, _id } = politico;
@@ -258,6 +276,9 @@ function patch_delete_politico({ args, req }) {
 
 function patchd_delete_politico({ args, req }) {
     const { id_solicitud } = args;
+    SolicitudEliminarPolitico.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_POLITICO_DELETE,  subscription_response );
+    });
     SolicitudEliminarPolitico.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });

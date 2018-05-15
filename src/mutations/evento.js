@@ -26,7 +26,9 @@ function add_evento({ args, req }) {
     });
 
     //Guardar
-    evento.save();
+    evento.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').EVENTO_ADD,  subscription_response );
+    });
 
     return SolicitudEvento.findOne({ titulo });
 }
@@ -43,7 +45,9 @@ function update_evento({ args, req }) {
     });
 
     //Guardar
-    return evento.save();
+    return evento.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').EVENTO_UPDATE,  subscription_response );
+    });
 }
 
 function delete_evento({ args, req }) {
@@ -56,7 +60,9 @@ function delete_evento({ args, req }) {
     });
 
     //Guardar
-    politico.save();
+    politico.save(function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').EVENTO_DELETE,  subscription_response );
+    });
 
     //Area del resolver
     return SolicitudEliminarEvento.findOne({ id_evento });
@@ -64,6 +70,9 @@ function delete_evento({ args, req }) {
 
 function patch_add_evento({ args, req }) {
     const { id_evento } = args;
+    SolicitudEvento.findById(id_evento, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_EVENTO_ADD_MODERADOR,  subscription_response );
+    });
     SolicitudEvento.findById(id_evento)
         .then((evento) => {
             const { fecha, titulo, descripcion, referencia, politico, usuario, _id } = evento;
@@ -95,6 +104,10 @@ function patch_add_evento({ args, req }) {
 function patchd_add_evento({ args, req }) {
     const { id_evento } = args;
 
+    SolicitudEvento.findById(id_evento, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_EVENTO_ADD,  subscription_response );
+    });
+
     SolicitudEvento.findByIdAndRemove(id_evento, (err) => {
         if (err) return console.error(err);
     });
@@ -105,6 +118,9 @@ function patch_update_evento({ args, req }) {
     const {
         id_solicitud
     } = args;
+    SolicitudModificarEvento.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_EVENTO_UPDATE_MODERADOR,  subscription_response );
+    });
     SolicitudModificarEvento.findById(id_solicitud)
         .then((evento) => {
             var { id_evento, titulo, descripcion,
@@ -132,6 +148,11 @@ function patch_update_evento({ args, req }) {
 
 function patchd_update_evento({ args, req }) {
     const { id_solicitud } = args;
+
+    SolicitudModificarEvento.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_EVENTO_UPDATE,  subscription_response );
+    });
+
     SolicitudModificarEvento.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);
     });
@@ -139,7 +160,9 @@ function patchd_update_evento({ args, req }) {
  
 function patch_delete_evento({ args, req }) {
     const { id_solicitud } = args;
-    console.log(args);
+    SolicitudEliminarEvento.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCH_EVENTO_DELETE_MODERADOR,  subscription_response );
+    });
     return SolicitudEliminarEvento.findById(id_solicitud)
         .then((evento) => {
             var { id_evento, titulo, descripcion, referencia, usuario, fecha, politico, _id } = evento;
@@ -156,6 +179,9 @@ function patch_delete_evento({ args, req }) {
 
 function patchd_delete_evento({ args, req }) {
     const { id_solicitud } = args;
+    SolicitudEliminarEvento.findById(id_solicitud, function (err, subscription_response) {
+        pubsub.publish(require('./../subscriptions/constantes').PATCHD_EVENTO_DELETE,  subscription_response );
+    });
 
     SolicitudEliminarEvento.findByIdAndRemove(id_solicitud, (err) => {
         if (err) return console.error(err);

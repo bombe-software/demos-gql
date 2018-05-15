@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const graphql = require('graphql');
-const { GraphQLObjectType,  GraphQLID,  GraphQLInt, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLID, GraphQLInt, GraphQLString } = graphql;
 const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 
 const SolicitudPropuestaType = new GraphQLObjectType({
-  name:  'SolicitudPropuestaType',
+  name: 'SolicitudPropuestaType',
   fields: () => ({
     id: { type: GraphQLID },
     fecha: { type: GraphQLString },
@@ -14,7 +14,7 @@ const SolicitudPropuestaType = new GraphQLObjectType({
       type: require('./tipo_propuesta'),
       resolve(parentValue) {
         return SolicitudPropuesta.findById(parentValue).populate('tipo_propuesta')
-          .then(propuesta => propuesta.tipo_propuesta );
+          .then(propuesta => propuesta.tipo_propuesta);
       }
     },
     referencia: { type: GraphQLString },
@@ -22,14 +22,14 @@ const SolicitudPropuestaType = new GraphQLObjectType({
       type: require('./usuario'),
       resolve(parentValue) {
         return SolicitudPropuesta.findById(parentValue).populate('usuario')
-          .then(propuesta => propuesta.usuario );
+          .then(propuesta => propuesta.usuario);
       }
     },
     politico: {
       type: require('./politico'),
       resolve(parentValue) {
         return SolicitudPropuesta.findById(parentValue).populate('politico')
-          .then(propuesta => propuesta.politico );
+          .then(propuesta => propuesta.politico);
       }
     }
   })

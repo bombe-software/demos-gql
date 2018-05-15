@@ -57,7 +57,19 @@ const {
 
   PATCHD_EVENTO_DELETE,
   PATCHD_PROPUESTA_DELETE, 
-  PATCHD_POLITICO_DELETE
+  PATCHD_POLITICO_DELETE,
+
+  PATCH_EVENTO_ADD_MODERADOR,
+  PATCH_PROPUESTA_ADD_MODERADOR, 
+  PATCH_POLITICO_ADD_MODERADOR,
+
+  PATCH_EVENTO_UPDATE_MODERADOR,
+  PATCH_PROPUESTA_UPDATE_MODERADOR, 
+  PATCH_POLITICO_UPDATE_MODERADOR,
+
+  PATCH_EVENTO_DELETE_MODERADOR,
+  PATCH_PROPUESTA_DELETE_MODERADOR, 
+  PATCH_POLITICO_DELETE_MODERADOR,
 } = require('./../subscriptions/constantes');
 
 
@@ -134,6 +146,7 @@ const RootSubscription = new GraphQLObjectType({
         return resolver_generico(payload, args, context, info);
       }
     },
+    
     //Funciones patch_add
     suscribe_to_patch_evento_add: {
       type: EventoType,
@@ -202,6 +215,7 @@ const RootSubscription = new GraphQLObjectType({
         return resolver_generico(payload, args, context, info);
       }
     },
+
     //Funciones patchd_add
     suscribe_to_patchd_evento_add: {
       type: SolicitudEventoType,
@@ -269,7 +283,76 @@ const RootSubscription = new GraphQLObjectType({
       resolve: (payload, args, context, info) => {
         return resolver_generico(payload, args, context, info);
       }
-    }
+    },
+
+    //Funciones patch_add_moderador
+    suscribe_to_patch_evento_add_moderador: {
+      type: SolicitudEventoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_EVENTO_ADD_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_propuesta_add_moderador: {
+      type: SolicitudPropuestaType,
+      subscribe: () => pubsub.asyncIterator(PATCH_PROPUESTA_ADD_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_politico_add_moderador: {
+      type: SolicitudPoliticoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_POLITICO_ADD_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+
+    //Funciones patch_update_moderador
+    suscribe_to_patch_evento_update_moderador: {
+      type: ModificarEventoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_EVENTO_UPDATE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_propuesta_update_moderador: {
+      type: ModificarPropuestaType,
+      subscribe: () => pubsub.asyncIterator(PATCH_PROPUESTA_UPDATE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_politico_update_moderador: {
+      type: ModificarPoliticoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_POLITICO_UPDATE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+
+    //Funciones patch_delete_moderador
+    suscribe_to_patch_evento_delete_moderador: {
+      type: EliminarEventoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_EVENTO_DELETE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_propuesta_delete_moderador: {
+      type: EliminarPropuestaType,
+      subscribe: () => pubsub.asyncIterator(PATCH_PROPUESTA_DELETE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
+    suscribe_to_patch_politico_delete_moderador: {
+      type: EliminarPoliticoType,
+      subscribe: () => pubsub.asyncIterator(PATCH_POLITICO_DELETE_MODERADOR),
+      resolve: (payload, args, context, info) => {
+        return resolver_generico(payload, args, context, info);
+      }
+    },
   }
 });
 

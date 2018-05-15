@@ -4,6 +4,12 @@ const SolicitudPolitico = mongoose.model('solicitud_politico');
 const SolicitudModificarPolitico = mongoose.model('solicitud_modificar_politico');
 const SolicitudEliminarPolitico = mongoose.model('solicitud_eliminar_politico');
 const Politico = mongoose.model('politico');
+const Propuesta = mongoose.model('propuesta');
+const Evento = mongoose.model('evento');
+const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuesta');
+const SolicitudModificarEvento = mongoose.model('solicitud_modificar_evento');
+const SolicitudEliminarPropuesta = mongoose.model('solicitud_eliminar_propuesta');
+const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 const Partido = mongoose.model('partido');
 const Estado = mongoose.model('estado');
 const Estudio = mongoose.model('estudio');
@@ -263,6 +269,40 @@ function patch_delete_politico({ args, req }) {
     SolicitudEliminarPolitico.findById(id_solicitud)
         .then((politico) => {
             var { nombre, cargo, estado, partido, estudios, id_politico, _id } = politico;
+            
+            //Eliminar registros con el político seleccionado
+            VotacionNacional.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            Preferencia.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            Propuesta.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            Evento.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+
+            //Solicitudes pendientes relacionadas al político
+            SolicitudModificarEvento.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            SolicitudModificarPropuesta.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            SolicitudModificarPolitico.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            SolicitudEliminarPolitico.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            SolicitudEliminarEvento.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
+            SolicitudEliminarPropuesta.deleteMany({ politico: id_politico }, function(err){
+                console.log(err);
+            });
             Politico.findByIdAndRemove(id_politico, (err, resp) => {
                 if (err) return console.error(err);
                 SolicitudEliminarPolitico.findByIdAndRemove(_id, (err) => {

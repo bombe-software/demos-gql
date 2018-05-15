@@ -11,6 +11,7 @@ const Usuario = mongoose.model('usuario');
 const Preferencia = mongoose.model('preferencia');
 const Votacion = mongoose.model('votacion');
 const VotacionNacional = mongoose.model('like_nacional');
+const pubsub = require('./../../pubsub').pubsub;
 
 //Funcion
 function add_politico({ args, req }) {
@@ -42,9 +43,10 @@ function add_politico({ args, req }) {
         arregloEstudios = poli.estudios;
         arregloEstudios.push(estudioId);
         poli.set({ estudios: arregloEstudios });
-        //console.log(poli);
+        pubsub.publish(require('./../subscriptions/constantes').POLITICO_ADD,  poli );
         poli.save();
-    });
+    });  
+
     return politico;
 }
 

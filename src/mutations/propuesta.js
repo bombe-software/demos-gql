@@ -7,6 +7,7 @@ const SolicitudModificarPropuesta = mongoose.model('solicitud_modificar_propuest
 const Politico = mongoose.model('politico');
 const Propuesta = mongoose.model('propuesta');
 const Usuario = mongoose.model('usuario');
+const pubsub = require('./../../pubsub').pubsub;
 
 //Funcion
 function add_propuesta({ args, req }) {

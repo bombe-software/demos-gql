@@ -106,7 +106,6 @@ app.get('/pruebas', function (req, res) {
 
 
 //Configuracion 
-const pubsub = new PubSub();
 const server = createServer(app);
 server.listen(port, () => {
   new SubscriptionServer({

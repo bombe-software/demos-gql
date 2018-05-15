@@ -6,7 +6,7 @@ const SolicitudEliminarEvento = mongoose.model('solicitud_eliminar_evento');
 const Usuario = mongoose.model('usuario');
 const Politico = mongoose.model('politico');
 const Evento = mongoose.model('evento');
-
+const pubsub = require('./../../pubsub').pubsub;
 
 //Funcion
 function add_evento({ args, req }) {

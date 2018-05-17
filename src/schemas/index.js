@@ -255,8 +255,9 @@ const RootQuery = new GraphQLObjectType({
       args: {
         id_estado: { type: new GraphQLNonNull(GraphQLID) }
       },
-      resolve(parentValue, { id }) {
-        return Politico.find({ 'estado': id });
+      
+      resolve(parentValue, { id_estado }) {
+        return Politico.find({ 'estado': id_estado });
       }
     },
     solicitud_eventos: {

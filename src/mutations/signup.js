@@ -30,15 +30,8 @@ function signup({ args, req }) {
             .then(existingUser => {
                 if (existingUser) {
                     throw new Error('Email en uso');
-                }else{
-                    return UserConfirm.then(existingUser => {
-                        if (existingUser) {
-                            throw new Error('Email en uso');
-                        }else{
-                            return user.save();
-                        }
-                    })
                 }
+                return user.save();
             })
             .then(user => {
                 const ticket = {

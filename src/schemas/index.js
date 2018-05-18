@@ -24,6 +24,7 @@ const Usuario = mongoose.model('usuario');
 const Preferencia = mongoose.model('preferencia');
 const Votacion = mongoose.model('votacion');
 const Zona = mongoose.model('zona');
+const Denuncia = mongoose.model('denuncia');
 const SolicitudPolitico = mongoose.model('solicitud_politico');
 const SolicitudPropuesta = mongoose.model('solicitud_propuesta');
 const SolicitudEvento = mongoose.model('solicitud_evento');
@@ -348,6 +349,12 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(require('./zona')),
       resolve() {
         return Zona.find({});
+      }
+    },
+    denuncias: {
+      type: new GraphQLList(require('./denuncia')),
+      resolve() {
+        return Denuncia.find({});
       }
     }
   })

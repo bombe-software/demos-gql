@@ -57,7 +57,7 @@ const { nacional_voto } = require('./voto');
 const { like_propuesta } = require('./propuesta');
 const { dislike_propuesta } = require('./propuesta');
 const { mensaje } = require('./mensaje');
-
+const { add_denuncia } = require('./denuncia');
 
 const RootMutation = new GraphQLObjectType({
   name: 'Mutaciones',
@@ -488,6 +488,18 @@ const RootMutation = new GraphQLObjectType({
         mensajeUser: { type: GraphQLString }
       }, resolve(parentValue, args, req) {
         return mensaje({ args, req });
+      }
+    },
+    denuncia: {
+      type: require('./../schemas/denuncia'),
+      args: {
+        titulo: { type: GraphQLString },
+        descripcion: { type: GraphQLString },
+        usuario: { type: GraphQLID },
+        ubicacion: { type: GraphQLString}
+      },
+      resolve(parentValue, args, req) {
+        return add_denuncia({ args, req });
       }
     }
   }

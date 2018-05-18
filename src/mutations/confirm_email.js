@@ -9,6 +9,7 @@ function confirm_email({ args, req }) {
         email,
         firma
     } = args;
+    console.log(args);
     return UserAnt.findOne({ email }).then(user => {
         if (user != null) {
             let firma_1 = SHA256("Como estas?" + user.email + "Yo jaiba y tu?" + user._id).toString();

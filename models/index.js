@@ -1,4 +1,5 @@
 require('./bug');
+require('./denuncia');
 require('./estado');
 require('./evento');
 require('./grado_academico');

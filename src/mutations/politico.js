@@ -200,23 +200,17 @@ function patch_add_politico({ args, req }) {
                 p.save();
             });
 
-            var url = deploy.demos_krb_http +'/changeFile';
-            var formData = new FormData();
-            var config = {
-                headers: {
-                    'content-type': 'multipart/form-data'
-                }
-            }
+            var url =;
 
             politicoAprovado.save(function (err, resp) {
                 if (err) return console.error(err);
                 SolicitudPolitico.findByIdAndRemove(_id, (err) => {
                     if (err) return console.error(err);
                 });
-                console.log(_id);
-                formData.append('oldFileName', _id.toString())
-                formData.append('newFileName',resp._id.toString())
-                axios.post(url, formData)
+                axios.post( deploy.demos_krb_http +'/changeFile', {
+                    oldFileName:  _id.toString(),
+                    newFileName: resp._id.toString()
+                })
                 .catch(error => {
                     console.log(error.response)
                 });

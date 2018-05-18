@@ -206,8 +206,8 @@ function patch_add_politico({ args, req }) {
                     if (err) return console.error(err);
                 });
                 axios.post( deploy.demos_krb_http +'/changeFile', {
-                    oldFileName:  _id.toString(),
-                    newFileName: resp._id.toString()
+                    oldFileName:  _id,
+                    newFileName: politicoAprovado._id
                 })
                 .catch(error => {
                     console.log(error.response)

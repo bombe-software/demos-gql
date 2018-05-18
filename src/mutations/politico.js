@@ -19,6 +19,11 @@ const Votacion = mongoose.model('votacion');
 const VotacionNacional = mongoose.model('like_nacional');
 const pubsub = require('./../../pubsub').pubsub;
 
+const axios = require('axios');
+const fs = require('file-system');
+const deploy = require('./../../deploy');
+const FormData = require('form-data');
+
 //Funcion
 function add_politico({ args, req }) {
 
@@ -195,10 +200,25 @@ function patch_add_politico({ args, req }) {
                 p.save();
             });
 
+            var url = deploy.demos_krb_http +'/changeFile';
+            var formData = new FormData();
+            var config = {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            }
+
             politicoAprovado.save(function (err, resp) {
                 if (err) return console.error(err);
                 SolicitudPolitico.findByIdAndRemove(_id, (err) => {
                     if (err) return console.error(err);
+                });
+                console.log(_id);
+                formData.append('oldFileName', _id.toString())
+                formData.append('newFileName',resp._id.toString())
+                axios.post(url, formData)
+                .catch(error => {
+                    console.log(error.response)
                 });
                 return Politico.findById(resp._id);
             });

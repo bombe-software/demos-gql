@@ -200,8 +200,6 @@ function patch_add_politico({ args, req }) {
                 p.save();
             });
 
-            var url =;
-
             politicoAprovado.save(function (err, resp) {
                 if (err) return console.error(err);
                 SolicitudPolitico.findByIdAndRemove(_id, (err) => {
